@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  DML-contracts-validate:
+    name: Run DML-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/DML-contracts-ci.yaml
+
+  DML-contracts-release:
+    name: Run DML-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/DML-contracts-cd.yaml
+    needs: DML-contracts-validate
+
+  DML-frontend-validate:
+    name: Run DML-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/DML-frontend-ci.yaml
+
+  DML-frontend-release:
+    name: Run DML-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/DML-frontend-cd.yaml
+    needs: DML-frontend-validate

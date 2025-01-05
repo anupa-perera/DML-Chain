@@ -1,0 +1,14 @@
+name: Pull Request validation
+
+on: [pull_request]
+
+
+jobs:
+  DML-contracts-ci:
+    name: Run DML-contracts validation
+    uses: ./.github/workflows/DML-contracts-ci.yaml
+
+  DML-frontend-ci:
+    name: Run DML-frontend validation
+    uses: ./.github/workflows/DML-frontend-ci.yaml
+
