@@ -17,5 +17,5 @@ export const contractDeployer = async (ipfsHash: string, modelParameters: string
     amount: (4).algo(),
   });
 
-  const app_client = DmlChainClient();
+  const app_client = DmlChainClient.
 };

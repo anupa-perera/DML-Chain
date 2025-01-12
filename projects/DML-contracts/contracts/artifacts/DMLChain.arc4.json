@@ -3,19 +3,42 @@
   "desc": "",
   "methods": [
     {
-      "name": "gethash",
+      "name": "createApplication",
       "args": [
         {
-          "name": "ipfsHash",
+          "name": "modelHash",
           "type": "string"
         }
       ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "printHash",
+      "args": [],
       "returns": {
         "type": "string"
       }
     },
     {
-      "name": "createApplication",
+      "name": "storeModelParams",
+      "args": [
+        {
+          "name": "paramkeys",
+          "type": "string[]"
+        },
+        {
+          "name": "paramValues",
+          "type": "string[]"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "deleteApplication",
       "args": [],
       "returns": {
         "type": "void"

@@ -24,7 +24,7 @@ import { SendParams, SendSingleTransactionResult, SendAtomicTransactionComposerR
 import { Address, encodeAddress, modelsv2, OnApplicationComplete, Transaction, TransactionSigner } from 'algosdk'
 import SimulateResponse = modelsv2.SimulateResponse
 
-export const APP_SPEC: Arc56Contract = {"name":"DMLChain","desc":"","methods":[{"name":"gethash","args":[{"name":"ipfsHash","type":"string"}],"returns":{"type":"string"},"actions":{"create":[],"call":["NoOp"]}},{"name":"createApplication","args":[],"returns":{"type":"void"},"actions":{"create":["NoOp"],"call":[]}}],"arcs":[4,56],"structs":{},"state":{"schema":{"global":{"bytes":1,"ints":0},"local":{"bytes":0,"ints":0}},"keys":{"global":{"ipfsHash":{"key":"aXBmc0hhc2g=","keyType":"AVMBytes","valueType":"string"}},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{}}},"bareActions":{"create":[],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"teal":1,"source":"contracts\\Moderator.algo.ts:3","pc":[0]},{"teal":2,"source":"contracts\\Moderator.algo.ts:3","pc":[1,2,3]},{"teal":14,"source":"contracts\\Moderator.algo.ts:3","pc":[4,5]},{"teal":15,"source":"contracts\\Moderator.algo.ts:3","pc":[6]},{"teal":16,"source":"contracts\\Moderator.algo.ts:3","pc":[7,8]},{"teal":17,"source":"contracts\\Moderator.algo.ts:3","pc":[9]},{"teal":18,"source":"contracts\\Moderator.algo.ts:3","pc":[10,11]},{"teal":19,"source":"contracts\\Moderator.algo.ts:3","pc":[12]},{"teal":20,"source":"contracts\\Moderator.algo.ts:3","pc":[13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38]},{"teal":24,"source":"contracts\\Moderator.algo.ts:3","errorMessage":"The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?","pc":[39]},{"teal":29,"source":"contracts\\Moderator.algo.ts:8","pc":[40,41,42,43,44,45]},{"teal":32,"source":"contracts\\Moderator.algo.ts:8","pc":[46,47,48]},{"teal":33,"source":"contracts\\Moderator.algo.ts:8","pc":[49,50,51]},{"teal":36,"source":"contracts\\Moderator.algo.ts:8","pc":[52,53,54]},{"teal":37,"source":"contracts\\Moderator.algo.ts:8","pc":[55]},{"teal":38,"source":"contracts\\Moderator.algo.ts:8","pc":[56]},{"teal":39,"source":"contracts\\Moderator.algo.ts:8","pc":[57]},{"teal":40,"source":"contracts\\Moderator.algo.ts:8","pc":[58,59,60]},{"teal":41,"source":"contracts\\Moderator.algo.ts:8","pc":[61]},{"teal":42,"source":"contracts\\Moderator.algo.ts:8","pc":[62]},{"teal":43,"source":"contracts\\Moderator.algo.ts:8","pc":[63]},{"teal":44,"source":"contracts\\Moderator.algo.ts:8","pc":[64]},{"teal":45,"source":"contracts\\Moderator.algo.ts:8","pc":[65]},{"teal":46,"source":"contracts\\Moderator.algo.ts:8","pc":[66]},{"teal":50,"source":"contracts\\Moderator.algo.ts:8","pc":[67,68,69]},{"teal":54,"source":"contracts\\Moderator.algo.ts:9","pc":[70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91]},{"teal":55,"source":"contracts\\Moderator.algo.ts:9","pc":[92,93]},{"teal":56,"source":"contracts\\Moderator.algo.ts:9","pc":[94]},{"teal":57,"source":"contracts\\Moderator.algo.ts:8","pc":[95]},{"teal":60,"source":"contracts\\Moderator.algo.ts:3","pc":[96]},{"teal":61,"source":"contracts\\Moderator.algo.ts:3","pc":[97]},{"teal":64,"source":"contracts\\Moderator.algo.ts:3","pc":[98,99,100,101,102,103]},{"teal":65,"source":"contracts\\Moderator.algo.ts:3","pc":[104,105,106]},{"teal":66,"source":"contracts\\Moderator.algo.ts:3","pc":[107,108,109,110]},{"teal":69,"source":"contracts\\Moderator.algo.ts:3","errorMessage":"this contract does not implement the given ABI method for create NoOp","pc":[111]},{"teal":72,"source":"contracts\\Moderator.algo.ts:3","pc":[112,113,114,115,116,117]},{"teal":73,"source":"contracts\\Moderator.algo.ts:3","pc":[118,119,120]},{"teal":74,"source":"contracts\\Moderator.algo.ts:3","pc":[121,122,123,124]},{"teal":77,"source":"contracts\\Moderator.algo.ts:3","errorMessage":"this contract does not implement the given ABI method for call NoOp","pc":[125]}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjEwNi4xCi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbGdvcmFuZGZvdW5kYXRpb24vVEVBTFNjcmlwdAoKLy8gVGhpcyBjb250cmFjdCBpcyBjb21wbGlhbnQgd2l0aCBhbmQvb3IgaW1wbGVtZW50cyB0aGUgZm9sbG93aW5nIEFSQ3M6IFsgQVJDNCBdCgovLyBUaGUgZm9sbG93aW5nIHRlbiBsaW5lcyBvZiBURUFMIGhhbmRsZSBpbml0aWFsIHByb2dyYW0gZmxvdwovLyBUaGlzIHBhdHRlcm4gaXMgdXNlZCB0byBtYWtlIGl0IGVhc3kgZm9yIGFueW9uZSB0byBwYXJzZSB0aGUgc3RhcnQgb2YgdGhlIHByb2dyYW0gYW5kIGRldGVybWluZSBpZiBhIHNwZWNpZmljIGFjdGlvbiBpcyBhbGxvd2VkCi8vIEhlcmUsIGFjdGlvbiByZWZlcnMgdG8gdGhlIE9uQ29tcGxldGUgaW4gY29tYmluYXRpb24gd2l0aCB3aGV0aGVyIHRoZSBhcHAgaXMgYmVpbmcgY3JlYXRlZCBvciBjYWxsZWQKLy8gRXZlcnkgcG9zc2libGUgYWN0aW9uIGZvciB0aGlzIGNvbnRyYWN0IGlzIHJlcHJlc2VudGVkIGluIHRoZSBzd2l0Y2ggc3RhdGVtZW50Ci8vIElmIHRoZSBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIipOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQpwdXNoaW50IDYKKgp0eG4gT25Db21wbGV0aW9uCisKc3dpdGNoICpjYWxsX05vT3AgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpjcmVhdGVfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQKCipOT1RfSU1QTEVNRU5URUQ6CgkvLyBUaGUgcmVxdWVzdGVkIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhpcyBjb250cmFjdC4gQXJlIHlvdSB1c2luZyB0aGUgY29ycmVjdCBPbkNvbXBsZXRlPyBEaWQgeW91IHNldCB5b3VyIGFwcCBJRD8KCWVycgoKLy8gZ2V0aGFzaChzdHJpbmcpc3RyaW5nCiphYmlfcm91dGVfZ2V0aGFzaDoKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJcHVzaGJ5dGVzIDB4MTUxZjdjNzUKCgkvLyBpcGZzSGFzaDogc3RyaW5nCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglleHRyYWN0IDIgMAoKCS8vIGV4ZWN1dGUgZ2V0aGFzaChzdHJpbmcpc3RyaW5nCgljYWxsc3ViIGdldGhhc2gKCWR1cAoJbGVuCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0Cgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gZ2V0aGFzaChpcGZzSGFzaDogc3RyaW5nKTogc3RyaW5nCmdldGhhc2g6Cglwcm90byAxIDEKCgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6OQoJLy8gcmV0dXJuICdoYXNoIGlzIHByZXNlbnQgYW5kICcgKyBpcGZzSGFzaDsKCXB1c2hieXRlcyAweDY4NjE3MzY4MjA2OTczMjA3MDcyNjU3MzY1NmU3NDIwNjE2ZTY0MjAgLy8gImhhc2ggaXMgcHJlc2VudCBhbmQgIgoJZnJhbWVfZGlnIC0xIC8vIGlwZnNIYXNoOiBzdHJpbmcKCWNvbmNhdAoJcmV0c3ViCgoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJaW50YyAwIC8vIDEKCXJldHVybgoKKmNyZWF0ZV9Ob09wOgoJcHVzaGJ5dGVzIDB4Yjg0NDdiMzYgLy8gbWV0aG9kICJjcmVhdGVBcHBsaWNhdGlvbigpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoICphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCgkvLyB0aGlzIGNvbnRyYWN0IGRvZXMgbm90IGltcGxlbWVudCB0aGUgZ2l2ZW4gQUJJIG1ldGhvZCBmb3IgY3JlYXRlIE5vT3AKCWVycgoKKmNhbGxfTm9PcDoKCXB1c2hieXRlcyAweDM0ZjliNzQzIC8vIG1ldGhvZCAiZ2V0aGFzaChzdHJpbmcpc3RyaW5nIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9nZXRoYXNoCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJy","clear":"I3ByYWdtYSB2ZXJzaW9uIDEw"},"byteCode":{"approval":"CiABATEYFIEGCzEZCI0MAEkAAAAAAAAAAAAAADsAAAAAAAAAAAAAAIAEFR98dTYaAVcCAIgADEkVFlcGAkxQULAiQ4oBAYAUaGFzaCBpcyBwcmVzZW50IGFuZCCL/1CJIkOABLhEezY2GgCOAf/xAIAENPm3QzYaAI4B/6sA","clear":"Cg=="},"compilerInfo":{"compiler":"algod","compilerVersion":{"major":3,"minor":27,"patch":0,"commitHash":"f54f0997"}}} as unknown as Arc56Contract
+export const APP_SPEC: Arc56Contract = {"name":"DMLChain","desc":"","methods":[{"name":"createApplication","args":[{"name":"modelHash","type":"string"}],"returns":{"type":"void"},"actions":{"create":["NoOp"],"call":[]}},{"name":"printHash","args":[],"returns":{"type":"string"},"actions":{"create":[],"call":["NoOp"]}},{"name":"storeModelParams","args":[{"name":"paramkeys","type":"string[]"},{"name":"paramValues","type":"string[]"}],"returns":{"type":"void"},"actions":{"create":[],"call":["NoOp"]}},{"name":"deleteApplication","args":[],"returns":{"type":"void"},"actions":{"create":[],"call":["DeleteApplication"]}}],"arcs":[4,56],"structs":{"Regression":[{"name":"mse","type":"uint64"},{"name":"rmse","type":"uint64"},{"name":"mae","type":"uint64"},{"name":"cod","type":"uint64"}],"Classification":[{"name":"accuracy","type":"uint64"},{"name":"precision","type":"uint64"},{"name":"recall","type":"uint64"},{"name":"specificity","type":"uint64"},{"name":"f1Score","type":"uint64"},{"name":"roc","type":"uint64"}]},"state":{"schema":{"global":{"bytes":1,"ints":0},"local":{"bytes":0,"ints":0}},"keys":{"global":{"ipfsHash":{"key":"aXBmc0hhc2g=","keyType":"AVMBytes","valueType":"string"}},"local":{},"box":{}},"maps":{"global":{},"local":{},"box":{"parameterKeys":{"keyType":"string","valueType":"string","prefix":"parameterKeys"},"regressionPerformanceMetrics":{"keyType":"string","valueType":"Regression","prefix":"regressionPerformanceMetrics"},"classificationPerformanceMetrics":{"keyType":"string","valueType":"Classification","prefix":"classificationPerformanceMetrics"}}}},"bareActions":{"create":[],"call":[]},"sourceInfo":{"approval":{"sourceInfo":[{"teal":1,"source":"contracts\\Moderator.algo.ts:23","pc":[0]},{"teal":2,"source":"contracts\\Moderator.algo.ts:23","pc":[1,2,3,4,5,6,7,8]},{"teal":3,"source":"contracts\\Moderator.algo.ts:23","pc":[9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187]},{"teal":15,"source":"contracts\\Moderator.algo.ts:23","pc":[188,189]},{"teal":16,"source":"contracts\\Moderator.algo.ts:23","pc":[190]},{"teal":17,"source":"contracts\\Moderator.algo.ts:23","pc":[191,192]},{"teal":18,"source":"contracts\\Moderator.algo.ts:23","pc":[193]},{"teal":19,"source":"contracts\\Moderator.algo.ts:23","pc":[194,195]},{"teal":20,"source":"contracts\\Moderator.algo.ts:23","pc":[196]},{"teal":21,"source":"contracts\\Moderator.algo.ts:23","pc":[197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222]},{"teal":25,"source":"contracts\\Moderator.algo.ts:23","errorMessage":"The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?","pc":[223]},{"teal":30,"source":"contracts\\Moderator.algo.ts:36","pc":[224,225,226]},{"teal":31,"source":"contracts\\Moderator.algo.ts:36","pc":[227,228,229]},{"teal":34,"source":"contracts\\Moderator.algo.ts:36","pc":[230,231,232]},{"teal":35,"source":"contracts\\Moderator.algo.ts:36","pc":[233]},{"teal":36,"source":"contracts\\Moderator.algo.ts:36","pc":[234]},{"teal":40,"source":"contracts\\Moderator.algo.ts:36","pc":[235,236,237]},{"teal":44,"source":"contracts\\Moderator.algo.ts:37","pc":[238,239]},{"teal":45,"source":"contracts\\Moderator.algo.ts:37","pc":[240,241]},{"teal":46,"source":"contracts\\Moderator.algo.ts:37","pc":[242]},{"teal":47,"source":"contracts\\Moderator.algo.ts:37","pc":[243]},{"teal":48,"source":"contracts\\Moderator.algo.ts:37","pc":[244]},{"teal":49,"source":"contracts\\Moderator.algo.ts:37","pc":[245,246,247]},{"teal":50,"source":"contracts\\Moderator.algo.ts:37","pc":[248]},{"teal":51,"source":"contracts\\Moderator.algo.ts:37","pc":[249]},{"teal":52,"source":"contracts\\Moderator.algo.ts:37","pc":[250]},{"teal":53,"source":"contracts\\Moderator.algo.ts:36","pc":[251]},{"teal":58,"source":"contracts\\Moderator.algo.ts:41","pc":[252,253,254,255,256,257]},{"teal":61,"source":"contracts\\Moderator.algo.ts:41","pc":[258,259,260]},{"teal":62,"source":"contracts\\Moderator.algo.ts:41","pc":[261]},{"teal":63,"source":"contracts\\Moderator.algo.ts:41","pc":[262]},{"teal":64,"source":"contracts\\Moderator.algo.ts:41","pc":[263]},{"teal":65,"source":"contracts\\Moderator.algo.ts:41","pc":[264,265,266]},{"teal":66,"source":"contracts\\Moderator.algo.ts:41","pc":[267]},{"teal":67,"source":"contracts\\Moderator.algo.ts:41","pc":[268]},{"teal":68,"source":"contracts\\Moderator.algo.ts:41","pc":[269]},{"teal":69,"source":"contracts\\Moderator.algo.ts:41","pc":[270]},{"teal":70,"source":"contracts\\Moderator.algo.ts:41","pc":[271]},{"teal":71,"source":"contracts\\Moderator.algo.ts:41","pc":[272]},{"teal":75,"source":"contracts\\Moderator.algo.ts:41","pc":[273,274,275]},{"teal":79,"source":"contracts\\Moderator.algo.ts:42","pc":[276,277]},{"teal":80,"source":"contracts\\Moderator.algo.ts:42","pc":[278]},{"teal":81,"source":"contracts\\Moderator.algo.ts:42","pc":[279,280,281]},{"teal":82,"source":"contracts\\Moderator.algo.ts:41","pc":[282]},{"teal":87,"source":"contracts\\Moderator.algo.ts:46","pc":[283,284,285]},{"teal":90,"source":"contracts\\Moderator.algo.ts:46","pc":[286,287,288]},{"teal":93,"source":"contracts\\Moderator.algo.ts:46","pc":[289,290,291]},{"teal":94,"source":"contracts\\Moderator.algo.ts:46","pc":[292]},{"teal":95,"source":"contracts\\Moderator.algo.ts:46","pc":[293]},{"teal":99,"source":"contracts\\Moderator.algo.ts:46","pc":[294,295,296]},{"teal":102,"source":"contracts\\Moderator.algo.ts:46","pc":[297]},{"teal":103,"source":"contracts\\Moderator.algo.ts:46","pc":[298,299]},{"teal":107,"source":"contracts\\Moderator.algo.ts:47","pc":[300,301]},{"teal":108,"source":"contracts\\Moderator.algo.ts:47","pc":[302,303,304]},{"teal":109,"source":"contracts\\Moderator.algo.ts:47","pc":[305,306]},{"teal":110,"source":"contracts\\Moderator.algo.ts:47","pc":[307]},{"teal":111,"source":"contracts\\Moderator.algo.ts:47","pc":[308]},{"teal":112,"source":"contracts\\Moderator.algo.ts:47","pc":[309]},{"teal":116,"source":"contracts\\Moderator.algo.ts:48","pc":[310,311]},{"teal":117,"source":"contracts\\Moderator.algo.ts:48","pc":[312]},{"teal":118,"source":"contracts\\Moderator.algo.ts:48","pc":[313]},{"teal":119,"source":"contracts\\Moderator.algo.ts:48","pc":[314,315]},{"teal":120,"source":"contracts\\Moderator.algo.ts:48","pc":[316]},{"teal":121,"source":"contracts\\Moderator.algo.ts:48","pc":[317]},{"teal":122,"source":"contracts\\Moderator.algo.ts:48","pc":[318]},{"teal":123,"source":"contracts\\Moderator.algo.ts:48","pc":[319]},{"teal":127,"source":"contracts\\Moderator.algo.ts:50","pc":[320]},{"teal":128,"source":"contracts\\Moderator.algo.ts:50","pc":[321,322]},{"teal":135,"source":"contracts\\Moderator.algo.ts:51","pc":[323,324]},{"teal":136,"source":"contracts\\Moderator.algo.ts:51","pc":[325,326]},{"teal":137,"source":"contracts\\Moderator.algo.ts:51","pc":[327]},{"teal":138,"source":"contracts\\Moderator.algo.ts:51","pc":[328]},{"teal":139,"source":"contracts\\Moderator.algo.ts:51","pc":[329]},{"teal":140,"source":"contracts\\Moderator.algo.ts:51","pc":[330,331,332]},{"teal":144,"source":"contracts\\Moderator.algo.ts:52","pc":[333,334]},{"teal":145,"source":"contracts\\Moderator.algo.ts:52","pc":[335,336]},{"teal":146,"source":"contracts\\Moderator.algo.ts:52","pc":[337]},{"teal":147,"source":"contracts\\Moderator.algo.ts:52","pc":[338,339]},{"teal":148,"source":"contracts\\Moderator.algo.ts:52","pc":[340]},{"teal":149,"source":"contracts\\Moderator.algo.ts:52","pc":[341]},{"teal":150,"source":"contracts\\Moderator.algo.ts:52","pc":[342]},{"teal":151,"source":"contracts\\Moderator.algo.ts:52","pc":[343]},{"teal":152,"source":"contracts\\Moderator.algo.ts:52","pc":[344]},{"teal":153,"source":"contracts\\Moderator.algo.ts:52","pc":[345,346]},{"teal":154,"source":"contracts\\Moderator.algo.ts:52","pc":[347,348]},{"teal":155,"source":"contracts\\Moderator.algo.ts:52","pc":[349,350]},{"teal":156,"source":"contracts\\Moderator.algo.ts:52","pc":[351]},{"teal":157,"source":"contracts\\Moderator.algo.ts:52","pc":[352]},{"teal":158,"source":"contracts\\Moderator.algo.ts:52","pc":[353]},{"teal":159,"source":"contracts\\Moderator.algo.ts:52","pc":[354]},{"teal":160,"source":"contracts\\Moderator.algo.ts:52","pc":[355,356]},{"teal":161,"source":"contracts\\Moderator.algo.ts:52","pc":[357]},{"teal":162,"source":"contracts\\Moderator.algo.ts:52","pc":[358]},{"teal":163,"source":"contracts\\Moderator.algo.ts:52","pc":[359]},{"teal":164,"source":"contracts\\Moderator.algo.ts:52","pc":[360]},{"teal":165,"source":"contracts\\Moderator.algo.ts:52","pc":[361]},{"teal":166,"source":"contracts\\Moderator.algo.ts:52","pc":[362]},{"teal":167,"source":"contracts\\Moderator.algo.ts:52","pc":[363]},{"teal":168,"source":"contracts\\Moderator.algo.ts:52","pc":[364,365,366]},{"teal":169,"source":"contracts\\Moderator.algo.ts:52","pc":[367,368]},{"teal":173,"source":"contracts\\Moderator.algo.ts:53","pc":[369,370]},{"teal":174,"source":"contracts\\Moderator.algo.ts:53","pc":[371,372]},{"teal":175,"source":"contracts\\Moderator.algo.ts:53","pc":[373]},{"teal":176,"source":"contracts\\Moderator.algo.ts:53","pc":[374,375]},{"teal":177,"source":"contracts\\Moderator.algo.ts:53","pc":[376]},{"teal":178,"source":"contracts\\Moderator.algo.ts:53","pc":[377]},{"teal":179,"source":"contracts\\Moderator.algo.ts:53","pc":[378]},{"teal":180,"source":"contracts\\Moderator.algo.ts:53","pc":[379]},{"teal":181,"source":"contracts\\Moderator.algo.ts:53","pc":[380]},{"teal":182,"source":"contracts\\Moderator.algo.ts:53","pc":[381,382]},{"teal":183,"source":"contracts\\Moderator.algo.ts:53","pc":[383,384]},{"teal":184,"source":"contracts\\Moderator.algo.ts:53","pc":[385,386]},{"teal":185,"source":"contracts\\Moderator.algo.ts:53","pc":[387]},{"teal":186,"source":"contracts\\Moderator.algo.ts:53","pc":[388]},{"teal":187,"source":"contracts\\Moderator.algo.ts:53","pc":[389]},{"teal":188,"source":"contracts\\Moderator.algo.ts:53","pc":[390]},{"teal":189,"source":"contracts\\Moderator.algo.ts:53","pc":[391,392]},{"teal":190,"source":"contracts\\Moderator.algo.ts:53","pc":[393]},{"teal":191,"source":"contracts\\Moderator.algo.ts:53","pc":[394]},{"teal":192,"source":"contracts\\Moderator.algo.ts:53","pc":[395]},{"teal":193,"source":"contracts\\Moderator.algo.ts:53","pc":[396]},{"teal":194,"source":"contracts\\Moderator.algo.ts:53","pc":[397]},{"teal":195,"source":"contracts\\Moderator.algo.ts:53","pc":[398]},{"teal":196,"source":"contracts\\Moderator.algo.ts:53","pc":[399]},{"teal":197,"source":"contracts\\Moderator.algo.ts:53","pc":[400,401,402]},{"teal":198,"source":"contracts\\Moderator.algo.ts:53","pc":[403,404]},{"teal":202,"source":"contracts\\Moderator.algo.ts:55","pc":[405,406,407,408,409,410,411,412,413,414,415,416,417,418,419]},{"teal":203,"source":"contracts\\Moderator.algo.ts:55","pc":[420,421]},{"teal":204,"source":"contracts\\Moderator.algo.ts:55","pc":[422]},{"teal":205,"source":"contracts\\Moderator.algo.ts:55","pc":[423]},{"teal":206,"source":"contracts\\Moderator.algo.ts:55","pc":[424]},{"teal":207,"source":"contracts\\Moderator.algo.ts:55","pc":[425,426,427]},{"teal":208,"source":"contracts\\Moderator.algo.ts:55","pc":[428]},{"teal":209,"source":"contracts\\Moderator.algo.ts:55","pc":[429]},{"teal":210,"source":"contracts\\Moderator.algo.ts:55","pc":[430]},{"teal":211,"source":"contracts\\Moderator.algo.ts:55","pc":[431]},{"teal":212,"source":"contracts\\Moderator.algo.ts:55","pc":[432]},{"teal":213,"source":"contracts\\Moderator.algo.ts:55","pc":[433]},{"teal":214,"source":"contracts\\Moderator.algo.ts:55","pc":[434,435]},{"teal":215,"source":"contracts\\Moderator.algo.ts:55","pc":[436]},{"teal":216,"source":"contracts\\Moderator.algo.ts:55","pc":[437]},{"teal":217,"source":"contracts\\Moderator.algo.ts:55","pc":[438]},{"teal":218,"source":"contracts\\Moderator.algo.ts:55","pc":[439,440,441]},{"teal":219,"source":"contracts\\Moderator.algo.ts:55","pc":[442]},{"teal":220,"source":"contracts\\Moderator.algo.ts:55","pc":[443]},{"teal":221,"source":"contracts\\Moderator.algo.ts:55","pc":[444]},{"teal":225,"source":"contracts\\Moderator.algo.ts:57","pc":[445,446]},{"teal":226,"source":"contracts\\Moderator.algo.ts:57","pc":[447]},{"teal":227,"source":"contracts\\Moderator.algo.ts:57","pc":[448]},{"teal":228,"source":"contracts\\Moderator.algo.ts:57","pc":[449,450]},{"teal":229,"source":"contracts\\Moderator.algo.ts:51","pc":[451,452,453]},{"teal":232,"source":"contracts\\Moderator.algo.ts:46","pc":[454]},{"teal":236,"source":"contracts\\Moderator.algo.ts:74","pc":[455,456,457]},{"teal":240,"source":"contracts\\Moderator.algo.ts:75","pc":[458]},{"teal":241,"source":"contracts\\Moderator.algo.ts:75","pc":[459,460]},{"teal":242,"source":"contracts\\Moderator.algo.ts:75","pc":[461]},{"teal":243,"source":"contracts\\Moderator.algo.ts:74","pc":[462]},{"teal":247,"source":"contracts\\Moderator.algo.ts:79","pc":[463,464,465]},{"teal":251,"source":"contracts\\Moderator.algo.ts:80","pc":[466]},{"teal":252,"source":"contracts\\Moderator.algo.ts:80","pc":[467,468]},{"teal":253,"source":"contracts\\Moderator.algo.ts:80","pc":[469]},{"teal":254,"source":"contracts\\Moderator.algo.ts:79","pc":[470]},{"teal":258,"source":"contracts\\Moderator.algo.ts:84","pc":[471,472,473]},{"teal":266,"source":"contracts\\Moderator.algo.ts:87","pc":[474,475]},{"teal":267,"source":"contracts\\Moderator.algo.ts:87","pc":[476,477,478]},{"teal":268,"source":"contracts\\Moderator.algo.ts:87","pc":[479]},{"teal":269,"source":"contracts\\Moderator.algo.ts:85","pc":[480]},{"teal":270,"source":"contracts\\Moderator.algo.ts:85","pc":[481]},{"teal":271,"source":"contracts\\Moderator.algo.ts:85","pc":[482]},{"teal":272,"source":"contracts\\Moderator.algo.ts:85","pc":[483]},{"teal":273,"source":"contracts\\Moderator.algo.ts:87","pc":[484]},{"teal":274,"source":"contracts\\Moderator.algo.ts:87","pc":[485]},{"teal":275,"source":"contracts\\Moderator.algo.ts:87","pc":[486]},{"teal":276,"source":"contracts\\Moderator.algo.ts:87","pc":[487,488,489]},{"teal":277,"source":"contracts\\Moderator.algo.ts:88","pc":[490,491]},{"teal":278,"source":"contracts\\Moderator.algo.ts:88","pc":[492,493,494]},{"teal":279,"source":"contracts\\Moderator.algo.ts:88","pc":[495]},{"teal":280,"source":"contracts\\Moderator.algo.ts:85","pc":[496]},{"teal":281,"source":"contracts\\Moderator.algo.ts:85","pc":[497,498]},{"teal":282,"source":"contracts\\Moderator.algo.ts:85","pc":[499]},{"teal":283,"source":"contracts\\Moderator.algo.ts:85","pc":[500]},{"teal":284,"source":"contracts\\Moderator.algo.ts:88","pc":[501]},{"teal":285,"source":"contracts\\Moderator.algo.ts:88","pc":[502]},{"teal":286,"source":"contracts\\Moderator.algo.ts:87","pc":[503]},{"teal":289,"source":"contracts\\Moderator.algo.ts:88","pc":[504]},{"teal":290,"source":"contracts\\Moderator.algo.ts:88","pc":[505,506,507]},{"teal":291,"source":"contracts\\Moderator.algo.ts:89","pc":[508,509]},{"teal":292,"source":"contracts\\Moderator.algo.ts:89","pc":[510,511,512]},{"teal":293,"source":"contracts\\Moderator.algo.ts:89","pc":[513]},{"teal":294,"source":"contracts\\Moderator.algo.ts:85","pc":[514]},{"teal":295,"source":"contracts\\Moderator.algo.ts:85","pc":[515]},{"teal":296,"source":"contracts\\Moderator.algo.ts:85","pc":[516]},{"teal":297,"source":"contracts\\Moderator.algo.ts:85","pc":[517]},{"teal":298,"source":"contracts\\Moderator.algo.ts:89","pc":[518]},{"teal":299,"source":"contracts\\Moderator.algo.ts:89","pc":[519]},{"teal":300,"source":"contracts\\Moderator.algo.ts:88","pc":[520]},{"teal":303,"source":"contracts\\Moderator.algo.ts:89","pc":[521]},{"teal":304,"source":"contracts\\Moderator.algo.ts:89","pc":[522,523,524]},{"teal":305,"source":"contracts\\Moderator.algo.ts:90","pc":[525,526]},{"teal":306,"source":"contracts\\Moderator.algo.ts:90","pc":[527,528,529]},{"teal":307,"source":"contracts\\Moderator.algo.ts:90","pc":[530]},{"teal":308,"source":"contracts\\Moderator.algo.ts:85","pc":[531]},{"teal":309,"source":"contracts\\Moderator.algo.ts:85","pc":[532,533]},{"teal":310,"source":"contracts\\Moderator.algo.ts:85","pc":[534]},{"teal":311,"source":"contracts\\Moderator.algo.ts:85","pc":[535]},{"teal":312,"source":"contracts\\Moderator.algo.ts:90","pc":[536]},{"teal":313,"source":"contracts\\Moderator.algo.ts:90","pc":[537]},{"teal":314,"source":"contracts\\Moderator.algo.ts:89","pc":[538]},{"teal":317,"source":"contracts\\Moderator.algo.ts:86","pc":[539,540,541]},{"teal":322,"source":"contracts\\Moderator.algo.ts:92","pc":[542]},{"teal":323,"source":"contracts\\Moderator.algo.ts:92","pc":[543]},{"teal":328,"source":"contracts\\Moderator.algo.ts:94","pc":[544,545]},{"teal":329,"source":"contracts\\Moderator.algo.ts:84","pc":[546]},{"teal":333,"source":"contracts\\Moderator.algo.ts:98","pc":[547,548,549]},{"teal":343,"source":"contracts\\Moderator.algo.ts:101","pc":[550,551]},{"teal":344,"source":"contracts\\Moderator.algo.ts:101","pc":[552,553,554]},{"teal":345,"source":"contracts\\Moderator.algo.ts:101","pc":[555]},{"teal":346,"source":"contracts\\Moderator.algo.ts:99","pc":[556]},{"teal":347,"source":"contracts\\Moderator.algo.ts:99","pc":[557]},{"teal":348,"source":"contracts\\Moderator.algo.ts:99","pc":[558]},{"teal":349,"source":"contracts\\Moderator.algo.ts:99","pc":[559]},{"teal":350,"source":"contracts\\Moderator.algo.ts:101","pc":[560]},{"teal":351,"source":"contracts\\Moderator.algo.ts:101","pc":[561]},{"teal":352,"source":"contracts\\Moderator.algo.ts:101","pc":[562]},{"teal":353,"source":"contracts\\Moderator.algo.ts:101","pc":[563,564,565]},{"teal":354,"source":"contracts\\Moderator.algo.ts:102","pc":[566,567]},{"teal":355,"source":"contracts\\Moderator.algo.ts:102","pc":[568,569,570]},{"teal":356,"source":"contracts\\Moderator.algo.ts:102","pc":[571]},{"teal":357,"source":"contracts\\Moderator.algo.ts:99","pc":[572]},{"teal":358,"source":"contracts\\Moderator.algo.ts:99","pc":[573]},{"teal":359,"source":"contracts\\Moderator.algo.ts:99","pc":[574]},{"teal":360,"source":"contracts\\Moderator.algo.ts:99","pc":[575]},{"teal":361,"source":"contracts\\Moderator.algo.ts:102","pc":[576]},{"teal":362,"source":"contracts\\Moderator.algo.ts:102","pc":[577]},{"teal":363,"source":"contracts\\Moderator.algo.ts:101","pc":[578]},{"teal":366,"source":"contracts\\Moderator.algo.ts:102","pc":[579]},{"teal":367,"source":"contracts\\Moderator.algo.ts:102","pc":[580,581,582]},{"teal":368,"source":"contracts\\Moderator.algo.ts:103","pc":[583,584]},{"teal":369,"source":"contracts\\Moderator.algo.ts:103","pc":[585,586,587]},{"teal":370,"source":"contracts\\Moderator.algo.ts:103","pc":[588]},{"teal":371,"source":"contracts\\Moderator.algo.ts:99","pc":[589]},{"teal":372,"source":"contracts\\Moderator.algo.ts:99","pc":[590,591]},{"teal":373,"source":"contracts\\Moderator.algo.ts:99","pc":[592]},{"teal":374,"source":"contracts\\Moderator.algo.ts:99","pc":[593]},{"teal":375,"source":"contracts\\Moderator.algo.ts:103","pc":[594]},{"teal":376,"source":"contracts\\Moderator.algo.ts:103","pc":[595]},{"teal":377,"source":"contracts\\Moderator.algo.ts:102","pc":[596]},{"teal":380,"source":"contracts\\Moderator.algo.ts:103","pc":[597]},{"teal":381,"source":"contracts\\Moderator.algo.ts:103","pc":[598,599,600]},{"teal":382,"source":"contracts\\Moderator.algo.ts:104","pc":[601,602]},{"teal":383,"source":"contracts\\Moderator.algo.ts:104","pc":[603,604,605]},{"teal":384,"source":"contracts\\Moderator.algo.ts:104","pc":[606]},{"teal":385,"source":"contracts\\Moderator.algo.ts:99","pc":[607]},{"teal":386,"source":"contracts\\Moderator.algo.ts:99","pc":[608,609]},{"teal":387,"source":"contracts\\Moderator.algo.ts:99","pc":[610]},{"teal":388,"source":"contracts\\Moderator.algo.ts:99","pc":[611]},{"teal":389,"source":"contracts\\Moderator.algo.ts:104","pc":[612]},{"teal":390,"source":"contracts\\Moderator.algo.ts:104","pc":[613]},{"teal":391,"source":"contracts\\Moderator.algo.ts:103","pc":[614]},{"teal":394,"source":"contracts\\Moderator.algo.ts:104","pc":[615]},{"teal":395,"source":"contracts\\Moderator.algo.ts:104","pc":[616,617,618]},{"teal":396,"source":"contracts\\Moderator.algo.ts:105","pc":[619,620]},{"teal":397,"source":"contracts\\Moderator.algo.ts:105","pc":[621,622,623]},{"teal":398,"source":"contracts\\Moderator.algo.ts:105","pc":[624]},{"teal":399,"source":"contracts\\Moderator.algo.ts:99","pc":[625]},{"teal":400,"source":"contracts\\Moderator.algo.ts:99","pc":[626,627]},{"teal":401,"source":"contracts\\Moderator.algo.ts:99","pc":[628]},{"teal":402,"source":"contracts\\Moderator.algo.ts:99","pc":[629]},{"teal":403,"source":"contracts\\Moderator.algo.ts:105","pc":[630]},{"teal":404,"source":"contracts\\Moderator.algo.ts:105","pc":[631]},{"teal":405,"source":"contracts\\Moderator.algo.ts:104","pc":[632]},{"teal":408,"source":"contracts\\Moderator.algo.ts:105","pc":[633]},{"teal":409,"source":"contracts\\Moderator.algo.ts:105","pc":[634,635,636]},{"teal":410,"source":"contracts\\Moderator.algo.ts:106","pc":[637,638]},{"teal":411,"source":"contracts\\Moderator.algo.ts:106","pc":[639,640,641]},{"teal":412,"source":"contracts\\Moderator.algo.ts:106","pc":[642]},{"teal":413,"source":"contracts\\Moderator.algo.ts:99","pc":[643]},{"teal":414,"source":"contracts\\Moderator.algo.ts:99","pc":[644,645]},{"teal":415,"source":"contracts\\Moderator.algo.ts:99","pc":[646]},{"teal":416,"source":"contracts\\Moderator.algo.ts:99","pc":[647]},{"teal":417,"source":"contracts\\Moderator.algo.ts:106","pc":[648]},{"teal":418,"source":"contracts\\Moderator.algo.ts:106","pc":[649]},{"teal":419,"source":"contracts\\Moderator.algo.ts:105","pc":[650]},{"teal":422,"source":"contracts\\Moderator.algo.ts:100","pc":[651,652,653]},{"teal":427,"source":"contracts\\Moderator.algo.ts:108","pc":[654]},{"teal":428,"source":"contracts\\Moderator.algo.ts:108","pc":[655]},{"teal":433,"source":"contracts\\Moderator.algo.ts:110","pc":[656,657]},{"teal":434,"source":"contracts\\Moderator.algo.ts:98","pc":[658]},{"teal":439,"source":"contracts\\Moderator.algo.ts:114","pc":[659,660,661]},{"teal":440,"source":"contracts\\Moderator.algo.ts:114","pc":[662]},{"teal":441,"source":"contracts\\Moderator.algo.ts:114","pc":[663]},{"teal":445,"source":"contracts\\Moderator.algo.ts:114","pc":[664,665,666]},{"teal":449,"source":"contracts\\Moderator.algo.ts:115","pc":[667,668]},{"teal":450,"source":"contracts\\Moderator.algo.ts:115","pc":[669,670,671]},{"teal":451,"source":"contracts\\Moderator.algo.ts:115","pc":[672,673]},{"teal":452,"source":"contracts\\Moderator.algo.ts:115","pc":[674]},{"teal":453,"source":"contracts\\Moderator.algo.ts:115","pc":[675]},{"teal":454,"source":"contracts\\Moderator.algo.ts:115","pc":[676]},{"teal":455,"source":"contracts\\Moderator.algo.ts:114","pc":[677]},{"teal":458,"source":"contracts\\Moderator.algo.ts:23","pc":[678,679,680,681,682,683]},{"teal":459,"source":"contracts\\Moderator.algo.ts:23","pc":[684,685,686]},{"teal":460,"source":"contracts\\Moderator.algo.ts:23","pc":[687,688,689,690]},{"teal":463,"source":"contracts\\Moderator.algo.ts:23","errorMessage":"this contract does not implement the given ABI method for create NoOp","pc":[691]},{"teal":466,"source":"contracts\\Moderator.algo.ts:23","pc":[692,693,694,695,696,697]},{"teal":467,"source":"contracts\\Moderator.algo.ts:23","pc":[698,699,700,701,702,703]},{"teal":468,"source":"contracts\\Moderator.algo.ts:23","pc":[704,705,706]},{"teal":469,"source":"contracts\\Moderator.algo.ts:23","pc":[707,708,709,710,711,712]},{"teal":472,"source":"contracts\\Moderator.algo.ts:23","errorMessage":"this contract does not implement the given ABI method for call NoOp","pc":[713]},{"teal":475,"source":"contracts\\Moderator.algo.ts:23","pc":[714,715,716,717,718,719]},{"teal":476,"source":"contracts\\Moderator.algo.ts:23","pc":[720,721,722]},{"teal":477,"source":"contracts\\Moderator.algo.ts:23","pc":[723,724,725,726]},{"teal":480,"source":"contracts\\Moderator.algo.ts:23","errorMessage":"this contract does not implement the given ABI method for call DeleteApplication","pc":[727]}],"pcOffsetMethod":"none"},"clear":{"sourceInfo":[],"pcOffsetMethod":"none"}},"source":{"approval":"I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayA4IDAgMiAxIDE2IDI0CmJ5dGVjYmxvY2sgMHg2MzZjNjE3MzczNjk2NjY5NjM2MTc0Njk2ZjZlNTA2NTcyNjY2ZjcyNmQ2MTZlNjM2NTRkNjU3NDcyNjk2MzczMDAwYjcyNjM2YzYxNzM3MzRkNmY2NDY1NmMgMHg3MjY1Njc3MjY1NzM3MzY5NmY2ZTUwNjU3MjY2NmY3MjZkNjE2ZTYzNjU0ZDY1NzQ3MjY5NjM3MzAwMDg3MjY1Njc0ZDZmNjQ2NTZjIDB4IDB4NGQ2ZjY0NjU2YzIwNjg2MTczMjA2MjY1NjU2ZTIwNjE2MzYzNjU3MDc0NjU2NDIwNjY2ZjcyMjA2Njc1NzI3NDY4NjU3MjIwNjM2ZjZlNzM2OTY0NjU3MjYxNzQ2OTZmNmUgMHg2NjYxNjk2YzY1NjQyMDc0Njg2NTIwNmQ2OTZlNjk2ZDc1NmQyMDcyNjU3MTc1Njk3MjY1NmQ2NTZlNzQ3MyAweDY5NzA2NjczNDg2MTczNjgKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuMTA2LjEKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhlIGNvbnRyYWN0LCBpdHMgcmVzcGVjdGl2ZSBicmFuY2ggd2lsbCBiZSAiKk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCnB1c2hpbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpjYWxsX0RlbGV0ZUFwcGxpY2F0aW9uICpjcmVhdGVfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQKCipOT1RfSU1QTEVNRU5URUQ6CgkvLyBUaGUgcmVxdWVzdGVkIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhpcyBjb250cmFjdC4gQXJlIHlvdSB1c2luZyB0aGUgY29ycmVjdCBPbkNvbXBsZXRlPyBEaWQgeW91IHNldCB5b3VyIGFwcCBJRD8KCWVycgoKLy8gY3JlYXRlQXBwbGljYXRpb24oc3RyaW5nKXZvaWQKKmFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbjoKCS8vIG1vZGVsSGFzaDogc3RyaW5nCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglleHRyYWN0IDIgMAoKCS8vIGV4ZWN1dGUgY3JlYXRlQXBwbGljYXRpb24oc3RyaW5nKXZvaWQKCWNhbGxzdWIgY3JlYXRlQXBwbGljYXRpb24KCWludGMgMyAvLyAxCglyZXR1cm4KCi8vIGNyZWF0ZUFwcGxpY2F0aW9uKG1vZGVsSGFzaDogc3RyaW5nKTogdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czozNwoJLy8gdGhpcy5pcGZzSGFzaC52YWx1ZSA9IG1vZGVsSGFzaAoJYnl0ZWMgNSAvLyAgImlwZnNIYXNoIgoJZnJhbWVfZGlnIC0xIC8vIG1vZGVsSGFzaDogc3RyaW5nCglkdXAKCWxlbgoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJYXBwX2dsb2JhbF9wdXQKCXJldHN1YgoKLy8gcHJpbnRIYXNoKClzdHJpbmcKKmFiaV9yb3V0ZV9wcmludEhhc2g6CgkvLyBUaGUgQUJJIHJldHVybiBwcmVmaXgKCXB1c2hieXRlcyAweDE1MWY3Yzc1CgoJLy8gZXhlY3V0ZSBwcmludEhhc2goKXN0cmluZwoJY2FsbHN1YiBwcmludEhhc2gKCWR1cAoJbGVuCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0Cgljb25jYXQKCWxvZwoJaW50YyAzIC8vIDEKCXJldHVybgoKLy8gcHJpbnRIYXNoKCk6IHN0cmluZwpwcmludEhhc2g6Cglwcm90byAwIDEKCgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6NDIKCS8vIHJldHVybiB0aGlzLmlwZnNIYXNoLnZhbHVlOwoJYnl0ZWMgNSAvLyAgImlwZnNIYXNoIgoJYXBwX2dsb2JhbF9nZXQKCWV4dHJhY3QgMiAwCglyZXRzdWIKCi8vIHN0b3JlTW9kZWxQYXJhbXMoc3RyaW5nW10sc3RyaW5nW10pdm9pZAoqYWJpX3JvdXRlX3N0b3JlTW9kZWxQYXJhbXM6CgkvLyBwYXJhbVZhbHVlczogc3RyaW5nW10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCgkvLyBwYXJhbWtleXM6IHN0cmluZ1tdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCgoJLy8gZXhlY3V0ZSBzdG9yZU1vZGVsUGFyYW1zKHN0cmluZ1tdLHN0cmluZ1tdKXZvaWQKCWNhbGxzdWIgc3RvcmVNb2RlbFBhcmFtcwoJaW50YyAzIC8vIDEKCXJldHVybgoKLy8gc3RvcmVNb2RlbFBhcmFtcyhwYXJhbWtleXM6IHN0cmluZ1tdLCBwYXJhbVZhbHVlczogc3RyaW5nW10pOiB2b2lkCnN0b3JlTW9kZWxQYXJhbXM6Cglwcm90byAyIDAKCgkvLyBQdXNoIGVtcHR5IGJ5dGVzIGFmdGVyIHRoZSBmcmFtZSBwb2ludGVyIHRvIHJlc2VydmUgc3BhY2UgZm9yIGxvY2FsIHZhcmlhYmxlcwoJYnl0ZWMgMiAvLyAweAoJZHVwbiAyCgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjQ3CgkvLyBhc3NlcnQodGhpcy50eG4uc2VuZGVyID09PSB0aGlzLmFwcC5jcmVhdG9yKQoJdHhuIFNlbmRlcgoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJYXBwX3BhcmFtc19nZXQgQXBwQ3JlYXRvcgoJcG9wCgk9PQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjQ4CgkvLyBhc3NlcnQocGFyYW1rZXlzLmxlbmd0aCA9PT0gcGFyYW1WYWx1ZXMubGVuZ3RoKQoJZnJhbWVfZGlnIC0xIC8vIHBhcmFta2V5czogc3RyaW5nW10KCWludGMgMSAvLyAwCglleHRyYWN0X3VpbnQxNgoJZnJhbWVfZGlnIC0yIC8vIHBhcmFtVmFsdWVzOiBzdHJpbmdbXQoJaW50YyAxIC8vIDAKCWV4dHJhY3RfdWludDE2Cgk9PQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjUwCgkvLyBpID0gMAoJaW50YyAxIC8vIDAKCWZyYW1lX2J1cnkgMCAvLyBpOiB1aW50NjQKCip3aGlsZV8wOgoKKndoaWxlXzBfY29udGludWU6CgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6NTEKCS8vIGkgPCBwYXJhbWtleXMubGVuZ3RoCglmcmFtZV9kaWcgMCAvLyBpOiB1aW50NjQKCWZyYW1lX2RpZyAtMSAvLyBwYXJhbWtleXM6IHN0cmluZ1tdCglpbnRjIDEgLy8gMAoJZXh0cmFjdF91aW50MTYKCTwKCWJ6ICp3aGlsZV8wX2VuZAoKCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czo1MgoJLy8ga2V5ID0gcGFyYW1rZXlzW2ldCglmcmFtZV9kaWcgLTEgLy8gcGFyYW1rZXlzOiBzdHJpbmdbXQoJc3RvcmUgMjU1IC8vIGZ1bGwgYXJyYXkKCWludGMgMSAvLyAgaW5pdGlhbCBvZmZzZXQKCWZyYW1lX2RpZyAwIC8vIGk6IHVpbnQ2NAoJaW50YyAyIC8vIDIKCSogLy8gYWNjICogMgoJKwoJaW50YyAyIC8vIDIKCSsgLy8gYWRkIHR3byBmb3IgbGVuZ3RoCglsb2FkIDI1NSAvLyBmdWxsIGFycmF5Cglsb2FkIDI1NSAvLyBmdWxsIGFycmF5Cgl1bmNvdmVyIDIKCWV4dHJhY3RfdWludDE2CglpbnRjIDIgLy8gMgoJKyAvLyBhZGQgdHdvIGZvciBsZW5ndGgKCWR1cCAvLyBkdXBsaWNhdGUgc3RhcnQgb2YgZWxlbWVudAoJbG9hZCAyNTUgLy8gZnVsbCBhcnJheQoJc3dhcAoJZXh0cmFjdF91aW50MTYgLy8gZ2V0IG51bWJlciBvZiBlbGVtZW50cwoJaW50YyAzIC8vICBnZXQgdHlwZSBsZW5ndGgKCSogLy8gbXVsdGlwbHkgYnkgdHlwZSBsZW5ndGgKCWludGMgMiAvLyAyCgkrIC8vIGFkZCB0d28gZm9yIGxlbmd0aAoJZXh0cmFjdDMKCWV4dHJhY3QgMiAwCglmcmFtZV9idXJ5IDEgLy8ga2V5OiBzdHJpbmcKCgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6NTMKCS8vIHZhbHVlID0gcGFyYW1WYWx1ZXNbaV0KCWZyYW1lX2RpZyAtMiAvLyBwYXJhbVZhbHVlczogc3RyaW5nW10KCXN0b3JlIDI1NSAvLyBmdWxsIGFycmF5CglpbnRjIDEgLy8gIGluaXRpYWwgb2Zmc2V0CglmcmFtZV9kaWcgMCAvLyBpOiB1aW50NjQKCWludGMgMiAvLyAyCgkqIC8vIGFjYyAqIDIKCSsKCWludGMgMiAvLyAyCgkrIC8vIGFkZCB0d28gZm9yIGxlbmd0aAoJbG9hZCAyNTUgLy8gZnVsbCBhcnJheQoJbG9hZCAyNTUgLy8gZnVsbCBhcnJheQoJdW5jb3ZlciAyCglleHRyYWN0X3VpbnQxNgoJaW50YyAyIC8vIDIKCSsgLy8gYWRkIHR3byBmb3IgbGVuZ3RoCglkdXAgLy8gZHVwbGljYXRlIHN0YXJ0IG9mIGVsZW1lbnQKCWxvYWQgMjU1IC8vIGZ1bGwgYXJyYXkKCXN3YXAKCWV4dHJhY3RfdWludDE2IC8vIGdldCBudW1iZXIgb2YgZWxlbWVudHMKCWludGMgMyAvLyAgZ2V0IHR5cGUgbGVuZ3RoCgkqIC8vIG11bHRpcGx5IGJ5IHR5cGUgbGVuZ3RoCglpbnRjIDIgLy8gMgoJKyAvLyBhZGQgdHdvIGZvciBsZW5ndGgKCWV4dHJhY3QzCglleHRyYWN0IDIgMAoJZnJhbWVfYnVyeSAyIC8vIHZhbHVlOiBzdHJpbmcKCgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6NTUKCS8vIHRoaXMucGFyYW1ldGVyS2V5cyhrZXkpLnZhbHVlID0gdmFsdWUKCXB1c2hieXRlcyAweDcwNjE3MjYxNmQ2NTc0NjU3MjRiNjU3OTczIC8vICJwYXJhbWV0ZXJLZXlzIgoJZnJhbWVfZGlnIDEgLy8ga2V5OiBzdHJpbmcKCWR1cAoJbGVuCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0Cgljb25jYXQKCWR1cAoJYm94X2RlbAoJcG9wCglmcmFtZV9kaWcgMiAvLyB2YWx1ZTogc3RyaW5nCglkdXAKCWxlbgoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJYm94X3B1dAoKCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czo1NwoJLy8gaSA9IGkgKyAxCglmcmFtZV9kaWcgMCAvLyBpOiB1aW50NjQKCWludGMgMyAvLyAxCgkrCglmcmFtZV9idXJ5IDAgLy8gaTogdWludDY0CgliICp3aGlsZV8wCgoqd2hpbGVfMF9lbmQ6CglyZXRzdWIKCi8vIHN0b3JlQ2xhc3NpZmljYXRpb25TZWxlY3Rpb25Dcml0ZXJpYShldmFsdWF0aW9uTWV0cmljczogQ2xhc3NpZmljYXRpb24pOiB2b2lkCnN0b3JlQ2xhc3NpZmljYXRpb25TZWxlY3Rpb25Dcml0ZXJpYToKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czo3NQoJLy8gdGhpcy5jbGFzc2lmaWNhdGlvblBlcmZvcm1hbmNlTWV0cmljcygncmNsYXNzTW9kZWwnKS52YWx1ZSA9IGV2YWx1YXRpb25NZXRyaWNzCglieXRlYyAwIC8vIDB4NjM2YzYxNzM3MzY5NjY2OTYzNjE3NDY5NmY2ZTUwNjU3MjY2NmY3MjZkNjE2ZTYzNjU0ZDY1NzQ3MjY5NjM3MzAwMGI3MjYzNmM2MTczNzM0ZDZmNjQ2NTZjCglmcmFtZV9kaWcgLTEgLy8gZXZhbHVhdGlvbk1ldHJpY3M6IENsYXNzaWZpY2F0aW9uCglib3hfcHV0CglyZXRzdWIKCi8vIHN0b3JlTW9kZWxSZWdyZXNzaW9uU2VsZWN0aW9uQ3JpdGVyaWEoZXZhbHVhdGlvbk1ldHJpY3M6IFJlZ3Jlc3Npb24pOiB2b2lkCnN0b3JlTW9kZWxSZWdyZXNzaW9uU2VsZWN0aW9uQ3JpdGVyaWE6Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6ODAKCS8vIHRoaXMucmVncmVzc2lvblBlcmZvcm1hbmNlTWV0cmljcygncmVnTW9kZWwnKS52YWx1ZSA9IGV2YWx1YXRpb25NZXRyaWNzCglieXRlYyAxIC8vIDB4NzI2NTY3NzI2NTczNzM2OTZmNmU1MDY1NzI2NjZmNzI2ZDYxNmU2MzY1NGQ2NTc0NzI2OTYzNzMwMDA4NzI2NTY3NGQ2ZjY0NjU2YwoJZnJhbWVfZGlnIC0xIC8vIGV2YWx1YXRpb25NZXRyaWNzOiBSZWdyZXNzaW9uCglib3hfcHV0CglyZXRzdWIKCi8vIHJlZ01vZGVsU2VsZWN0aW9uQ3JpdGVyaWEobW9kZWxFdmFsdWF0aW9uTWV0cmljczogUmVncmVzc2lvbik6IHN0cmluZwpyZWdNb2RlbFNlbGVjdGlvbkNyaXRlcmlhOgoJcHJvdG8gMSAxCgoJLy8gKmlmMF9jb25kaXRpb24KCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czo4NwoJLy8gbW9kZWxFdmFsdWF0aW9uTWV0cmljcy5NU0UgPD0gYmFzZWxpbmVSZWdNZXRyaWNzLk1TRSAmJgoJLy8gICAgICAgbW9kZWxFdmFsdWF0aW9uTWV0cmljcy5NQUUgPD0gYmFzZWxpbmVSZWdNZXRyaWNzLk1BRSAmJgoJLy8gICAgICAgbW9kZWxFdmFsdWF0aW9uTWV0cmljcy5STVNFIDw9IGJhc2VsaW5lUmVnTWV0cmljcy5STVNFICYmCgkvLyAgICAgICBtb2RlbEV2YWx1YXRpb25NZXRyaWNzLkNPRCA+PSBiYXNlbGluZVJlZ01ldHJpY3MuQ09ECglmcmFtZV9kaWcgLTEgLy8gbW9kZWxFdmFsdWF0aW9uTWV0cmljczogUmVncmVzc2lvbgoJZXh0cmFjdCAwIDgKCWJ0b2kKCWJ5dGVjIDEgLy8gMHg3MjY1Njc3MjY1NzM3MzY5NmY2ZTUwNjU3MjY2NmY3MjZkNjE2ZTYzNjU0ZDY1NzQ3MjY5NjM3MzAwMDg3MjY1Njc0ZDZmNjQ2NTZjCglpbnRjIDEgLy8gMAoJaW50YyAwIC8vIDgKCWJveF9leHRyYWN0CglidG9pCgk8PQoJZHVwCglieiAqc2tpcF9hbmQwCglmcmFtZV9kaWcgLTEgLy8gbW9kZWxFdmFsdWF0aW9uTWV0cmljczogUmVncmVzc2lvbgoJZXh0cmFjdCAxNiA4CglidG9pCglieXRlYyAxIC8vIDB4NzI2NTY3NzI2NTczNzM2OTZmNmU1MDY1NzI2NjZmNzI2ZDYxNmU2MzY1NGQ2NTc0NzI2OTYzNzMwMDA4NzI2NTY3NGQ2ZjY0NjU2YwoJaW50YyA0IC8vICBoZWFkT2Zmc2V0CglpbnRjIDAgLy8gOAoJYm94X2V4dHJhY3QKCWJ0b2kKCTw9CgkmJgoKKnNraXBfYW5kMDoKCWR1cAoJYnogKnNraXBfYW5kMQoJZnJhbWVfZGlnIC0xIC8vIG1vZGVsRXZhbHVhdGlvbk1ldHJpY3M6IFJlZ3Jlc3Npb24KCWV4dHJhY3QgOCA4CglidG9pCglieXRlYyAxIC8vIDB4NzI2NTY3NzI2NTczNzM2OTZmNmU1MDY1NzI2NjZmNzI2ZDYxNmU2MzY1NGQ2NTc0NzI2OTYzNzMwMDA4NzI2NTY3NGQ2ZjY0NjU2YwoJaW50YyAwIC8vICBoZWFkT2Zmc2V0CglpbnRjIDAgLy8gOAoJYm94X2V4dHJhY3QKCWJ0b2kKCTw9CgkmJgoKKnNraXBfYW5kMToKCWR1cAoJYnogKnNraXBfYW5kMgoJZnJhbWVfZGlnIC0xIC8vIG1vZGVsRXZhbHVhdGlvbk1ldHJpY3M6IFJlZ3Jlc3Npb24KCWV4dHJhY3QgMjQgOAoJYnRvaQoJYnl0ZWMgMSAvLyAweDcyNjU2NzcyNjU3MzczNjk2ZjZlNTA2NTcyNjY2ZjcyNmQ2MTZlNjM2NTRkNjU3NDcyNjk2MzczMDAwODcyNjU2NzRkNmY2NDY1NmMKCWludGMgNSAvLyAgaGVhZE9mZnNldAoJaW50YyAwIC8vIDgKCWJveF9leHRyYWN0CglidG9pCgk+PQoJJiYKCipza2lwX2FuZDI6CglieiAqaWYwX2VuZAoKCS8vICppZjBfY29uc2VxdWVudAoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjkyCgkvLyByZXR1cm4gJ01vZGVsIGhhcyBiZWVuIGFjY2VwdGVkIGZvciBmdXJ0aGVyIGNvbnNpZGVyYXRpb24nOwoJYnl0ZWMgMyAvLyAgIk1vZGVsIGhhcyBiZWVuIGFjY2VwdGVkIGZvciBmdXJ0aGVyIGNvbnNpZGVyYXRpb24iCglyZXRzdWIKCippZjBfZW5kOgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjk0CgkvLyByZXR1cm4gJ2ZhaWxlZCB0aGUgbWluaW11bSByZXF1aXJlbWVudHMnOwoJYnl0ZWMgNCAvLyAgImZhaWxlZCB0aGUgbWluaW11bSByZXF1aXJlbWVudHMiCglyZXRzdWIKCi8vIGNsYXNzTW9kZWxTZWxlY3Rpb25Dcml0ZXJpYShtb2RlbEV2YWx1YXRpb25NZXRyaWNzOiBDbGFzc2lmaWNhdGlvbik6IHN0cmluZwpjbGFzc01vZGVsU2VsZWN0aW9uQ3JpdGVyaWE6Cglwcm90byAxIDEKCgkvLyAqaWYxX2NvbmRpdGlvbgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjEwMQoJLy8gbW9kZWxFdmFsdWF0aW9uTWV0cmljcy5hY2N1cmFjeSA+PSBiYXNlbGluZUNsYXNzTWV0cmljcy5hY2N1cmFjeSAmJgoJLy8gICAgICAgbW9kZWxFdmFsdWF0aW9uTWV0cmljcy5wcmVjaXNpb24gPj0gYmFzZWxpbmVDbGFzc01ldHJpY3MucHJlY2lzaW9uICYmCgkvLyAgICAgICBtb2RlbEV2YWx1YXRpb25NZXRyaWNzLnJlY2FsbCA+PSBiYXNlbGluZUNsYXNzTWV0cmljcy5yZWNhbGwgJiYKCS8vICAgICAgIG1vZGVsRXZhbHVhdGlvbk1ldHJpY3Muc3BlY2lmaWNpdHkgPj0gYmFzZWxpbmVDbGFzc01ldHJpY3Muc3BlY2lmaWNpdHkgJiYKCS8vICAgICAgIG1vZGVsRXZhbHVhdGlvbk1ldHJpY3MuRjFTY29yZSA+PSBiYXNlbGluZUNsYXNzTWV0cmljcy5GMVNjb3JlICYmCgkvLyAgICAgICBtb2RlbEV2YWx1YXRpb25NZXRyaWNzLlJPQyA+PSBiYXNlbGluZUNsYXNzTWV0cmljcy5ST0MKCWZyYW1lX2RpZyAtMSAvLyBtb2RlbEV2YWx1YXRpb25NZXRyaWNzOiBDbGFzc2lmaWNhdGlvbgoJZXh0cmFjdCAwIDgKCWJ0b2kKCWJ5dGVjIDAgLy8gMHg2MzZjNjE3MzczNjk2NjY5NjM2MTc0Njk2ZjZlNTA2NTcyNjY2ZjcyNmQ2MTZlNjM2NTRkNjU3NDcyNjk2MzczMDAwYjcyNjM2YzYxNzM3MzRkNmY2NDY1NmMKCWludGMgMSAvLyAwCglpbnRjIDAgLy8gOAoJYm94X2V4dHJhY3QKCWJ0b2kKCT49CglkdXAKCWJ6ICpza2lwX2FuZDMKCWZyYW1lX2RpZyAtMSAvLyBtb2RlbEV2YWx1YXRpb25NZXRyaWNzOiBDbGFzc2lmaWNhdGlvbgoJZXh0cmFjdCA4IDgKCWJ0b2kKCWJ5dGVjIDAgLy8gMHg2MzZjNjE3MzczNjk2NjY5NjM2MTc0Njk2ZjZlNTA2NTcyNjY2ZjcyNmQ2MTZlNjM2NTRkNjU3NDcyNjk2MzczMDAwYjcyNjM2YzYxNzM3MzRkNmY2NDY1NmMKCWludGMgMCAvLyAgaGVhZE9mZnNldAoJaW50YyAwIC8vIDgKCWJveF9leHRyYWN0CglidG9pCgk+PQoJJiYKCipza2lwX2FuZDM6CglkdXAKCWJ6ICpza2lwX2FuZDQKCWZyYW1lX2RpZyAtMSAvLyBtb2RlbEV2YWx1YXRpb25NZXRyaWNzOiBDbGFzc2lmaWNhdGlvbgoJZXh0cmFjdCAxNiA4CglidG9pCglieXRlYyAwIC8vIDB4NjM2YzYxNzM3MzY5NjY2OTYzNjE3NDY5NmY2ZTUwNjU3MjY2NmY3MjZkNjE2ZTYzNjU0ZDY1NzQ3MjY5NjM3MzAwMGI3MjYzNmM2MTczNzM0ZDZmNjQ2NTZjCglpbnRjIDQgLy8gIGhlYWRPZmZzZXQKCWludGMgMCAvLyA4Cglib3hfZXh0cmFjdAoJYnRvaQoJPj0KCSYmCgoqc2tpcF9hbmQ0OgoJZHVwCglieiAqc2tpcF9hbmQ1CglmcmFtZV9kaWcgLTEgLy8gbW9kZWxFdmFsdWF0aW9uTWV0cmljczogQ2xhc3NpZmljYXRpb24KCWV4dHJhY3QgMjQgOAoJYnRvaQoJYnl0ZWMgMCAvLyAweDYzNmM2MTczNzM2OTY2Njk2MzYxNzQ2OTZmNmU1MDY1NzI2NjZmNzI2ZDYxNmU2MzY1NGQ2NTc0NzI2OTYzNzMwMDBiNzI2MzZjNjE3MzczNGQ2ZjY0NjU2YwoJaW50YyA1IC8vICBoZWFkT2Zmc2V0CglpbnRjIDAgLy8gOAoJYm94X2V4dHJhY3QKCWJ0b2kKCT49CgkmJgoKKnNraXBfYW5kNToKCWR1cAoJYnogKnNraXBfYW5kNgoJZnJhbWVfZGlnIC0xIC8vIG1vZGVsRXZhbHVhdGlvbk1ldHJpY3M6IENsYXNzaWZpY2F0aW9uCglleHRyYWN0IDMyIDgKCWJ0b2kKCWJ5dGVjIDAgLy8gMHg2MzZjNjE3MzczNjk2NjY5NjM2MTc0Njk2ZjZlNTA2NTcyNjY2ZjcyNmQ2MTZlNjM2NTRkNjU3NDcyNjk2MzczMDAwYjcyNjM2YzYxNzM3MzRkNmY2NDY1NmMKCXB1c2hpbnQgMzIgLy8gaGVhZE9mZnNldAoJaW50YyAwIC8vIDgKCWJveF9leHRyYWN0CglidG9pCgk+PQoJJiYKCipza2lwX2FuZDY6CglkdXAKCWJ6ICpza2lwX2FuZDcKCWZyYW1lX2RpZyAtMSAvLyBtb2RlbEV2YWx1YXRpb25NZXRyaWNzOiBDbGFzc2lmaWNhdGlvbgoJZXh0cmFjdCA0MCA4CglidG9pCglieXRlYyAwIC8vIDB4NjM2YzYxNzM3MzY5NjY2OTYzNjE3NDY5NmY2ZTUwNjU3MjY2NmY3MjZkNjE2ZTYzNjU0ZDY1NzQ3MjY5NjM3MzAwMGI3MjYzNmM2MTczNzM0ZDZmNjQ2NTZjCglwdXNoaW50IDQwIC8vIGhlYWRPZmZzZXQKCWludGMgMCAvLyA4Cglib3hfZXh0cmFjdAoJYnRvaQoJPj0KCSYmCgoqc2tpcF9hbmQ3OgoJYnogKmlmMV9lbmQKCgkvLyAqaWYxX2NvbnNlcXVlbnQKCS8vIGNvbnRyYWN0c1xNb2RlcmF0b3IuYWxnby50czoxMDgKCS8vIHJldHVybiAnTW9kZWwgaGFzIGJlZW4gYWNjZXB0ZWQgZm9yIGZ1cnRoZXIgY29uc2lkZXJhdGlvbic7CglieXRlYyAzIC8vICAiTW9kZWwgaGFzIGJlZW4gYWNjZXB0ZWQgZm9yIGZ1cnRoZXIgY29uc2lkZXJhdGlvbiIKCXJldHN1YgoKKmlmMV9lbmQ6CgkvLyBjb250cmFjdHNcTW9kZXJhdG9yLmFsZ28udHM6MTEwCgkvLyByZXR1cm4gJ2ZhaWxlZCB0aGUgbWluaW11bSByZXF1aXJlbWVudHMnOwoJYnl0ZWMgNCAvLyAgImZhaWxlZCB0aGUgbWluaW11bSByZXF1aXJlbWVudHMiCglyZXRzdWIKCi8vIGRlbGV0ZUFwcGxpY2F0aW9uKCl2b2lkCiphYmlfcm91dGVfZGVsZXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGRlbGV0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGRlbGV0ZUFwcGxpY2F0aW9uCglpbnRjIDMgLy8gMQoJcmV0dXJuCgovLyBkZWxldGVBcHBsaWNhdGlvbigpOiB2b2lkCmRlbGV0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzXE1vZGVyYXRvci5hbGdvLnRzOjExNQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5hcHAuY3JlYXRvcikKCXR4biBTZW5kZXIKCXR4bmEgQXBwbGljYXRpb25zIDAKCWFwcF9wYXJhbXNfZ2V0IEFwcENyZWF0b3IKCXBvcAoJPT0KCWFzc2VydAoJcmV0c3ViCgoqY3JlYXRlX05vT3A6CglwdXNoYnl0ZXMgMHgxMTU3NTZkYiAvLyBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKHN0cmluZyl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbgoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjcmVhdGUgTm9PcAoJZXJyCgoqY2FsbF9Ob09wOgoJcHVzaGJ5dGVzIDB4MTUzN2MxOTQgLy8gbWV0aG9kICJwcmludEhhc2goKXN0cmluZyIKCXB1c2hieXRlcyAweDRlNDI4Zjg2IC8vIG1ldGhvZCAic3RvcmVNb2RlbFBhcmFtcyhzdHJpbmdbXSxzdHJpbmdbXSl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9wcmludEhhc2ggKmFiaV9yb3V0ZV9zdG9yZU1vZGVsUGFyYW1zCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJyCgoqY2FsbF9EZWxldGVBcHBsaWNhdGlvbjoKCXB1c2hieXRlcyAweDI0ODdjMzJjIC8vIG1ldGhvZCAiZGVsZXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2RlbGV0ZUFwcGxpY2F0aW9uCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgRGVsZXRlQXBwbGljYXRpb24KCWVycg==","clear":"I3ByYWdtYSB2ZXJzaW9uIDEw"},"byteCode":{"approval":"CiAGCAACARAYJgYtY2xhc3NpZmljYXRpb25QZXJmb3JtYW5jZU1ldHJpY3MAC3JjbGFzc01vZGVsJnJlZ3Jlc3Npb25QZXJmb3JtYW5jZU1ldHJpY3MACHJlZ01vZGVsADFNb2RlbCBoYXMgYmVlbiBhY2NlcHRlZCBmb3IgZnVydGhlciBjb25zaWRlcmF0aW9uH2ZhaWxlZCB0aGUgbWluaW11bSByZXF1aXJlbWVudHMIaXBmc0hhc2gxGBSBBgsxGQiNDAHVAAAAAAAAAAAB6wHHAAAAAAAAAAAAAAA2GgFXAgCIAAIlQ4oBACcFi/9JFRZXBgJMUGeJgAQVH3x1iAAMSRUWVwYCTFBQsCVDigABJwVkVwIAiTYaAjYaAYgAAiVDigIAKkcCMQA2MgByB0gSRIv/I1mL/iNZEkQjjACLAIv/I1kMQQB5i/81/yOLACQLCCQINP80/08CWSQISTT/TFklCyQIWFcCAIwBi/41/yOLACQLCCQINP80/08CWSQISTT/TFklCyQIWFcCAIwCgA1wYXJhbWV0ZXJLZXlziwFJFRZXBgJMUFBJvEiLAkkVFlcGAkxQv4sAJQiMAEL/fYmKAQAoi/+/iYoBACmL/7+JigEBi/9XAAgXKSMiuhcOSUEADov/VxAIFykhBCK6Fw4QSUEADYv/VwgIFykiIroXDhBJQQAOi/9XGAgXKSEFIroXDxBBAAIriScEiYoBAYv/VwAIFygjIroXD0lBAA2L/1cICBcoIiK6Fw8QSUEADov/VxAIFyghBCK6Fw8QSUEADov/VxgIFyghBSK6Fw8QSUEADov/VyAIFyiBICK6Fw8QSUEADov/VygIFyiBKCK6Fw8QQQACK4knBImIAAIlQ4oAADEANjIAcgdIEkSJgAQRV1bbNhoAjgH+LQCABBU3wZSABE5Cj4Y2GgCOAv4z/lIAgAQkh8MsNhoAjgH/vAA=","clear":"Cg=="},"compilerInfo":{"compiler":"algod","compilerVersion":{"major":3,"minor":27,"patch":0,"commitHash":"f54f0997"}}} as unknown as Arc56Contract
 
 /**
  * A state record containing binary data
@@ -63,6 +63,40 @@ export type Expand<T> = T extends (...args: infer A) => infer R
     : never
 
 
+// Type definitions for ARC-56 structs
+
+export type Regression = {
+  mse: bigint,
+  rmse: bigint,
+  mae: bigint,
+  cod: bigint
+}
+
+
+/**
+ * Converts the ABI tuple representation of a Regression to the struct representation
+ */
+export function RegressionFromTuple(abiTuple: [bigint, bigint, bigint, bigint]) {
+  return getABIStructFromABITuple(abiTuple, APP_SPEC.structs.Regression, APP_SPEC.structs) as Regression
+}
+
+export type Classification = {
+  accuracy: bigint,
+  precision: bigint,
+  recall: bigint,
+  specificity: bigint,
+  f1Score: bigint,
+  roc: bigint
+}
+
+
+/**
+ * Converts the ABI tuple representation of a Classification to the struct representation
+ */
+export function ClassificationFromTuple(abiTuple: [bigint, bigint, bigint, bigint, bigint, bigint]) {
+  return getABIStructFromABITuple(abiTuple, APP_SPEC.structs.Classification, APP_SPEC.structs) as Classification
+}
+
 /**
  * The argument types for the DmlChain contract
  */
@@ -71,17 +105,24 @@ export type DmlChainArgs = {
    * The object representation of the arguments for each method
    */
   obj: {
-    'gethash(string)string': {
-      ipfsHash: string
+    'createApplication(string)void': {
+      modelHash: string
     }
-    'createApplication()void': Record<string, never>
+    'printHash()string': Record<string, never>
+    'storeModelParams(string[],string[])void': {
+      paramkeys: string[]
+      paramValues: string[]
+    }
+    'deleteApplication()void': Record<string, never>
   }
   /**
    * The tuple representation of the arguments for each method
    */
   tuple: {
-    'gethash(string)string': [ipfsHash: string]
-    'createApplication()void': []
+    'createApplication(string)void': [modelHash: string]
+    'printHash()string': []
+    'storeModelParams(string[],string[])void': [paramkeys: string[], paramValues: string[]]
+    'deleteApplication()void': []
   }
 }
 
@@ -89,8 +130,10 @@ export type DmlChainArgs = {
  * The return type for each method
  */
 export type DmlChainReturns = {
-  'gethash(string)string': string
-  'createApplication()void': void
+  'createApplication(string)void': void
+  'printHash()string': string
+  'storeModelParams(string[],string[])void': void
+  'deleteApplication()void': void
 }
 
 /**
@@ -101,15 +144,25 @@ export type DmlChainTypes = {
    * Maps method signatures / names to their argument and return types.
    */
   methods:
-    & Record<'gethash(string)string' | 'gethash', {
-      argsObj: DmlChainArgs['obj']['gethash(string)string']
-      argsTuple: DmlChainArgs['tuple']['gethash(string)string']
-      returns: DmlChainReturns['gethash(string)string']
+    & Record<'createApplication(string)void' | 'createApplication', {
+      argsObj: DmlChainArgs['obj']['createApplication(string)void']
+      argsTuple: DmlChainArgs['tuple']['createApplication(string)void']
+      returns: DmlChainReturns['createApplication(string)void']
     }>
-    & Record<'createApplication()void' | 'createApplication', {
-      argsObj: DmlChainArgs['obj']['createApplication()void']
-      argsTuple: DmlChainArgs['tuple']['createApplication()void']
-      returns: DmlChainReturns['createApplication()void']
+    & Record<'printHash()string' | 'printHash', {
+      argsObj: DmlChainArgs['obj']['printHash()string']
+      argsTuple: DmlChainArgs['tuple']['printHash()string']
+      returns: DmlChainReturns['printHash()string']
+    }>
+    & Record<'storeModelParams(string[],string[])void' | 'storeModelParams', {
+      argsObj: DmlChainArgs['obj']['storeModelParams(string[],string[])void']
+      argsTuple: DmlChainArgs['tuple']['storeModelParams(string[],string[])void']
+      returns: DmlChainReturns['storeModelParams(string[],string[])void']
+    }>
+    & Record<'deleteApplication()void' | 'deleteApplication', {
+      argsObj: DmlChainArgs['obj']['deleteApplication()void']
+      argsTuple: DmlChainArgs['tuple']['deleteApplication()void']
+      returns: DmlChainReturns['deleteApplication()void']
     }>
   /**
    * Defines the shape of the state of the application.
@@ -120,6 +173,14 @@ export type DmlChainTypes = {
         ipfsHash: string
       }
       maps: {}
+    }
+    box: {
+      keys: {}
+      maps: {
+        parameterKeys: Map<string, string>
+        regressionPerformanceMetrics: Map<string, Regression>
+        classificationPerformanceMetrics: Map<string, Classification>
+      }
     }
   }
 }
@@ -156,13 +217,24 @@ export type MethodReturn<TSignature extends DmlChainSignatures> = DmlChainTypes[
  */
 export type GlobalKeysState = DmlChainTypes['state']['global']['keys']
 
+/**
+ * Defines the shape of the keyed box state of the application.
+ */
+export type BoxKeysState = DmlChainTypes['state']['box']['keys']
+
 
 /**
  * Defines supported create method params for this smart contract
  */
 export type DmlChainCreateCallParams =
-  | Expand<CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & {method: 'createApplication'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
-  | Expand<CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & {method: 'createApplication()void'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
+  | Expand<CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & {method: 'createApplication'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
+  | Expand<CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & {method: 'createApplication(string)void'} & {onComplete?: OnApplicationComplete.NoOpOC} & CreateSchema>
+/**
+ * Defines supported delete method params for this smart contract
+ */
+export type DmlChainDeleteCallParams =
+  | Expand<CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> & {method: 'deleteApplication'}>
+  | Expand<CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> & {method: 'deleteApplication()void'}>
 /**
  * Defines arguments required for the deploy method.
  */
@@ -171,6 +243,10 @@ export type DmlChainDeployParams = Expand<Omit<AppFactoryDeployParams, 'createPa
    * Create transaction parameters to use if a create needs to be issued as part of deployment; use `method` to define ABI call (if available) or leave out for a bare call (if available)
    */
   createParams?: DmlChainCreateCallParams
+  /**
+   * Delete transaction parameters to use if a create needs to be issued as part of deployment; use `method` to define ABI call (if available) or leave out for a bare call (if available)
+   */
+  deleteParams?: DmlChainDeleteCallParams
 }>
 
 
@@ -186,22 +262,52 @@ export abstract class DmlChainParamsFactory {
       _resolveByMethod<TParams extends DmlChainCreateCallParams & {method: string}>(params: TParams) {
         switch(params.method) {
           case 'createApplication':
-          case 'createApplication()void':
+          case 'createApplication(string)void':
             return DmlChainParamsFactory.create.createApplication(params)
         }
         throw new Error(`Unknown ' + verb + ' method`)
       },
 
       /**
-       * Constructs create ABI call params for the DMLChain smart contract using the createApplication()void ABI method
+       * Constructs create ABI call params for the DMLChain smart contract using the createApplication(string)void ABI method
        *
        * @param params Parameters for the call
        * @returns An `AppClientMethodCallParams` object for the call
        */
-      createApplication(params: CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC}): AppClientMethodCallParams & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC} {
+      createApplication(params: CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC}): AppClientMethodCallParams & AppClientCompilationParams & {onComplete?: OnApplicationComplete.NoOpOC} {
         return {
           ...params,
-          method: 'createApplication()void' as const,
+          method: 'createApplication(string)void' as const,
+          args: Array.isArray(params.args) ? params.args : [params.args.modelHash],
+        }
+      },
+    }
+  }
+
+  /**
+   * Gets available delete ABI call param factories
+   */
+  static get delete() {
+    return {
+      _resolveByMethod<TParams extends DmlChainDeleteCallParams & {method: string}>(params: TParams) {
+        switch(params.method) {
+          case 'deleteApplication':
+          case 'deleteApplication()void':
+            return DmlChainParamsFactory.delete.deleteApplication(params)
+        }
+        throw new Error(`Unknown ' + verb + ' method`)
+      },
+
+      /**
+       * Constructs delete ABI call params for the DMLChain smart contract using the deleteApplication()void ABI method
+       *
+       * @param params Parameters for the call
+       * @returns An `AppClientMethodCallParams` object for the call
+       */
+      deleteApplication(params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']>): AppClientMethodCallParams {
+        return {
+          ...params,
+          method: 'deleteApplication()void' as const,
           args: Array.isArray(params.args) ? params.args : [],
         }
       },
@@ -209,16 +315,29 @@ export abstract class DmlChainParamsFactory {
   }
 
   /**
-   * Constructs a no op call for the gethash(string)string ABI method
+   * Constructs a no op call for the printHash()string ABI method
    *
    * @param params Parameters for the call
    * @returns An `AppClientMethodCallParams` object for the call
    */
-  static gethash(params: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
+  static printHash(params: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
     return {
       ...params,
-      method: 'gethash(string)string' as const,
-      args: Array.isArray(params.args) ? params.args : [params.args.ipfsHash],
+      method: 'printHash()string' as const,
+      args: Array.isArray(params.args) ? params.args : [],
+    }
+  }
+  /**
+   * Constructs a no op call for the storeModelParams(string[],string[])void ABI method
+   *
+   * @param params Parameters for the call
+   * @returns An `AppClientMethodCallParams` object for the call
+   */
+  static storeModelParams(params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & CallOnComplete): AppClientMethodCallParams & CallOnComplete {
+    return {
+      ...params,
+      method: 'storeModelParams(string[],string[])void' as const,
+      args: Array.isArray(params.args) ? params.args : [params.args.paramkeys, params.args.paramValues],
     }
   }
 }
@@ -296,6 +415,7 @@ export class DmlChainFactory {
     const result = await this.appFactory.deploy({
       ...params,
       createParams: params.createParams?.method ? DmlChainParamsFactory.create._resolveByMethod(params.createParams) : params.createParams ? params.createParams as (DmlChainCreateCallParams & { args: Uint8Array[] }) : undefined,
+      deleteParams: params.deleteParams?.method ? DmlChainParamsFactory.delete._resolveByMethod(params.deleteParams) : params.deleteParams ? params.deleteParams as (DmlChainDeleteCallParams & { args: Uint8Array[] }) : undefined,
     })
     return { result: result.result, appClient: new DmlChainClient(result.appClient) }
   }
@@ -309,13 +429,28 @@ export class DmlChainFactory {
      */
     create: {
       /**
-       * Creates a new instance of the DMLChain smart contract using the createApplication()void ABI method.
+       * Creates a new instance of the DMLChain smart contract using the createApplication(string)void ABI method.
        *
        * @param params The params for the smart contract call
        * @returns The create params
        */
-      createApplication: (params: CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      createApplication: (params: CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         return this.appFactory.params.create(DmlChainParamsFactory.create.createApplication(params))
+      },
+    },
+
+    /**
+     * Gets available deployDelete methods
+     */
+    deployDelete: {
+      /**
+       * Deletes an existing instance of the DMLChain smart contract using the deleteApplication()void ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The deployDelete params
+       */
+      deleteApplication: (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> = {args: []}) => {
+        return this.appFactory.params.deployDelete(DmlChainParamsFactory.delete.deleteApplication(params))
       },
     },
 
@@ -330,12 +465,12 @@ export class DmlChainFactory {
      */
     create: {
       /**
-       * Creates a new instance of the DMLChain smart contract using the createApplication()void ABI method.
+       * Creates a new instance of the DMLChain smart contract using the createApplication(string)void ABI method.
        *
        * @param params The params for the smart contract call
        * @returns The create transaction
        */
-      createApplication: (params: CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      createApplication: (params: CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & AppClientCompilationParams & CreateSchema & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         return this.appFactory.createTransaction.create(DmlChainParamsFactory.create.createApplication(params))
       },
     },
@@ -351,14 +486,14 @@ export class DmlChainFactory {
      */
     create: {
       /**
-       * Creates a new instance of the DMLChain smart contract using an ABI method call using the createApplication()void ABI method.
+       * Creates a new instance of the DMLChain smart contract using an ABI method call using the createApplication(string)void ABI method.
        *
        * @param params The params for the smart contract call
        * @returns The create result
        */
-      createApplication: async (params: CallParams<DmlChainArgs['obj']['createApplication()void'] | DmlChainArgs['tuple']['createApplication()void']> & AppClientCompilationParams & CreateSchema & SendParams & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      createApplication: async (params: CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & AppClientCompilationParams & CreateSchema & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         const result = await this.appFactory.send.create(DmlChainParamsFactory.create.createApplication(params))
-        return { result: { ...result.result, return: result.result.return as unknown as (undefined | DmlChainReturns['createApplication()void']) }, appClient: new DmlChainClient(result.appClient) }
+        return { result: { ...result.result, return: result.result.return as unknown as (undefined | DmlChainReturns['createApplication(string)void']) }, appClient: new DmlChainClient(result.appClient) }
       },
     },
 
@@ -453,6 +588,22 @@ export class DmlChainClient {
    */
   readonly params = {
     /**
+     * Gets available delete methods
+     */
+    delete: {
+      /**
+       * Deletes an existing instance of the DMLChain smart contract using the `deleteApplication()void` ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The delete params
+       */
+      deleteApplication: (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> = {args: []}) => {
+        return this.appClient.params.delete(DmlChainParamsFactory.delete.deleteApplication(params))
+      },
+
+    },
+
+    /**
      * Makes a clear_state call to an existing instance of the DMLChain smart contract.
      *
      * @param params The params for the bare (raw) call
@@ -463,13 +614,23 @@ export class DmlChainClient {
     },
 
     /**
-     * Makes a call to the DMLChain smart contract using the `gethash(string)string` ABI method.
+     * Makes a call to the DMLChain smart contract using the `printHash()string` ABI method.
      *
      * @param params The params for the smart contract call
      * @returns The call params
      */
-    gethash: (params: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
-      return this.appClient.params.call(DmlChainParamsFactory.gethash(params))
+    printHash: (params: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']> & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      return this.appClient.params.call(DmlChainParamsFactory.printHash(params))
+    },
+
+    /**
+     * Makes a call to the DMLChain smart contract using the `storeModelParams(string[],string[])void` ABI method.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call params
+     */
+    storeModelParams: (params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.params.call(DmlChainParamsFactory.storeModelParams(params))
     },
 
   }
@@ -478,6 +639,22 @@ export class DmlChainClient {
    * Create transactions for the current app
    */
   readonly createTransaction = {
+    /**
+     * Gets available delete methods
+     */
+    delete: {
+      /**
+       * Deletes an existing instance of the DMLChain smart contract using the `deleteApplication()void` ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The delete transaction
+       */
+      deleteApplication: (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> = {args: []}) => {
+        return this.appClient.createTransaction.delete(DmlChainParamsFactory.delete.deleteApplication(params))
+      },
+
+    },
+
     /**
      * Makes a clear_state call to an existing instance of the DMLChain smart contract.
      *
@@ -489,13 +666,23 @@ export class DmlChainClient {
     },
 
     /**
-     * Makes a call to the DMLChain smart contract using the `gethash(string)string` ABI method.
+     * Makes a call to the DMLChain smart contract using the `printHash()string` ABI method.
      *
      * @param params The params for the smart contract call
      * @returns The call transaction
      */
-    gethash: (params: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
-      return this.appClient.createTransaction.call(DmlChainParamsFactory.gethash(params))
+    printHash: (params: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']> & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      return this.appClient.createTransaction.call(DmlChainParamsFactory.printHash(params))
+    },
+
+    /**
+     * Makes a call to the DMLChain smart contract using the `storeModelParams(string[],string[])void` ABI method.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call transaction
+     */
+    storeModelParams: (params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      return this.appClient.createTransaction.call(DmlChainParamsFactory.storeModelParams(params))
     },
 
   }
@@ -504,6 +691,23 @@ export class DmlChainClient {
    * Send calls to the current app
    */
   readonly send = {
+    /**
+     * Gets available delete methods
+     */
+    delete: {
+      /**
+       * Deletes an existing instance of the DMLChain smart contract using the `deleteApplication()void` ABI method.
+       *
+       * @param params The params for the smart contract call
+       * @returns The delete result
+       */
+      deleteApplication: async (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> & SendParams = {args: []}) => {
+        const result = await this.appClient.send.delete(DmlChainParamsFactory.delete.deleteApplication(params))
+        return {...result, return: result.return as unknown as (undefined | DmlChainReturns['deleteApplication()void'])}
+      },
+
+    },
+
     /**
      * Makes a clear_state call to an existing instance of the DMLChain smart contract.
      *
@@ -515,14 +719,25 @@ export class DmlChainClient {
     },
 
     /**
-     * Makes a call to the DMLChain smart contract using the `gethash(string)string` ABI method.
+     * Makes a call to the DMLChain smart contract using the `printHash()string` ABI method.
      *
      * @param params The params for the smart contract call
      * @returns The call result
      */
-    gethash: async (params: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
-      const result = await this.appClient.send.call(DmlChainParamsFactory.gethash(params))
-      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['gethash(string)string'])}
+    printHash: async (params: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC} = {args: []}) => {
+      const result = await this.appClient.send.call(DmlChainParamsFactory.printHash(params))
+      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['printHash()string'])}
+    },
+
+    /**
+     * Makes a call to the DMLChain smart contract using the `storeModelParams(string[],string[])void` ABI method.
+     *
+     * @param params The params for the smart contract call
+     * @returns The call result
+     */
+    storeModelParams: async (params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
+      const result = await this.appClient.send.call(DmlChainParamsFactory.storeModelParams(params))
+      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['storeModelParams(string[],string[])void'])}
     },
 
   }
@@ -559,6 +774,58 @@ export class DmlChainClient {
        */
       ipfsHash: async (): Promise<string | undefined> => { return (await this.appClient.state.global.getValue("ipfsHash")) as string | undefined },
     },
+    /**
+     * Methods to access box state for the current DMLChain app
+     */
+    box: {
+      /**
+       * Get all current keyed values from box state
+       */
+      getAll: async (): Promise<Partial<Expand<BoxKeysState>>> => {
+        const result = await this.appClient.state.box.getAll()
+        return {
+        }
+      },
+      /**
+       * Get values from the parameterKeys map in box state
+       */
+      parameterKeys: {
+        /**
+         * Get all current values of the parameterKeys map in box state
+         */
+        getMap: async (): Promise<Map<string, string>> => { return (await this.appClient.state.box.getMap("parameterKeys")) as Map<string, string> },
+        /**
+         * Get a current value of the parameterKeys map by key from box state
+         */
+        value: async (key: string): Promise<string | undefined> => { return await this.appClient.state.box.getMapValue("parameterKeys", key) as string | undefined },
+      },
+      /**
+       * Get values from the regressionPerformanceMetrics map in box state
+       */
+      regressionPerformanceMetrics: {
+        /**
+         * Get all current values of the regressionPerformanceMetrics map in box state
+         */
+        getMap: async (): Promise<Map<string, Regression>> => { return (await this.appClient.state.box.getMap("regressionPerformanceMetrics")) as Map<string, Regression> },
+        /**
+         * Get a current value of the regressionPerformanceMetrics map by key from box state
+         */
+        value: async (key: string): Promise<Regression | undefined> => { return await this.appClient.state.box.getMapValue("regressionPerformanceMetrics", key) as Regression | undefined },
+      },
+      /**
+       * Get values from the classificationPerformanceMetrics map in box state
+       */
+      classificationPerformanceMetrics: {
+        /**
+         * Get all current values of the classificationPerformanceMetrics map in box state
+         */
+        getMap: async (): Promise<Map<string, Classification>> => { return (await this.appClient.state.box.getMap("classificationPerformanceMetrics")) as Map<string, Classification> },
+        /**
+         * Get a current value of the classificationPerformanceMetrics map by key from box state
+         */
+        value: async (key: string): Promise<Classification | undefined> => { return await this.appClient.state.box.getMapValue("classificationPerformanceMetrics", key) as Classification | undefined },
+      },
+    },
   }
 
   public newGroup(): DmlChainComposer {
@@ -568,12 +835,29 @@ export class DmlChainClient {
     const resultMappers: Array<undefined | ((x: ABIReturn | undefined) => any)> = []
     return {
       /**
-       * Add a gethash(string)string method call against the DMLChain contract
+       * Add a printHash()string method call against the DMLChain contract
        */
-      gethash(params: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
-        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.gethash(params)))
-        resultMappers.push((v) => client.decodeReturnValue('gethash(string)string', v))
+      printHash(params: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
+        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.printHash(params)))
+        resultMappers.push((v) => client.decodeReturnValue('printHash()string', v))
         return this
+      },
+      /**
+       * Add a storeModelParams(string[],string[])void method call against the DMLChain contract
+       */
+      storeModelParams(params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & {onComplete?: OnApplicationComplete.NoOpOC}) {
+        promiseChain = promiseChain.then(async () => composer.addAppCallMethodCall(await client.params.storeModelParams(params)))
+        resultMappers.push(undefined)
+        return this
+      },
+      get delete() {
+        return {
+          deleteApplication: (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']>) => {
+            promiseChain = promiseChain.then(async () => composer.addAppDeleteMethodCall(await client.params.delete.deleteApplication(params)))
+            resultMappers.push(undefined)
+            return this
+          },
+        }
       },
       /**
        * Add a clear state call to the DMLChain contract
@@ -611,13 +895,36 @@ export class DmlChainClient {
 }
 export type DmlChainComposer<TReturns extends [...any[]] = []> = {
   /**
-   * Calls the gethash(string)string ABI method.
+   * Calls the printHash()string ABI method.
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  gethash(params?: CallParams<DmlChainArgs['obj']['gethash(string)string'] | DmlChainArgs['tuple']['gethash(string)string']>): DmlChainComposer<[...TReturns, DmlChainReturns['gethash(string)string'] | undefined]>
+  printHash(params?: CallParams<DmlChainArgs['obj']['printHash()string'] | DmlChainArgs['tuple']['printHash()string']>): DmlChainComposer<[...TReturns, DmlChainReturns['printHash()string'] | undefined]>
+
+  /**
+   * Calls the storeModelParams(string[],string[])void ABI method.
+   *
+   * @param args The arguments for the contract call
+   * @param params Any additional parameters for the call
+   * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
+   */
+  storeModelParams(params?: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']>): DmlChainComposer<[...TReturns, DmlChainReturns['storeModelParams(string[],string[])void'] | undefined]>
+
+  /**
+   * Gets available delete methods
+   */
+  readonly delete: {
+    /**
+     * Deletes an existing instance of the DMLChain smart contract using the deleteApplication()void ABI method.
+     *
+     * @param args The arguments for the smart contract call
+     * @param params Any additional parameters for the call
+     * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
+     */
+    deleteApplication(params?: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']>): DmlChainComposer<[...TReturns, DmlChainReturns['deleteApplication()void'] | undefined]>
+  }
 
   /**
    * Makes a clear_state call to an existing instance of the DMLChain smart contract.
