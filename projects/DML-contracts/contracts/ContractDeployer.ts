@@ -1,8 +1,8 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils';
-import { DmlChainClient } from './clients/DMLChainClient';
+import { DmlChainFactory } from './clients/DMLChainClient';
 
-export const contractDeployer = async (ipfsHash: string, modelParameters: string) => {
-  console.log(ipfsHash + modelParameters);
+export const contractDeployer = async (ipfsHash: string) => {
+  console.log(ipfsHash);
 
   const algorand = AlgorandClient.defaultLocalNet();
   algorand.setDefaultValidityWindow(1000);
@@ -17,5 +17,13 @@ export const contractDeployer = async (ipfsHash: string, modelParameters: string
     amount: (4).algo(),
   });
 
-  const app_client = DmlChainClient.
+  const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
+    defaultSender: acct.account.addr,
+  });
+
+  const { appClient: client } = await factory.deploy();
+
+  const response = await client.send.printHash({ args: { modelHash: 'World' } });
+
+  console.log(response);
 };

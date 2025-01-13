@@ -43,8 +43,15 @@ export class DMLChain extends Contract {
     this.ipfsHash.value = modelHash;
   }
 
+  // update model data
+  updateApplication(modelHash: string): void {
+    assert(this.txn.sender === this.app.creator);
+    this.ipfsHash.value = modelHash;
+  }
+
   // printHash
-  printHash(): string {
+  printHash(modelHash: string): string {
+    this.ipfsHash.value = modelHash;
     return this.ipfsHash.value;
   }
 

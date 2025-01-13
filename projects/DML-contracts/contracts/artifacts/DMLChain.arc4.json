@@ -15,8 +15,25 @@
       }
     },
     {
+      "name": "updateApplication",
+      "args": [
+        {
+          "name": "modelHash",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "printHash",
-      "args": [],
+      "args": [
+        {
+          "name": "modelHash",
+          "type": "string"
+        }
+      ],
       "returns": {
         "type": "string"
       }

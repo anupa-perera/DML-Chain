@@ -516,9 +516,9 @@ export class DmlChainFactory {
   public async deploy(params: DmlChainDeployParams = {}) {
     const result = await this.appFactory.deploy({
       ...params,
-      createParams: params.createParams?.method ? DmlChainParamsFactory.create._resolveByMethod(params.createParams) : params.createParams ? params.createParams as (DmlChainCreateCallParams & { args: Uint8Array[] }) : undefined,
-      updateParams: params.updateParams?.method ? DmlChainParamsFactory.update._resolveByMethod(params.updateParams) : params.updateParams ? params.updateParams as (DmlChainUpdateCallParams & { args: Uint8Array[] }) : undefined,
-      deleteParams: params.deleteParams?.method ? DmlChainParamsFactory.delete._resolveByMethod(params.deleteParams) : params.deleteParams ? params.deleteParams as (DmlChainDeleteCallParams & { args: Uint8Array[] }) : undefined,
+      createParams: params.createParams?.method ? DmlChainParamsFactory.create._resolveByMethod(params.createParams) : params.createParams,
+      updateParams: params.updateParams?.method ? DmlChainParamsFactory.update._resolveByMethod(params.updateParams) : params.updateParams,
+      deleteParams: params.deleteParams?.method ? DmlChainParamsFactory.delete._resolveByMethod(params.deleteParams) : params.deleteParams,
     })
     return { result: result.result, appClient: new DmlChainClient(result.appClient) }
   }
@@ -611,7 +611,7 @@ export class DmlChainFactory {
        */
       createApplication: async (params: CallParams<DmlChainArgs['obj']['createApplication(string)void'] | DmlChainArgs['tuple']['createApplication(string)void']> & AppClientCompilationParams & CreateSchema & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
         const result = await this.appFactory.send.create(DmlChainParamsFactory.create.createApplication(params))
-        return { result: { ...result.result, return: result.result.return as unknown as (undefined | DmlChainReturns['createApplication(string)void']) }, appClient: new DmlChainClient(result.appClient) }
+        return { result: { ...result.result, return: result.result.return as undefined | DmlChainReturns['createApplication(string)void'] }, appClient: new DmlChainClient(result.appClient) }
       },
     },
 
@@ -893,7 +893,7 @@ export class DmlChainClient {
        */
       updateApplication: async (params: CallParams<DmlChainArgs['obj']['updateApplication(string)void'] | DmlChainArgs['tuple']['updateApplication(string)void']> & AppClientCompilationParams & SendParams) => {
         const result = await this.appClient.send.update(DmlChainParamsFactory.update.updateApplication(params))
-        return {...result, return: result.return as unknown as (undefined | DmlChainReturns['updateApplication(string)void'])}
+        return {...result, return: result.return as undefined | DmlChainReturns['updateApplication(string)void']}
       },
 
     },
@@ -910,7 +910,7 @@ export class DmlChainClient {
        */
       deleteApplication: async (params: CallParams<DmlChainArgs['obj']['deleteApplication()void'] | DmlChainArgs['tuple']['deleteApplication()void']> & SendParams = {args: []}) => {
         const result = await this.appClient.send.delete(DmlChainParamsFactory.delete.deleteApplication(params))
-        return {...result, return: result.return as unknown as (undefined | DmlChainReturns['deleteApplication()void'])}
+        return {...result, return: result.return as undefined | DmlChainReturns['deleteApplication()void']}
       },
 
     },
@@ -933,7 +933,7 @@ export class DmlChainClient {
      */
     printHash: async (params: CallParams<DmlChainArgs['obj']['printHash(string)string'] | DmlChainArgs['tuple']['printHash(string)string']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
       const result = await this.appClient.send.call(DmlChainParamsFactory.printHash(params))
-      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['printHash(string)string'])}
+      return {...result, return: result.return as undefined | DmlChainReturns['printHash(string)string']}
     },
 
     /**
@@ -944,7 +944,7 @@ export class DmlChainClient {
      */
     storeModelParams: async (params: CallParams<DmlChainArgs['obj']['storeModelParams(string[],string[])void'] | DmlChainArgs['tuple']['storeModelParams(string[],string[])void']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
       const result = await this.appClient.send.call(DmlChainParamsFactory.storeModelParams(params))
-      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['storeModelParams(string[],string[])void'])}
+      return {...result, return: result.return as undefined | DmlChainReturns['storeModelParams(string[],string[])void']}
     },
 
     /**
@@ -955,7 +955,7 @@ export class DmlChainClient {
      */
     submitLocalUpdate: async (params: CallParams<DmlChainArgs['obj']['submitLocalUpdate(string[],uint64[],uint64)void'] | DmlChainArgs['tuple']['submitLocalUpdate(string[],uint64[],uint64)void']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
       const result = await this.appClient.send.call(DmlChainParamsFactory.submitLocalUpdate(params))
-      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['submitLocalUpdate(string[],uint64[],uint64)void'])}
+      return {...result, return: result.return as undefined | DmlChainReturns['submitLocalUpdate(string[],uint64[],uint64)void']}
     },
 
     /**
@@ -966,7 +966,7 @@ export class DmlChainClient {
      */
     finalizeFedAvg: async (params: CallParams<DmlChainArgs['obj']['finalizeFedAvg(string[])void'] | DmlChainArgs['tuple']['finalizeFedAvg(string[])void']> & SendParams & {onComplete?: OnApplicationComplete.NoOpOC}) => {
       const result = await this.appClient.send.call(DmlChainParamsFactory.finalizeFedAvg(params))
-      return {...result, return: result.return as unknown as (undefined | DmlChainReturns['finalizeFedAvg(string[])void'])}
+      return {...result, return: result.return as undefined | DmlChainReturns['finalizeFedAvg(string[])void']}
     },
 
   }
