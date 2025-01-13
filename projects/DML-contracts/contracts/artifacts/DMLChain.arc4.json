@@ -38,6 +38,38 @@
       }
     },
     {
+      "name": "submitLocalUpdate",
+      "args": [
+        {
+          "name": "paramKeys",
+          "type": "string[]"
+        },
+        {
+          "name": "paramValues",
+          "type": "uint64[]"
+        },
+        {
+          "name": "dataSize",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "finalizeFedAvg",
+      "args": [
+        {
+          "name": "paramKeys",
+          "type": "string[]"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "deleteApplication",
       "args": [],
       "returns": {

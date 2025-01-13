@@ -32,6 +32,12 @@ export class DMLChain extends Contract {
 
   classificationPerformanceMetrics = BoxMap<string, Classification>({ prefix: 'classificationPerformanceMetrics' });
 
+  //  partial sums of parameters for aggregation.
+  aggregatorParameterSums = BoxMap<string, uint64>({ prefix: 'aggrSums' });
+
+  // total data size from local contributions
+  totalDataSize = BoxMap<string, uint64>({ prefix: 'totalDataSize' });
+
   // assign hash to global state
   createApplication(modelHash: string): void {
     this.ipfsHash.value = modelHash;
@@ -108,6 +114,46 @@ export class DMLChain extends Contract {
       return 'Model has been accepted for further consideration';
     }
     return 'failed the minimum requirements';
+  }
+
+  // submit local update
+  submitLocalUpdate(paramKeys: string[], paramValues: uint64[], dataSize: uint64): void {
+    const oldTotal = this.totalDataSize('totalDataSize').value;
+    this.totalDataSize('totalDataSize').value = oldTotal + dataSize;
+
+    assert(paramKeys.length === paramValues.length);
+
+    let i = 0;
+    while (i < paramKeys.length) {
+      const pKey = paramKeys[i];
+      const pVal = paramValues[i];
+
+      const oldSum = this.aggregatorParameterSums(pKey).value;
+      const newSum = oldSum + pVal * dataSize;
+
+      this.aggregatorParameterSums(pKey).value = newSum;
+      i = i + 1;
+    }
+  }
+
+  // Finalize the aggregated model on-chain
+  finalizeFedAvg(paramKeys: string[]): void {
+    assert(this.txn.sender === this.app.creator);
+
+    const total = this.totalDataSize('totalDataSize').value;
+    assert(total > 0, 'No data has been aggregated yet.');
+
+    let i = 0;
+    while (i < paramKeys.length) {
+      const pKey = paramKeys[i];
+      const sum = this.aggregatorParameterSums(pKey).value;
+
+      const fedAvgValue = sum / total;
+
+      this.parameterKeys(pKey).value = fedAvgValue.toString();
+
+      i = i + 1;
+    }
   }
 
   //  delete contract
