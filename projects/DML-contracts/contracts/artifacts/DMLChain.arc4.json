@@ -55,6 +55,54 @@
       }
     },
     {
+      "name": "storeClassificationSelectionCriteria",
+      "args": [
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "storeModelRegressionSelectionCriteria",
+      "args": [
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "regModelSelectionCriteria",
+      "args": [
+        {
+          "name": "modelEvaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "classModelSelectionCriteria",
+      "args": [
+        {
+          "name": "modelEvaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
       "name": "submitLocalUpdate",
       "args": [
         {

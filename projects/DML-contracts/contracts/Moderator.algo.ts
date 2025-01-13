@@ -22,7 +22,7 @@ type Regression = {
 
 export class DMLChain extends Contract {
   // store hash on global state
-  ipfsHash = GlobalStateKey<string>();
+  ipfsHash = GlobalStateKey<string>({ key: 'ipfsHash' });
 
   // Store params in BoxMap
   parameterKeys = BoxMap<string, string>({ prefix: 'parameterKeys' });
@@ -84,17 +84,19 @@ export class DMLChain extends Contract {
   // }
 
   // store classification model selection criteria
-  private storeClassificationSelectionCriteria(evaluationMetrics: Classification): void {
+  storeClassificationSelectionCriteria(evaluationMetrics: Classification): void {
+    verifyTxn(this.txn, { sender: this.app.creator });
     this.classificationPerformanceMetrics('rclassModel').value = evaluationMetrics;
   }
 
   // store Regression model selection criteria
-  private storeModelRegressionSelectionCriteria(evaluationMetrics: Regression): void {
+  storeModelRegressionSelectionCriteria(evaluationMetrics: Regression): void {
+    verifyTxn(this.txn, { sender: this.app.creator });
     this.regressionPerformanceMetrics('regModel').value = evaluationMetrics;
   }
 
   // model selection criteria for reg models
-  private regModelSelectionCriteria(modelEvaluationMetrics: Regression): string {
+  regModelSelectionCriteria(modelEvaluationMetrics: Regression): string {
     const baselineRegMetrics = this.regressionPerformanceMetrics('regModel').value;
     if (
       modelEvaluationMetrics.MSE <= baselineRegMetrics.MSE &&
@@ -108,7 +110,8 @@ export class DMLChain extends Contract {
   }
 
   // model selection criteria for classification models
-  private classModelSelectionCriteria(modelEvaluationMetrics: Classification): string {
+  classModelSelectionCriteria(modelEvaluationMetrics: Classification): string {
+    verifyTxn(this.txn, { sender: this.app.creator });
     const baselineClassMetrics = this.classificationPerformanceMetrics('rclassModel').value;
     if (
       modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&

@@ -23,7 +23,7 @@ export const contractDeployer = async (ipfsHash: string) => {
 
   const { appClient: client } = await factory.deploy();
 
-  const response = await client.send.printHash({ args: { modelHash: 'World' } });
+  const response = await client.send.printHash({ args: { modelHash: ipfsHash } });
 
-  console.log(response);
+  console.log('this is response', response);
 };
