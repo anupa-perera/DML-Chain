@@ -50,8 +50,7 @@ export class DMLChain extends Contract {
   }
 
   // printHash
-  printHash(modelHash: string): string {
-    this.ipfsHash.value = modelHash;
+  printHash(): string {
     return this.ipfsHash.value;
   }
 

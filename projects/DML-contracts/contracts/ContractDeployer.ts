@@ -14,16 +14,16 @@ export const contractDeployer = async (ipfsHash: string) => {
   algorand.send.payment({
     sender: dispenser.addr,
     receiver: acct.account.addr,
-    amount: (4).algo(),
+    amount: (1).algo(),
   });
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
     defaultSender: acct.account.addr,
   });
 
-  const { appClient: client } = await factory.deploy();
+  const { appClient: client } = await factory.send.create.createApplication({ args: { modelHash: ipfsHash } });
 
-  const response = await client.send.printHash({ args: { modelHash: ipfsHash } });
+  const response = await client.send.printHash();
 
-  console.log('this is response', response);
+  console.log('this is response', response.return);
 };

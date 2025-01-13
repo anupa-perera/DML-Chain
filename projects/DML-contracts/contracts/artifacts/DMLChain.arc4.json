@@ -28,12 +28,7 @@
     },
     {
       "name": "printHash",
-      "args": [
-        {
-          "name": "modelHash",
-          "type": "string"
-        }
-      ],
+      "args": [],
       "returns": {
         "type": "string"
       }
