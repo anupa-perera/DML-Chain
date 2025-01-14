@@ -70,17 +70,17 @@ export class DMLChain extends Contract {
     }
   }
 
-  // // print all stored model params
-  // printModelParams(paramkeys: string[]): string[] {
-  //   const values: string[] = [];
-  //   let i = 0;
-  //   while (i < paramkeys.length) {
-  //     const key = paramkeys[i];
-  //     values[i] = this.parameterKeys(key).value;
-  //     i = i + 1;
-  //   }
-  //   return values;
-  // }
+  // print all stored model params
+  printModelParams(paramKeys: StaticArray<string, 20>): void {
+    let i = 0;
+    while (i < paramKeys.length) {
+      const key = paramKeys[i];
+      const value = this.parameterKeys(key).value;
+      log(key);
+      log(value);
+      i = i + 1;
+    }
+  }
 
   // store classification model selection criteria
   storeClassificationSelectionCriteria(evaluationMetrics: Classification): void {

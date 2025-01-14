@@ -50,6 +50,18 @@
       }
     },
     {
+      "name": "printModelParams",
+      "args": [
+        {
+          "name": "paramKeys",
+          "type": "string[20]"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "storeClassificationSelectionCriteria",
       "args": [
         {
