@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Container, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { contractDeployer } from '../../DML-contracts/contracts/ContractDeployer'
@@ -14,16 +14,19 @@ const App: React.FC = () => {
   const [data, setData] = useState<DataType | null>(null)
 
   const handleDeploy = async () => {
-    setLoading(true)
-    try {
-      console.log(ipfsHash)
-      await contractDeployer(ipfsHash)
-      setResponse('Contract deployed successfully')
-    } catch (error) {
-      console.error('Error deploying contract:', error)
-      setResponse('Error deploying contract')
-    } finally {
-      setLoading(false)
+    if (data) {
+      setIpfsHash(data.ipfs_hash)
+      setLoading(true)
+      try {
+        console.log('clicking', ipfsHash)
+        await contractDeployer(ipfsHash)
+        setResponse('Contract deployed successfully')
+      } catch (error) {
+        console.error('Error deploying contract:', error)
+        setResponse('Error deploying contract')
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
@@ -46,14 +49,7 @@ const App: React.FC = () => {
         <Typography variant="h4" gutterBottom>
           Deploy Contract
         </Typography>
-        <TextField
-          fullWidth
-          label="Enter IPFS Hash"
-          variant="outlined"
-          value={data?.ipfs_hash ?? ''}
-          onChange={(e) => setIpfsHash(e.target.value)}
-          sx={{ mb: 2 }}
-        />
+        <Typography sx={{ mb: 2 }}>{data?.ipfs_hash}</Typography>
         <Button variant="contained" color="primary" onClick={handleDeploy} disabled={loading} fullWidth>
           {loading ? <CircularProgress size={24} /> : 'Deploy'}
         </Button>

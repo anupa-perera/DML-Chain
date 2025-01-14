@@ -23,5 +23,5 @@ export const contractDeployer = async (ipfsHash: string) => {
 
   const printHashResponse = await client.send.printHash();
 
-  console.log(printHashResponse);
+  console.log(printHashResponse.return);
 };
