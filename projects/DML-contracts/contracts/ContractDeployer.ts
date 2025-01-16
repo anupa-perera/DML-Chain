@@ -1,7 +1,15 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils';
 import { DmlChainFactory } from './clients/DMLChainClient';
 
-export const contractDeployer = async (ipfsHash: string) => {
+type Classification = {
+  accuracy: bigint;
+  precision: bigint;
+  recall: bigint;
+  f1score: bigint;
+};
+
+export const contractDeployer = async (ipfsHash: string, modelEval: Classification) => {
+  console.log('this is modeleval', modelEval);
   const algorand = AlgorandClient.defaultLocalNet();
   algorand.setDefaultValidityWindow(1000);
 
@@ -12,7 +20,7 @@ export const contractDeployer = async (ipfsHash: string) => {
   algorand.send.payment({
     sender: dispenser.addr,
     receiver: acct.account.addr,
-    amount: (1).algo(),
+    amount: (10).algo(),
   });
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
@@ -23,5 +31,11 @@ export const contractDeployer = async (ipfsHash: string) => {
 
   const printHashResponse = await client.send.printHash();
 
-  console.log(printHashResponse.return);
+  console.log('printing', printHashResponse);
+
+  const storeClassMetrics = await client.send.storeClassificationSelectionCriteria({
+    args: { evaluationMetrics: modelEval },
+  });
+
+  console.log(storeClassMetrics);
 };

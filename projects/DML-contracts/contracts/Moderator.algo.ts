@@ -8,9 +8,7 @@ type Classification = {
   accuracy: uint64;
   precision: uint64;
   recall: uint64;
-  specificity: uint64;
-  F1Score: uint64;
-  ROC: uint64;
+  f1score: uint64;
 };
 
 type Regression = {
@@ -115,10 +113,7 @@ export class DMLChain extends Contract {
     if (
       modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&
       modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
-      modelEvaluationMetrics.recall >= baselineClassMetrics.recall &&
-      modelEvaluationMetrics.specificity >= baselineClassMetrics.specificity &&
-      modelEvaluationMetrics.F1Score >= baselineClassMetrics.F1Score &&
-      modelEvaluationMetrics.ROC >= baselineClassMetrics.ROC
+      modelEvaluationMetrics.recall >= baselineClassMetrics.recall
     ) {
       return 'Model has been accepted for further consideration';
     }
