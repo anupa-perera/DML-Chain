@@ -62,8 +62,12 @@
       }
     },
     {
-      "name": "createBox",
+      "name": "storeClassificationSelectionCriteria",
       "args": [
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        },
         {
           "name": "mbrPay",
           "type": "pay"
@@ -74,15 +78,22 @@
       }
     },
     {
-      "name": "storeClassificationSelectionCriteria",
+      "name": "getClassificationCriteria",
+      "args": [],
+      "returns": {
+        "type": "(uint64,uint64,uint64,uint64)"
+      }
+    },
+    {
+      "name": "classModelSelectionCriteria",
       "args": [
         {
-          "name": "evaluationMetrics",
+          "name": "modelEvaluationMetrics",
           "type": "(uint64,uint64,uint64,uint64)"
         }
       ],
       "returns": {
-        "type": "void"
+        "type": "string"
       }
     },
     {
@@ -99,18 +110,6 @@
     },
     {
       "name": "regModelSelectionCriteria",
-      "args": [
-        {
-          "name": "modelEvaluationMetrics",
-          "type": "(uint64,uint64,uint64,uint64)"
-        }
-      ],
-      "returns": {
-        "type": "string"
-      }
-    },
-    {
-      "name": "classModelSelectionCriteria",
       "args": [
         {
           "name": "modelEvaluationMetrics",

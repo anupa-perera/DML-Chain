@@ -9,16 +9,27 @@ const App: React.FC = () => {
   interface DataType {
     ipfs_hash: string
     model_params: object
-    metrics: object
+    metrics: {
+      accuracy: bigint
+      precision: bigint
+      recall: bigint
+      f1score: bigint
+    }
   }
   const [data, setData] = useState<DataType | null>(null)
 
   const handleDeploy = async () => {
     if (data) {
       setLoading(true)
-      console.log('in here', data)
+
+      const evaluationMetrics = data.metrics
       try {
-        await contractDeployer(data.ipfs_hash, { accuracy: 10n, precision: 10n, recall: 10n, f1score: 10n })
+        await contractDeployer(data.ipfs_hash, {
+          accuracy: BigInt(evaluationMetrics?.accuracy),
+          precision: BigInt(evaluationMetrics?.precision),
+          recall: BigInt(evaluationMetrics?.recall),
+          f1score: BigInt(evaluationMetrics?.f1score),
+        })
         setResponse('Contract deployed successfully')
       } catch (error) {
         console.error('Error deploying contract:', error)

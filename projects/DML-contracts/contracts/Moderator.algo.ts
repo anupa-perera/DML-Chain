@@ -4,7 +4,7 @@ import { Contract } from '@algorandfoundation/tealscript';
 // const COST_PER_BOX = 2500;
 // const MAX_BOX_SIZE = 32768;
 
-const boxMbr = 500_000;
+const boxMbr = 1_000_000;
 
 type Classification = {
   accuracy: uint64;
@@ -25,18 +25,18 @@ export class DMLChain extends Contract {
   ipfsHash = GlobalStateKey<string>({ key: 'ipfsHash' });
 
   // Store params in BoxMap
-  parameterKeys = BoxMap<string, string>({ prefix: 'parameterKeys' });
+  parameterKeys = BoxMap<string, string>({ allowPotentialCollisions: true });
 
   // store selection criteria in BoxMap
-  regressionPerformanceMetrics = BoxMap<string, Regression>({ prefix: 'regressionPerformanceMetrics' });
+  regressionPerformanceMetrics = BoxMap<string, Regression>({ allowPotentialCollisions: true });
 
-  classificationPerformanceMetrics = BoxMap<string, Classification>({ prefix: 'classificationPerformanceMetrics' });
+  classificationPerformanceMetrics = BoxMap<string, Classification>({ allowPotentialCollisions: true });
 
   //  partial sums of parameters for aggregation.
-  aggregatorParameterSums = BoxMap<string, uint64>({ prefix: 'aggrSums' });
+  aggregatorParameterSums = BoxMap<string, uint64>({ allowPotentialCollisions: true });
 
   // total data size from local contributions
-  totalDataSize = BoxMap<string, uint64>({ prefix: 'totalDataSize' });
+  totalDataSize = BoxMap<string, uint64>({ allowPotentialCollisions: true });
 
   // assign hash to global state
   createApplication(modelHash: string): void {
@@ -82,22 +82,37 @@ export class DMLChain extends Contract {
     }
   }
 
-  // create box to store classification model selection criteria
-  createBox(mbrPay: PayTxn): void {
-    assert(!this.classificationPerformanceMetrics('rclassModel').exists);
+  // store classification model selection criteria
+  storeClassificationSelectionCriteria(evaluationMetrics: Classification, mbrPay: PayTxn): void {
+    verifyTxn(this.txn, { sender: this.app.creator });
     verifyPayTxn(mbrPay, {
       sender: this.txn.sender,
       receiver: this.app.address,
       amount: boxMbr,
     });
 
-    this.classificationPerformanceMetrics('rclassModel').create(1024);
+    this.classificationPerformanceMetrics('InitialModelMetrics').create(32);
+    this.classificationPerformanceMetrics('InitialModelMetrics').value = evaluationMetrics;
   }
 
-  // store classification model selection criteria
-  storeClassificationSelectionCriteria(evaluationMetrics: Classification): void {
-    verifyTxn(this.txn, { sender: this.app.creator });
-    this.classificationPerformanceMetrics('rclassModel').value = evaluationMetrics;
+  // get classification criteria
+  getClassificationCriteria(): Classification {
+    assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists);
+    return this.classificationPerformanceMetrics('InitialModelMetrics').value;
+  }
+
+  // model selection criteria for classification models
+  classModelSelectionCriteria(modelEvaluationMetrics: Classification): string {
+    assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists);
+    const baselineClassMetrics = this.classificationPerformanceMetrics('InitialModelMetrics').value;
+    if (
+      modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&
+      modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
+      modelEvaluationMetrics.recall >= baselineClassMetrics.recall
+    ) {
+      return 'Model has been accepted for further consideration';
+    }
+    return 'failed the minimum requirements';
   }
 
   // store Regression model selection criteria
@@ -114,20 +129,6 @@ export class DMLChain extends Contract {
       modelEvaluationMetrics.MAE <= baselineRegMetrics.MAE &&
       modelEvaluationMetrics.RMSE <= baselineRegMetrics.RMSE &&
       modelEvaluationMetrics.COD >= baselineRegMetrics.COD
-    ) {
-      return 'Model has been accepted for further consideration';
-    }
-    return 'failed the minimum requirements';
-  }
-
-  // model selection criteria for classification models
-  classModelSelectionCriteria(modelEvaluationMetrics: Classification): string {
-    verifyTxn(this.txn, { sender: this.app.creator });
-    const baselineClassMetrics = this.classificationPerformanceMetrics('rclassModel').value;
-    if (
-      modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&
-      modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
-      modelEvaluationMetrics.recall >= baselineClassMetrics.recall
     ) {
       return 'Model has been accepted for further consideration';
     }
