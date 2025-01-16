@@ -365,18 +365,8 @@ printModelParams:
 *while_1_end:
 	retsub
 
-// createBox(pay,(uint64,uint64,uint64,uint64))void
+// createBox(pay)void
 *abi_route_createBox:
-	// evaluationMetrics: (uint64,uint64,uint64,uint64)
-	txna ApplicationArgs 1
-	dup
-	len
-	intc 4 // 32
-	==
-
-	// argument 0 (evaluationMetrics) for createBox must be a (uint64,uint64,uint64,uint64)
-	assert
-
 	// mbrPay: pay
 	txn GroupIndex
 	intc 0 // 1
@@ -386,17 +376,17 @@ printModelParams:
 	intc 0 //  pay
 	==
 
-	// argument 1 (mbrPay) for createBox must be a pay transaction
+	// argument 0 (mbrPay) for createBox must be a pay transaction
 	assert
 
-	// execute createBox(pay,(uint64,uint64,uint64,uint64))void
+	// execute createBox(pay)void
 	callsub createBox
 	intc 0 // 1
 	return
 
-// createBox(mbrPay: PayTxn, evaluationMetrics: Classification): void
+// createBox(mbrPay: PayTxn): void
 createBox:
-	proto 2 0
+	proto 1 0
 
 	// contracts\Moderator.algo.ts:87
 	// assert(!this.classificationPerformanceMetrics('rclassModel').exists)
@@ -434,17 +424,18 @@ createBox:
 	// verify amount
 	frame_dig -1 // mbrPay: PayTxn
 	gtxns Amount
-	pushint 28100
+	pushint 500000
 	==
 
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
 	// contracts\Moderator.algo.ts:94
-	// this.classificationPerformanceMetrics('rclassModel').value = evaluationMetrics
+	// this.classificationPerformanceMetrics('rclassModel').create(1024)
 	bytec 1 // 0x636c617373696669636174696f6e506572666f726d616e63654d657472696373000b72636c6173734d6f64656c
-	frame_dig -2 // evaluationMetrics: Classification
-	box_put
+	pushint 1024
+	box_create
+	pop
 	retsub
 
 // storeClassificationSelectionCriteria((uint64,uint64,uint64,uint64))void
@@ -1087,7 +1078,7 @@ deleteApplication:
 	pushbytes 0x1537c194 // method "printHash()string"
 	pushbytes 0x4e428f86 // method "storeModelParams(string[],string[])void"
 	pushbytes 0x1244e332 // method "printModelParams(string[20])void"
-	pushbytes 0xd154c76e // method "createBox(pay,(uint64,uint64,uint64,uint64))void"
+	pushbytes 0xe66c399d // method "createBox(pay)void"
 	pushbytes 0x6127f07e // method "storeClassificationSelectionCriteria((uint64,uint64,uint64,uint64))void"
 	pushbytes 0x7de2dfcd // method "storeModelRegressionSelectionCriteria((uint64,uint64,uint64,uint64))void"
 	pushbytes 0xbf8adedf // method "regModelSelectionCriteria((uint64,uint64,uint64,uint64))string"
