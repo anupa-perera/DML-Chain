@@ -62,6 +62,22 @@
       }
     },
     {
+      "name": "createBox",
+      "args": [
+        {
+          "name": "mbrPay",
+          "type": "pay"
+        },
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "storeClassificationSelectionCriteria",
       "args": [
         {

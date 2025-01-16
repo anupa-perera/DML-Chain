@@ -4,6 +4,8 @@ import { Contract } from '@algorandfoundation/tealscript';
 // const COST_PER_BOX = 2500;
 // const MAX_BOX_SIZE = 32768;
 
+const boxMbr = 2_500 + 400 * 64;
+
 type Classification = {
   accuracy: uint64;
   precision: uint64;
@@ -78,6 +80,18 @@ export class DMLChain extends Contract {
       log(value);
       i = i + 1;
     }
+  }
+
+  // create box to store classification model selection criteria
+  createBox(mbrPay: PayTxn, evaluationMetrics: Classification): void {
+    assert(!this.classificationPerformanceMetrics('rclassModel').exists);
+    verifyPayTxn(mbrPay, {
+      sender: this.txn.sender,
+      receiver: this.app.address,
+      amount: boxMbr,
+    });
+
+    this.classificationPerformanceMetrics('rclassModel').value = evaluationMetrics;
   }
 
   // store classification model selection criteria

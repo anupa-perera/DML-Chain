@@ -1,4 +1,4 @@
-import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import { AlgorandClient, microAlgos } from '@algorandfoundation/algokit-utils';
 import { DmlChainFactory } from './clients/DMLChainClient';
 
 type Classification = {
@@ -9,7 +9,6 @@ type Classification = {
 };
 
 export const contractDeployer = async (ipfsHash: string, modelEval: Classification) => {
-  console.log('this is modeleval', modelEval);
   const algorand = AlgorandClient.defaultLocalNet();
   algorand.setDefaultValidityWindow(1000);
 
@@ -32,6 +31,21 @@ export const contractDeployer = async (ipfsHash: string, modelEval: Classificati
   const printHashResponse = await client.send.printHash();
 
   console.log('printing', printHashResponse);
+
+  const mbrPayFirstDeposit = await algorand.createTransaction.payment({
+    sender: acct.account.addr,
+    receiver: client.appAddress,
+    amount: microAlgos(2_500 + 400 * 112),
+  });
+
+  const createBox = await client.send.createBox({
+    args: {
+      mbrPay: mbrPayFirstDeposit,
+      evaluationMetrics: modelEval,
+    },
+  });
+
+  console.log('this is create box', createBox);
 
   const storeClassMetrics = await client.send.storeClassificationSelectionCriteria({
     args: { evaluationMetrics: modelEval },
