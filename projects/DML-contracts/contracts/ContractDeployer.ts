@@ -19,7 +19,6 @@ export const contractDeployer = async (
   modelEvaluation: Classification,
   ParameterData: ParamsData
 ) => {
-  console.log(ipfsHash, modelEvaluation, ParameterData);
   const algorand = AlgorandClient.defaultLocalNet();
   algorand.setDefaultValidityWindow(1000);
 
@@ -93,7 +92,17 @@ export const contractDeployer = async (
   const boxIDs = await algorand.app.getBoxNames(appID);
   console.log('ÍDs', boxIDs);
 
-  boxIDs.forEach((box) => {
-    console.log(box.name);
+  boxIDs.forEach(async (box) => {
+    if (Object.keys(box.nameRaw).length === 32) {
+      try {
+        const getParams = await client.send.getBoxValue({ args: { address: box.name } });
+        console.log(box.name);
+        console.log(getParams);
+      } catch (error) {
+        console.error(`Error fetching box value for ${box.name}`, error);
+      }
+    } else {
+      console.warn(`Skipped API call for box with name: ${box.name} due to incorrect nameRaw length.`);
+    }
   });
 };

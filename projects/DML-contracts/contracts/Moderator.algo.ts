@@ -106,6 +106,7 @@ export class DMLChain extends Contract {
     return 'failed the minimum requirements';
   }
 
+  // store model parameters
   storeModelParams(mbrPay: PayTxn, Address: Address, paramsData: ParamsData): void {
     verifyTxn(this.txn, { sender: this.txn.sender });
     verifyPayTxn(mbrPay, {
@@ -116,6 +117,12 @@ export class DMLChain extends Contract {
 
     this.paramsData(Address).create(32);
     this.paramsData(Address).value = paramsData;
+  }
+
+  // get model params by address reference
+  getBoxValue(Address: Address): ParamsData {
+    assert(this.paramsData(Address).exists);
+    return this.paramsData(Address).value;
   }
 
   //  delete contract

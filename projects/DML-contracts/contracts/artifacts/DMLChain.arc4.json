@@ -113,6 +113,18 @@
       }
     },
     {
+      "name": "getBoxValue",
+      "args": [
+        {
+          "name": "Address",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "(string,string)"
+      }
+    },
+    {
       "name": "deleteApplication",
       "args": [],
       "returns": {

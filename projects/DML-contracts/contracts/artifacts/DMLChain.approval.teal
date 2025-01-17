@@ -519,6 +519,16 @@ storeModelParams:
 	proto 3 0
 
 	// contracts\Moderator.algo.ts:111
+	// verifyTxn(this.txn, { sender: this.txn.sender })
+	// verify sender
+	txn Sender
+	txn Sender
+	==
+
+	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.txn.sender"}
+	assert
+
+	// contracts\Moderator.algo.ts:112
 	// verifyPayTxn(mbrPay, {
 	//       sender: this.txn.sender,
 	//       receiver: this.app.address,
@@ -551,14 +561,14 @@ storeModelParams:
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
-	// contracts\Moderator.algo.ts:117
+	// contracts\Moderator.algo.ts:118
 	// this.paramsData(Address).create(32)
 	frame_dig -2 // Address: Address
 	intc 2 // 32
 	box_create
 	pop
 
-	// contracts\Moderator.algo.ts:118
+	// contracts\Moderator.algo.ts:119
 	// this.paramsData(Address).value = paramsData
 	frame_dig -2 // Address: Address
 	dup
@@ -566,6 +576,49 @@ storeModelParams:
 	pop
 	frame_dig -3 // paramsData: ParamsData
 	box_put
+	retsub
+
+// getBoxValue(address)(string,string)
+*abi_route_getBoxValue:
+	// The ABI return prefix
+	bytec 2 // 0x151f7c75
+
+	// Address: address
+	txna ApplicationArgs 1
+	dup
+	len
+	intc 2 // 32
+	==
+
+	// argument 0 (Address) for getBoxValue must be a address
+	assert
+
+	// execute getBoxValue(address)(string,string)
+	callsub getBoxValue
+	concat
+	log
+	intc 0 // 1
+	return
+
+// getBoxValue(Address: Address): ParamsData
+getBoxValue:
+	proto 1 1
+
+	// contracts\Moderator.algo.ts:124
+	// assert(this.paramsData(Address).exists)
+	frame_dig -1 // Address: Address
+	box_len
+	swap
+	pop
+	assert
+
+	// contracts\Moderator.algo.ts:125
+	// return this.paramsData(Address).value;
+	frame_dig -1 // Address: Address
+	box_get
+
+	// box value does not exist: this.paramsData(Address).value
+	assert
 	retsub
 
 // deleteApplication()void
@@ -579,7 +632,7 @@ storeModelParams:
 deleteApplication:
 	proto 0 0
 
-	// contracts\Moderator.algo.ts:123
+	// contracts\Moderator.algo.ts:130
 	// assert(this.txn.sender === this.app.creator)
 	txn Sender
 	txna Applications 0
@@ -605,8 +658,9 @@ deleteApplication:
 	pushbytes 0x7de2dfcd // method "storeModelRegressionSelectionCriteria((uint64,uint64,uint64,uint64))void"
 	pushbytes 0xbf8adedf // method "regModelSelectionCriteria((uint64,uint64,uint64,uint64))string"
 	pushbytes 0x5b5536de // method "storeModelParams(pay,address,(string,string))void"
+	pushbytes 0xedaedb79 // method "getBoxValue(address)(string,string)"
 	txna ApplicationArgs 0
-	match *abi_route_printHash *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelRegressionSelectionCriteria *abi_route_regModelSelectionCriteria *abi_route_storeModelParams
+	match *abi_route_printHash *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelRegressionSelectionCriteria *abi_route_regModelSelectionCriteria *abi_route_storeModelParams *abi_route_getBoxValue
 
 	// this contract does not implement the given ABI method for call NoOp
 	err
