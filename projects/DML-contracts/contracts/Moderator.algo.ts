@@ -20,23 +20,22 @@ type Regression = {
   COD: uint64;
 };
 
+type ParamsData = {
+  paramHash: string;
+  paramKey: string;
+};
+
 export class DMLChain extends Contract {
   // store hash on global state
   ipfsHash = GlobalStateKey<string>({ key: 'ipfsHash' });
 
   // Store params in BoxMap
-  parameterKeys = BoxMap<string, string>({ allowPotentialCollisions: true });
+  paramsData = BoxMap<Address, ParamsData>({ allowPotentialCollisions: true });
 
   // store selection criteria in BoxMap
   regressionPerformanceMetrics = BoxMap<string, Regression>({ allowPotentialCollisions: true });
 
   classificationPerformanceMetrics = BoxMap<string, Classification>({ allowPotentialCollisions: true });
-
-  //  partial sums of parameters for aggregation.
-  aggregatorParameterSums = BoxMap<string, uint64>({ allowPotentialCollisions: true });
-
-  // total data size from local contributions
-  totalDataSize = BoxMap<string, uint64>({ allowPotentialCollisions: true });
 
   // assign hash to global state
   createApplication(modelHash: string): void {
@@ -52,34 +51,6 @@ export class DMLChain extends Contract {
   // printHash
   printHash(): string {
     return this.ipfsHash.value;
-  }
-
-  // store model params
-  storeModelParams(paramkeys: string[], paramValues: string[]): void {
-    assert(this.txn.sender === this.app.creator);
-    assert(paramkeys.length === paramValues.length);
-
-    let i = 0;
-    while (i < paramkeys.length) {
-      const key = paramkeys[i];
-      const value = paramValues[i];
-
-      this.parameterKeys(key).value = value;
-
-      i = i + 1;
-    }
-  }
-
-  // print all stored model params
-  printModelParams(paramKeys: StaticArray<string, 20>): void {
-    let i = 0;
-    while (i < paramKeys.length) {
-      const key = paramKeys[i];
-      const value = this.parameterKeys(key).value;
-      log(key);
-      log(value);
-      i = i + 1;
-    }
   }
 
   // store classification model selection criteria
@@ -135,44 +106,16 @@ export class DMLChain extends Contract {
     return 'failed the minimum requirements';
   }
 
-  // submit local update
-  submitLocalUpdate(paramKeys: string[], paramValues: uint64[], dataSize: uint64): void {
-    const oldTotal = this.totalDataSize('totalDataSize').value;
-    this.totalDataSize('totalDataSize').value = oldTotal + dataSize;
+  storeModelParams(mbrPay: PayTxn, Address: Address, paramsData: ParamsData): void {
+    verifyTxn(this.txn, { sender: this.txn.sender });
+    verifyPayTxn(mbrPay, {
+      sender: this.txn.sender,
+      receiver: this.app.address,
+      amount: boxMbr,
+    });
 
-    assert(paramKeys.length === paramValues.length);
-
-    let i = 0;
-    while (i < paramKeys.length) {
-      const pKey = paramKeys[i];
-      const pVal = paramValues[i];
-
-      const oldSum = this.aggregatorParameterSums(pKey).value;
-      const newSum = oldSum + pVal * dataSize;
-
-      this.aggregatorParameterSums(pKey).value = newSum;
-      i = i + 1;
-    }
-  }
-
-  // Finalize the aggregated model on-chain
-  finalizeFedAvg(paramKeys: string[]): void {
-    assert(this.txn.sender === this.app.creator);
-
-    const total = this.totalDataSize('totalDataSize').value;
-    assert(total > 0, 'No data has been aggregated yet.');
-
-    let i = 0;
-    while (i < paramKeys.length) {
-      const pKey = paramKeys[i];
-      const sum = this.aggregatorParameterSums(pKey).value;
-
-      const fedAvgValue = sum / total;
-
-      this.parameterKeys(pKey).value = fedAvgValue.toString();
-
-      i = i + 1;
-    }
+    this.paramsData(Address).create(32);
+    this.paramsData(Address).value = paramsData;
   }
 
   //  delete contract

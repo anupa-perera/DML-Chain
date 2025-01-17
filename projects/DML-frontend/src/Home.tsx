@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const [response, setResponse] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   interface DataType {
-    ipfs_hash: string
+    model_ipfs_hash: string
     model_params: object
     metrics: {
       accuracy: bigint
@@ -15,6 +15,8 @@ const App: React.FC = () => {
       recall: bigint
       f1score: bigint
     }
+    param_ipfs_hash: string
+    param_key: string
   }
   const [data, setData] = useState<DataType | null>(null)
 
@@ -24,12 +26,16 @@ const App: React.FC = () => {
 
       const evaluationMetrics = data.metrics
       try {
-        await contractDeployer(data.ipfs_hash, {
-          accuracy: BigInt(evaluationMetrics?.accuracy),
-          precision: BigInt(evaluationMetrics?.precision),
-          recall: BigInt(evaluationMetrics?.recall),
-          f1score: BigInt(evaluationMetrics?.f1score),
-        })
+        await contractDeployer(
+          data.model_ipfs_hash,
+          {
+            accuracy: BigInt(evaluationMetrics?.accuracy),
+            precision: BigInt(evaluationMetrics?.precision),
+            recall: BigInt(evaluationMetrics?.recall),
+            f1score: BigInt(evaluationMetrics?.f1score),
+          },
+          { paramHash: data.param_ipfs_hash, paramKey: data.param_key },
+        )
         setResponse('Contract deployed successfully')
       } catch (error) {
         console.error('Error deploying contract:', error)
@@ -61,7 +67,7 @@ const App: React.FC = () => {
         <Typography variant="h4" gutterBottom>
           Deploy Contract
         </Typography>
-        <Typography sx={{ mb: 2 }}>{data?.ipfs_hash}</Typography>
+        <Typography sx={{ mb: 2 }}>{data?.model_ipfs_hash}</Typography>
         <Button variant="contained" color="primary" onClick={handleDeploy} disabled={loading} fullWidth>
           {loading ? <CircularProgress size={24} /> : 'Deploy'}
         </Button>
