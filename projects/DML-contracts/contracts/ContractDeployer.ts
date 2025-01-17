@@ -102,7 +102,7 @@ export const contractDeployer = async (
         console.error(`Error fetching box value for ${box.name}`, error);
       }
     } else {
-      console.warn(`Skipped API call for box with name: ${box.name} due to incorrect nameRaw length.`);
+      console.warn(`Skipped API call for box with name: ${box.name} due to being <32 for address type`);
     }
   });
 };
