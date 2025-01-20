@@ -9,19 +9,23 @@
     },
     {
       "path": "./projects/DML-frontend"
+    },
+    {
+      "path": "./model",
+      "name": "MODEL"
     }
   ],
   "settings": {
     "files.exclude": {
       "projects/": true
     },
-    "jest.disabledWorkspaceFolders": ["ROOT", "projects"],
+    "jest.disabledWorkspaceFolders": ["ROOT", "projects", "model"],
     "dotenv.enableAutocloaking": false
   },
   "extensions": {
     "recommendations": ["joshx.workspace-terminals"]
   },
-  
+
   "tasks": {
     "version": "2.0.0",
     "tasks": []

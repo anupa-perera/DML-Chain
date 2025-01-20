@@ -1,9 +1,9 @@
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { ModeratorFactory } from '../contracts/Moderator'
+import { DmlChainFactory } from '../contracts/DMLChain'
 import { getAlgodConfigFromViteEnvironment, getIndexerConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 
 interface AppCallsInterface {
   openModal: boolean
@@ -32,27 +32,29 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
     // Instead, you would deploy your contract on your backend and reference it by id.
     // Given the simplicity of the starter contract, we are deploying it on the frontend
     // for demonstration purposes.
-    const factory = new ModeratorFactory({
+    const factory = new DmlChainFactory({
       defaultSender: activeAddress,
       algorand,
     })
-    const deployResult = await factory.send.create.createApplication().catch((e: Error) => {
-      enqueueSnackbar(`Error deploying the contract: ${e.message}`, { variant: 'error' })
-      setLoading(false)
-      return undefined
-    })
+    // const deployResult = await factory.send.create.createApplication({ args: { modelHash: 'ipfsHash' } }).catch((e: Error) => {
+    //   enqueueSnackbar(`Error deploying the contract: ${e.message}`, { variant: 'error' })
+    //   setLoading(false)
+    //   return undefined
+    // })
 
-    if (!deployResult) {
-      return
-    }
+    // if (!deployResult) {
+    //   return
+    // }
 
-    const { appClient } = deployResult
+    // const { appClient } = deployResult
+    const appClient = await factory.getAppClientById({ defaultSender: activeAddress, appId: 732728511n })
 
-    const response = await appClient.send.hello({ args: { name: contractInput } }).catch((e: Error) => {
-      enqueueSnackbar(`Error calling the contract: ${e.message}`, { variant: 'error' })
-      setLoading(false)
-      return undefined
-    })
+
+    const appClientCalling = await factory.getAppClientById({ defaultSender: activeAddress, appId: 732728511n })
+
+    const updateApplication = await appClient.send.update.updateApplication({ args: { modelHash: 'ipfsHash' } })
+    
+    const response = await appClient.send.printHash()
 
     if (!response) {
       return

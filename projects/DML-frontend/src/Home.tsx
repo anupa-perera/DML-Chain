@@ -1,32 +1,36 @@
-import { Box, Button, CircularProgress, Container, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { contractDeployer } from '../../DML-contracts/contracts/ContractDeployer'
+import { createContract, generateAccount, submitModelParams } from './utils/ContractDeployer'
+
+interface DataType {
+  model_ipfs_hash: string
+  model_params: object
+  metrics: {
+    accuracy: bigint
+    precision: bigint
+    recall: bigint
+    f1score: bigint
+  }
+  param_ipfs_hash: string
+  param_key: string
+}
 
 const App: React.FC = () => {
   const [response, setResponse] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  interface DataType {
-    model_ipfs_hash: string
-    model_params: object
-    metrics: {
-      accuracy: bigint
-      precision: bigint
-      recall: bigint
-      f1score: bigint
-    }
-    param_ipfs_hash: string
-    param_key: string
-  }
+  const [address, setAddress] = useState<string>('')
   const [data, setData] = useState<DataType | null>(null)
+  const [generatedAccount, setGeneratedAccount] = useState<string>('')
+  const [appID, setAppID] = useState<number>()
+  const [DOAddress, setDOAddress] = useState<string>('')
 
   const handleDeploy = async () => {
     if (data) {
       setLoading(true)
-
       const evaluationMetrics = data.metrics
       try {
-        await contractDeployer(
+        const contractResult = await createContract(
           data.model_ipfs_hash,
           {
             accuracy: BigInt(evaluationMetrics?.accuracy),
@@ -34,13 +38,42 @@ const App: React.FC = () => {
             recall: BigInt(evaluationMetrics?.recall),
             f1score: BigInt(evaluationMetrics?.f1score),
           },
-          { paramHash: data.param_ipfs_hash, paramKey: data.param_key },
+          address,
         )
-        setResponse('Contract deployed successfully')
+
+        const response = contractResult
+
+        setResponse(`Contract deployed successfully AppID is ${response}`)
+        setLoading(false)
       } catch (error) {
-        console.error('Error deploying contract:', error)
-        setResponse('Error deploying contract')
-      } finally {
+        setResponse(`Error deploying contract' ${error}`)
+        setLoading(false)
+      }
+    } else {
+      console.log('no data')
+    }
+  }
+
+  const handleParamsUpdate = async () => {
+    console.log(appID, 'this is app id')
+    if (data && appID) {
+      setLoading(true)
+      try {
+        const contractResult = await submitModelParams(
+          {
+            paramHash: data.param_ipfs_hash,
+            paramKey: data.param_key,
+          },
+          DOAddress,
+          BigInt(appID),
+        )
+
+        const response = contractResult
+
+        setResponse(`Contract deployed successfully AppID is ${response}`)
+        setLoading(false)
+      } catch (error) {
+        setResponse(`Error deploying contract' ${error}`)
         setLoading(false)
       }
     } else {
@@ -64,17 +97,43 @@ const App: React.FC = () => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ mt: 4, textAlign: 'center' }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h6" gutterBottom>
+          Generate Account
+        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <TextField value={generatedAccount} fullWidth variant="outlined" label="Create Account" />
+          <Button
+            disabled={loading}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 1 }}
+            onClick={() => {
+              setLoading(true)
+              const generatedAccount = generateAccount()
+              setGeneratedAccount(generatedAccount)
+              navigator.clipboard.writeText(generatedAccount)
+              setLoading(false)
+            }}
+          >
+            generate Account
+          </Button>
+        </Box>
+        <Typography variant="h6" gutterBottom>
           Deploy Contract
         </Typography>
-        <Typography sx={{ mb: 2 }}>{data?.model_ipfs_hash}</Typography>
+        <TextField
+          fullWidth
+          label="Wallet Address"
+          variant="outlined"
+          margin="normal"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
         <Button variant="contained" color="primary" onClick={handleDeploy} disabled={loading} fullWidth>
           {loading ? <CircularProgress size={24} /> : 'Deploy'}
         </Button>
-        <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
-          {response}
-        </Typography>
       </Box>
+      <Box> {response}</Box>
       <Box
         sx={{
           mt: 4,
@@ -89,12 +148,6 @@ const App: React.FC = () => {
             component="pre"
             sx={{
               textAlign: 'left',
-              borderRadius: 1,
-              width: '600px',
-              bgcolor: '#f5f5f5',
-              '&:hover': {
-                bgcolor: '#f0f0f0',
-              },
             }}
           >
             {JSON.stringify(data, null, 1)}
@@ -103,6 +156,55 @@ const App: React.FC = () => {
           <CircularProgress size={20} />
         )}
       </Box>
+      <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        Store Model Params
+      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ minWidth: '150px' }}>Enter Account</Typography>
+        <TextField
+          fullWidth
+          label="Account"
+          variant="outlined"
+          margin="normal"
+          placeholder="Enter your account"
+          onChange={(e) => setDOAddress(e.target.value)}
+          required
+        />
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ minWidth: '150px' }}>Enter AppID</Typography>
+        <TextField
+          fullWidth
+          label="AppID"
+          variant="outlined"
+          margin="normal"
+          placeholder="Enter your account"
+          onChange={(e) => {
+            const value = Number(e.target.value)
+            console.log('AppID Input Value:', value) // Log input value
+            setAppID(value)
+          }}
+          required
+          type="number"
+        />
+      </Box>
+      {data ? (
+        <Box
+          component="pre"
+          sx={{
+            textAlign: 'left',
+          }}
+        >
+          Params IPFS Hash: {JSON.stringify(data.model_ipfs_hash, null, 1)}
+          <br />
+          Params Key: {JSON.stringify(data.param_key, null, 1)}
+        </Box>
+      ) : (
+        <CircularProgress size={20} />
+      )}
+      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleParamsUpdate} disabled={loading}>
+        Store Model Params
+      </Button>
     </Container>
   )
 }
