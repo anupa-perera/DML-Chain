@@ -1,6 +1,6 @@
 import * as algokit from '@algorandfoundation/algokit-utils'
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import algosdk from 'algosdk'
+import algosdk, { encodeAddress } from 'algosdk'
 import { DmlChainFactory } from '../contracts/DMLChain'
 
 type Classification = {
@@ -34,7 +34,7 @@ export const createContract = async (ipfsHash: string, modelEvaluation: Classifi
 
   const mnoAccount = algorand.account.fromMnemonic(address)
 
-  algorand.send.payment({
+  await algorand.send.payment({
     sender: dispenser.addr,
     receiver: mnoAccount.account.addr,
     amount: (10).algo(),
@@ -69,23 +69,6 @@ export const createContract = async (ipfsHash: string, modelEvaluation: Classifi
 
   console.log('this is getbox', getBox.return)
 
-  const parameterData: ParamsData = {
-    paramHash: 'test',
-    paramKey: 'test',
-  }
-
-  const BoxMBRPay = await algorand.createTransaction.payment({
-    sender: mnoAccount.account.addr,
-    receiver: client.appAddress,
-    amount: (1).algo(),
-  })
-
-  const storeModelParameters = await client.send.storeModelParams({
-    args: { mbrPay: BoxMBRPay, address: mnoAccount.account.addr, paramsData: parameterData },
-  })
-
-  console.log('storing params', storeModelParameters)
-
   return appID
 
   // const performMetricEvaluation = await client.send.classModelSelectionCriteria({
@@ -100,23 +83,6 @@ export const createContract = async (ipfsHash: string, modelEvaluation: Classifi
   // console.log('Boxes:', boxes);
 
   // console.log('ÍDs', boxIDs);
-
-  // boxIDs.forEach(async (box) => {
-  //   if (Object.keys(box.nameRaw).length === 32) {
-  //     try {
-  //       const extAddr = encodeAddress(box.nameRaw);
-  //       console.log(extAddr, 'this is ext addr');
-  //       const getParams = await (await client.send.getBoxValue({ args: { address: extAddr } })).return;
-  //       const paramHash = getParams?.paramHash;
-  //       const paramKey = getParams?.paramKey;
-  //       console.log(paramHash, paramKey);
-  //     } catch (error) {
-  //       console.error(`Error fetching box value for ${box.name}`, error);
-  //     }
-  //   } else {
-  //     console.warn(`Skipped API call for box with name: ${box.name} due to being <32 for address type`);
-  //   }
-  // });
 }
 
 export const submitModelParams = async (ParameterData: ParamsData, DOAddress: string, appID: bigint) => {
@@ -132,8 +98,12 @@ export const submitModelParams = async (ParameterData: ParamsData, DOAddress: st
   algorand.send.payment({
     sender: dispenser.addr,
     receiver: mnoAccount.account.addr,
-    amount: (100).algo(),
+    amount: (30000).algo(),
   })
+
+  const chkBal = await algorand.account.getInformation(mnoAccount.account.addr)
+
+  console.log('chking balanace', chkBal)
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
     defaultSender: mnoAccount.account.addr,
@@ -154,8 +124,36 @@ export const submitModelParams = async (ParameterData: ParamsData, DOAddress: st
   })
 
   console.log(storeModelParameters, 'storing params')
+}
+
+export const getStoredModelParams = async (MOAddress: string, appID: bigint) => {
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  const mnoAccount = algorand.account.fromMnemonic(MOAddress)
+
+  const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
+    defaultSender: mnoAccount.account.addr,
+  })
+
+  const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
 
   const boxIDs = await algorand.app.getBoxNames(appID)
 
   console.log('there are boxes', boxIDs)
+
+  boxIDs.forEach(async (box) => {
+    if (Object.keys(box.nameRaw).length === 32) {
+      try {
+        const extAddr = encodeAddress(box.nameRaw)
+        const getParams = await (await client.send.getBoxValue({ args: { address: extAddr } })).return
+        const paramHash = getParams?.paramHash
+        const paramKey = getParams?.paramKey
+        console.log('these are params for address', extAddr, 'hash - ', paramHash, 'paramskey -', paramKey)
+      } catch (error) {
+        console.error(`Error fetching box value for ${box.name}`, error)
+      }
+    } else {
+      console.warn(`Skipped API call for box with name: ${box.name} due to being <32 for address type`)
+    }
+  })
 }

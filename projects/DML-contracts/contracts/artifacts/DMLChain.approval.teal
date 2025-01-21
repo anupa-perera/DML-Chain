@@ -518,7 +518,17 @@ regModelSelectionCriteria:
 storeModelParams:
 	proto 3 0
 
+	// *if2_condition
 	// contracts\Moderator.algo.ts:111
+	// this.paramsData(Address).exists
+	frame_dig -2 // Address: Address
+	box_len
+	swap
+	pop
+	bz *if2_else
+
+	// *if2_consequent
+	// contracts\Moderator.algo.ts:112
 	// verifyTxn(this.txn, { sender: this.txn.sender })
 	// verify sender
 	txn Sender
@@ -528,12 +538,12 @@ storeModelParams:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.txn.sender"}
 	assert
 
-	// contracts\Moderator.algo.ts:112
+	// contracts\Moderator.algo.ts:113
 	// verifyPayTxn(mbrPay, {
-	//       sender: this.txn.sender,
-	//       receiver: this.app.address,
-	//       amount: boxMbr,
-	//     })
+	//         sender: this.txn.sender,
+	//         receiver: this.app.address,
+	//         amount: boxMbr,
+	//       })
 	// verify sender
 	frame_dig -1 // mbrPay: PayTxn
 	gtxns Sender
@@ -561,13 +571,6 @@ storeModelParams:
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
-	// contracts\Moderator.algo.ts:118
-	// this.paramsData(Address).create(32)
-	frame_dig -2 // Address: Address
-	intc 2 // 32
-	box_create
-	pop
-
 	// contracts\Moderator.algo.ts:119
 	// this.paramsData(Address).value = paramsData
 	frame_dig -2 // Address: Address
@@ -576,6 +579,69 @@ storeModelParams:
 	pop
 	frame_dig -3 // paramsData: ParamsData
 	box_put
+	b *if2_end
+
+*if2_else:
+	// contracts\Moderator.algo.ts:121
+	// verifyTxn(this.txn, { sender: this.txn.sender })
+	// verify sender
+	txn Sender
+	txn Sender
+	==
+
+	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.txn.sender"}
+	assert
+
+	// contracts\Moderator.algo.ts:122
+	// verifyPayTxn(mbrPay, {
+	//         sender: this.txn.sender,
+	//         receiver: this.app.address,
+	//         amount: boxMbr,
+	//       })
+	// verify sender
+	frame_dig -1 // mbrPay: PayTxn
+	gtxns Sender
+	txn Sender
+	==
+
+	// transaction verification failed: {"txn":"mbrPay","field":"sender","expected":"this.txn.sender"}
+	assert
+
+	// verify receiver
+	frame_dig -1 // mbrPay: PayTxn
+	gtxns Receiver
+	global CurrentApplicationAddress
+	==
+
+	// transaction verification failed: {"txn":"mbrPay","field":"receiver","expected":"this.app.address"}
+	assert
+
+	// verify amount
+	frame_dig -1 // mbrPay: PayTxn
+	gtxns Amount
+	intc 3 // 1000000
+	==
+
+	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
+	assert
+
+	// contracts\Moderator.algo.ts:128
+	// this.paramsData(Address).create(32)
+	frame_dig -2 // Address: Address
+	intc 2 // 32
+	box_create
+	pop
+
+	// contracts\Moderator.algo.ts:129
+	// this.paramsData(Address).value = paramsData
+	frame_dig -2 // Address: Address
+	dup
+	box_del
+	pop
+	frame_dig -3 // paramsData: ParamsData
+	box_put
+
+*if2_end:
 	retsub
 
 // getBoxValue(address)(string,string)
@@ -604,7 +670,7 @@ storeModelParams:
 getBoxValue:
 	proto 1 1
 
-	// contracts\Moderator.algo.ts:124
+	// contracts\Moderator.algo.ts:135
 	// assert(this.paramsData(Address).exists)
 	frame_dig -1 // Address: Address
 	box_len
@@ -612,7 +678,7 @@ getBoxValue:
 	pop
 	assert
 
-	// contracts\Moderator.algo.ts:125
+	// contracts\Moderator.algo.ts:136
 	// return this.paramsData(Address).value;
 	frame_dig -1 // Address: Address
 	box_get
@@ -632,7 +698,7 @@ getBoxValue:
 deleteApplication:
 	proto 0 0
 
-	// contracts\Moderator.algo.ts:130
+	// contracts\Moderator.algo.ts:141
 	// assert(this.txn.sender === this.app.creator)
 	txn Sender
 	txna Applications 0

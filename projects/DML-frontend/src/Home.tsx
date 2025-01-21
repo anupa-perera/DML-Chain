@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { createContract, generateAccount, submitModelParams } from './utils/ContractDeployer'
+import { createContract, generateAccount, getStoredModelParams, submitModelParams } from './utils/ContractDeployer'
 
 interface DataType {
   model_ipfs_hash: string
@@ -55,7 +55,6 @@ const App: React.FC = () => {
   }
 
   const handleParamsUpdate = async () => {
-    console.log(appID, 'this is app id')
     if (data && appID) {
       setLoading(true)
       try {
@@ -70,14 +69,29 @@ const App: React.FC = () => {
 
         const response = contractResult
 
-        setResponse(`Contract deployed successfully AppID is ${response}`)
+        console.log(`Contract deployed successfully AppID is ${response}`)
         setLoading(false)
       } catch (error) {
-        setResponse(`Error deploying contract' ${error}`)
+        console.log(`Error deploying contract' ${error}`)
         setLoading(false)
       }
     } else {
       console.log('no data')
+    }
+  }
+
+  const handleGetAllModelParams = async () => {
+    if (address && appID) {
+      try {
+        setLoading(true)
+        await getStoredModelParams(address, BigInt(appID))
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+      }
+    } else {
+      console.log('missing data', address, appID)
     }
   }
 
@@ -204,6 +218,32 @@ const App: React.FC = () => {
       )}
       <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleParamsUpdate} disabled={loading}>
         Store Model Params
+      </Button>
+      <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        Get All Model Params
+      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ minWidth: '150px' }}>Model Owner Account</Typography>
+        <Typography sx={{ minWidth: '150px' }}>{address}</Typography>
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ minWidth: '150px' }}>Enter AppID</Typography>
+        <TextField
+          fullWidth
+          label="AppID"
+          variant="outlined"
+          margin="normal"
+          placeholder="Enter your Contract ID"
+          onChange={(e) => {
+            const value = Number(e.target.value)
+            setAppID(value)
+          }}
+          required
+          type="number"
+        />
+      </Box>
+      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleGetAllModelParams} disabled={loading}>
+        Get All Model Params
       </Button>
     </Container>
   )

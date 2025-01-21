@@ -108,15 +108,26 @@ export class DMLChain extends Contract {
 
   // store model parameters
   storeModelParams(mbrPay: PayTxn, Address: Address, paramsData: ParamsData): void {
-    verifyTxn(this.txn, { sender: this.txn.sender });
-    verifyPayTxn(mbrPay, {
-      sender: this.txn.sender,
-      receiver: this.app.address,
-      amount: boxMbr,
-    });
+    if (this.paramsData(Address).exists) {
+      verifyTxn(this.txn, { sender: this.txn.sender });
+      verifyPayTxn(mbrPay, {
+        sender: this.txn.sender,
+        receiver: this.app.address,
+        amount: boxMbr,
+      });
 
-    this.paramsData(Address).create(32);
-    this.paramsData(Address).value = paramsData;
+      this.paramsData(Address).value = paramsData;
+    } else {
+      verifyTxn(this.txn, { sender: this.txn.sender });
+      verifyPayTxn(mbrPay, {
+        sender: this.txn.sender,
+        receiver: this.app.address,
+        amount: boxMbr,
+      });
+
+      this.paramsData(Address).create(32);
+      this.paramsData(Address).value = paramsData;
+    }
   }
 
   // get model params by address reference
