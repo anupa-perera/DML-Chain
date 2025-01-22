@@ -65,7 +65,7 @@
         }
       ],
       "returns": {
-        "type": "string"
+        "type": "bool"
       }
     },
     {

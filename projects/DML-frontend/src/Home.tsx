@@ -1,7 +1,8 @@
 import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { createContract, generateAccount, getStoredModelParams, submitModelParams } from './utils/ContractDeployer'
+import { createContract, generateAccount, getStoredModelParams, modelSelectionCriteria, submitModelParams } from './utils/ContractDeployer'
+import { multiplyAndRound } from './utils/methods'
 
 interface DataType {
   model_ipfs_hash: string
@@ -33,10 +34,10 @@ const App: React.FC = () => {
         const contractResult = await createContract(
           data.model_ipfs_hash,
           {
-            accuracy: BigInt(evaluationMetrics?.accuracy),
-            precision: BigInt(evaluationMetrics?.precision),
-            recall: BigInt(evaluationMetrics?.recall),
-            f1score: BigInt(evaluationMetrics?.f1score),
+            accuracy: evaluationMetrics.accuracy ? multiplyAndRound(Number(evaluationMetrics?.accuracy)) : 0n,
+            precision: evaluationMetrics.precision ? multiplyAndRound(Number(evaluationMetrics?.precision)) : 0n,
+            recall: evaluationMetrics.recall ? multiplyAndRound(Number(evaluationMetrics?.recall)) : 0n,
+            f1score: evaluationMetrics.f1score ? multiplyAndRound(Number(evaluationMetrics?.f1score)) : 0n,
           },
           address,
         )
@@ -54,26 +55,32 @@ const App: React.FC = () => {
     }
   }
 
-  const handleParamsUpdate = async () => {
+  const handlesubmitModelParams = async () => {
     if (data && appID) {
       setLoading(true)
-      try {
-        const contractResult = await submitModelParams(
-          {
-            paramHash: data.param_ipfs_hash,
-            paramKey: data.param_key,
-          },
-          DOAddress,
-          BigInt(appID),
-        )
+      const acceptanceCriteria = await modelSelectionCriteria(address, BigInt(appID))
+      if (acceptanceCriteria) {
+        console.log('Model has been accepted for further consideration', acceptanceCriteria)
+        try {
+          const contractResult = await submitModelParams(
+            {
+              paramHash: data.param_ipfs_hash,
+              paramKey: data.param_key,
+            },
+            DOAddress,
+            BigInt(appID),
+          )
 
-        const response = contractResult
+          const response = contractResult
 
-        console.log(`Contract deployed successfully AppID is ${response}`)
-        setLoading(false)
-      } catch (error) {
-        console.log(`Error deploying contract' ${error}`)
-        setLoading(false)
+          console.log(`Contract deployed successfully AppID is ${response}`)
+          setLoading(false)
+        } catch (error) {
+          console.log(`Error deploying contract' ${error}`)
+          setLoading(false)
+        }
+      } else {
+        console.log('failed the minimum requirements', acceptanceCriteria)
       }
     } else {
       console.log('no data')
@@ -216,7 +223,7 @@ const App: React.FC = () => {
       ) : (
         <CircularProgress size={20} />
       )}
-      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleParamsUpdate} disabled={loading}>
+      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handlesubmitModelParams} disabled={loading}>
         Store Model Params
       </Button>
       <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>

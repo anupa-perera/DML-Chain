@@ -73,7 +73,7 @@ export class DMLChain extends Contract {
   }
 
   // model selection criteria for classification models
-  classModelSelectionCriteria(modelEvaluationMetrics: Classification): string {
+  classModelSelectionCriteria(modelEvaluationMetrics: Classification): boolean {
     assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists);
     const baselineClassMetrics = this.classificationPerformanceMetrics('InitialModelMetrics').value;
     if (
@@ -81,9 +81,9 @@ export class DMLChain extends Contract {
       modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
       modelEvaluationMetrics.recall >= baselineClassMetrics.recall
     ) {
-      return 'Model has been accepted for further consideration';
+      return true;
     }
-    return 'failed the minimum requirements';
+    return false;
   }
 
   // store Regression model selection criteria

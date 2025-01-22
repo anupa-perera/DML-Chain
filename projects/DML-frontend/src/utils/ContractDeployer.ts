@@ -54,35 +54,45 @@ export const createContract = async (ipfsHash: string, modelEvaluation: Classifi
     amount: (1).algo(),
   })
 
-  const createBox = await client.send
-    .storeClassificationSelectionCriteria({
-      args: {
-        evaluationMetrics: modelEvaluation,
-        mbrPay: mbrPayFirstDeposit,
-      },
-    })
-    .then((response) => response.confirmation)
+  const createBox = await client.send.storeClassificationSelectionCriteria({
+    args: {
+      evaluationMetrics: modelEvaluation,
+      mbrPay: mbrPayFirstDeposit,
+    },
+  })
 
   console.log('this is create box', createBox)
 
-  const getBox = await client.send.getClassificationCriteria()
+  const getStoredcriteria = await client.send.getClassificationCriteria()
 
-  console.log('this is getbox', getBox.return)
+  console.log(getStoredcriteria, 'these are the metrics')
 
   return appID
+}
 
-  // const performMetricEvaluation = await client.send.classModelSelectionCriteria({
-  //   args: { modelEvaluationMetrics: modelEvaluation },
-  // });
+export const modelSelectionCriteria = async (DOAddress: string, appID: bigint) => {
+  const algorand = AlgorandClient.defaultLocalNet()
+  algorand.setDefaultValidityWindow(1000)
 
-  // console.log(performMetricEvaluation.return);
+  const criteria: Classification = {
+    accuracy: 100n,
+    precision: 10n,
+    recall: 100n,
+    f1score: 1000n,
+  }
 
-  // const boxIDs = await algorand.app.getBoxNames(appID);
+  const mnoAccount = algorand.account.fromMnemonic(DOAddress)
 
-  // const boxes = await client.appClient.getBoxNames();
-  // console.log('Boxes:', boxes);
+  const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
+    defaultSender: mnoAccount.account.addr,
+  })
 
-  // console.log('ÍDs', boxIDs);
+  const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
+  const modelSelectionCriteria = await client.send.classModelSelectionCriteria({
+    args: { modelEvaluationMetrics: criteria },
+  })
+
+  return modelSelectionCriteria.return
 }
 
 export const submitModelParams = async (ParameterData: ParamsData, DOAddress: string, appID: bigint) => {
@@ -93,25 +103,17 @@ export const submitModelParams = async (ParameterData: ParamsData, DOAddress: st
 
   const dispenser = await algorand.account.localNetDispenser()
 
-  console.log('this is mno account', mnoAccount)
-
-  algorand.send.payment({
+  await algorand.send.payment({
     sender: dispenser.addr,
     receiver: mnoAccount.account.addr,
-    amount: (30000).algo(),
+    amount: (1).algo(),
   })
-
-  const chkBal = await algorand.account.getInformation(mnoAccount.account.addr)
-
-  console.log('chking balanace', chkBal)
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
     defaultSender: mnoAccount.account.addr,
   })
 
   const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
-
-  console.log('this is client return', client)
 
   const BoxMBRPay = await algorand.createTransaction.payment({
     sender: mnoAccount.account.addr,
