@@ -79,7 +79,8 @@ export class DMLChain extends Contract {
     if (
       modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&
       modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
-      modelEvaluationMetrics.recall >= baselineClassMetrics.recall
+      modelEvaluationMetrics.recall >= baselineClassMetrics.recall &&
+      modelEvaluationMetrics.f1score >= baselineClassMetrics.f1score
     ) {
       return true;
     }
@@ -132,6 +133,7 @@ export class DMLChain extends Contract {
 
   // get model params by address reference
   getBoxValue(Address: Address): ParamsData {
+    verifyTxn(this.txn, { sender: this.app.creator });
     assert(this.paramsData(Address).exists);
     return this.paramsData(Address).value;
   }

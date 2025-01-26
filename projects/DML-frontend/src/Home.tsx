@@ -1,8 +1,14 @@
 import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { createContract, generateAccount, getStoredModelParams, modelSelectionCriteria, submitModelParams } from './utils/ContractDeployer'
-import { multiplyAndRound } from './utils/methods'
+import {
+  createContract,
+  generateAccount,
+  getIpfsHash,
+  getStoredModelParams,
+  modelSelectionCriteria,
+  submitModelParams,
+} from './utils/ContractDeployer'
 
 interface DataType {
   model_ipfs_hash: string
@@ -21,10 +27,14 @@ const App: React.FC = () => {
   const [response, setResponse] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [address, setAddress] = useState<string>('')
+  const [publicAddress, setPublicAddress] = useState<string>('')
   const [data, setData] = useState<DataType | null>(null)
   const [generatedAccount, setGeneratedAccount] = useState<string>('')
   const [appID, setAppID] = useState<number>()
   const [DOAddress, setDOAddress] = useState<string>('')
+  const [MOAddress, setMOAddress] = useState<string>('')
+  const [ipfsHash, setIpfsHash] = useState<string>('')
+  const [paramsData, setParamsData] = useState<Record<string, { paramHash: string; paramKey: string }> | null>(null)
 
   const handleDeploy = async () => {
     if (data) {
@@ -34,16 +44,15 @@ const App: React.FC = () => {
         const contractResult = await createContract(
           data.model_ipfs_hash,
           {
-            accuracy: evaluationMetrics.accuracy ? multiplyAndRound(Number(evaluationMetrics?.accuracy)) : 0n,
-            precision: evaluationMetrics.precision ? multiplyAndRound(Number(evaluationMetrics?.precision)) : 0n,
-            recall: evaluationMetrics.recall ? multiplyAndRound(Number(evaluationMetrics?.recall)) : 0n,
-            f1score: evaluationMetrics.f1score ? multiplyAndRound(Number(evaluationMetrics?.f1score)) : 0n,
+            accuracy: evaluationMetrics?.accuracy,
+            precision: evaluationMetrics?.precision,
+            recall: evaluationMetrics?.recall,
+            f1score: evaluationMetrics?.f1score,
           },
-          address,
+          generatedAccount,
         )
 
         const response = contractResult
-
         setResponse(`Contract deployed successfully AppID is ${response}`)
         setLoading(false)
       } catch (error) {
@@ -58,10 +67,10 @@ const App: React.FC = () => {
   const handlesubmitModelParams = async () => {
     if (data && appID) {
       setLoading(true)
-      const acceptanceCriteria = await modelSelectionCriteria(address, BigInt(appID))
-      if (acceptanceCriteria) {
-        console.log('Model has been accepted for further consideration', acceptanceCriteria)
-        try {
+      try {
+        const acceptanceCriteria = await modelSelectionCriteria(address, BigInt(appID), data.metrics)
+        if (acceptanceCriteria) {
+          console.log('Model has been accepted for further consideration', acceptanceCriteria)
           const contractResult = await submitModelParams(
             {
               paramHash: data.param_ipfs_hash,
@@ -71,16 +80,14 @@ const App: React.FC = () => {
             BigInt(appID),
           )
 
-          const response = contractResult
-
-          console.log(`Contract deployed successfully AppID is ${response}`)
-          setLoading(false)
-        } catch (error) {
-          console.log(`Error deploying contract' ${error}`)
-          setLoading(false)
+          contractResult
+        } else {
+          console.log('failed the minimum requirements', acceptanceCriteria)
         }
-      } else {
-        console.log('failed the minimum requirements', acceptanceCriteria)
+      } catch (error) {
+        console.log(`Error deploying contract' ${error}`)
+      } finally {
+        setLoading(false)
       }
     } else {
       console.log('no data')
@@ -91,10 +98,47 @@ const App: React.FC = () => {
     if (address && appID) {
       try {
         setLoading(true)
-        await getStoredModelParams(address, BigInt(appID))
-        setLoading(false)
+        const allStoredParams = await getStoredModelParams(MOAddress, BigInt(appID))
+        setParamsData(allStoredParams)
       } catch (error) {
         console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      console.log('missing data', address, appID)
+    }
+  }
+
+  const retriveModelFile = async () => {
+    if (appID) {
+      try {
+        setLoading(true)
+        const ipfsHash = await getIpfsHash(BigInt(appID))
+
+        if (ipfsHash) {
+          setIpfsHash(ipfsHash)
+        }
+        const response = await axios.get(`http://127.0.0.1:5000/retrieve-model/${ipfsHash}`, {
+          responseType: 'blob', // Important for binary data
+        })
+
+        // Create download link
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${ipfsHash}_model.ipynb`)
+
+        // Trigger download
+        document.body.appendChild(link)
+        link.click()
+
+        // Cleanup
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(link)
+      } catch (error) {
+        console.log(error)
+      } finally {
         setLoading(false)
       }
     } else {
@@ -123,6 +167,9 @@ const App: React.FC = () => {
         </Typography>
         <Box sx={{ mb: 2 }}>
           <TextField value={generatedAccount} fullWidth variant="outlined" label="Create Account" />
+          <Typography variant="body1" sx={{ mt: 1, mb: 1, fontFamily: 'monospace', wordBreak: 'break-all' }}>
+            {publicAddress || 'No address generated yet'}
+          </Typography>
           <Button
             disabled={loading}
             fullWidth
@@ -131,13 +178,36 @@ const App: React.FC = () => {
             onClick={() => {
               setLoading(true)
               const generatedAccount = generateAccount()
-              setGeneratedAccount(generatedAccount)
-              navigator.clipboard.writeText(generatedAccount)
+              setGeneratedAccount(generatedAccount.mnemonic)
+              setPublicAddress(generatedAccount.address)
+              navigator.clipboard.writeText(generatedAccount.mnemonic)
               setLoading(false)
             }}
           >
             generate Account
           </Button>
+          <Box
+            sx={{
+              mt: 4,
+              bgcolor: 'background.paper',
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Data Preview
+            </Typography>
+            {data ? (
+              <Box
+                component="pre"
+                sx={{
+                  textAlign: 'left',
+                }}
+              >
+                {JSON.stringify(data, null, 1)}
+              </Box>
+            ) : (
+              <CircularProgress size={20} />
+            )}
+          </Box>
         </Box>
         <Typography variant="h6" gutterBottom>
           Deploy Contract
@@ -155,39 +225,45 @@ const App: React.FC = () => {
         </Button>
       </Box>
       <Box> {response}</Box>
-      <Box
-        sx={{
-          mt: 4,
-          bgcolor: 'background.paper',
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Data Preview
-        </Typography>
-        {data ? (
-          <Box
-            component="pre"
-            sx={{
-              textAlign: 'left',
-            }}
-          >
-            {JSON.stringify(data, null, 1)}
-          </Box>
-        ) : (
-          <CircularProgress size={20} />
-        )}
+
+      <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+        {' '}
+        Retrieve the model
+      </Typography>
+
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography sx={{ minWidth: '150px' }}>Enter AppID</Typography>
+        <TextField
+          fullWidth
+          label="AppID"
+          variant="outlined"
+          margin="normal"
+          placeholder="Enter your Contract ID"
+          onChange={(e) => {
+            const value = Number(e.target.value)
+            setAppID(value)
+            console.log('AppID Input Value:', appID)
+          }}
+          required
+          type="number"
+        />
       </Box>
+
+      <Box> Model IPFS HASH is {ipfsHash}</Box>
+      <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={retriveModelFile} disabled={loading}>
+        Retrieve Model file
+      </Button>
       <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
         Store Model Params
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography sx={{ minWidth: '150px' }}>Enter Account</Typography>
+        <Typography sx={{ minWidth: '150px' }}>Enter Account Address</Typography>
         <TextField
           fullWidth
           label="Account"
           variant="outlined"
           margin="normal"
-          placeholder="Enter your account"
+          placeholder="Enter your account address"
           onChange={(e) => setDOAddress(e.target.value)}
           required
         />
@@ -202,7 +278,7 @@ const App: React.FC = () => {
           placeholder="Enter your account"
           onChange={(e) => {
             const value = Number(e.target.value)
-            console.log('AppID Input Value:', value) // Log input value
+            console.log('AppID Input Value:', value)
             setAppID(value)
           }}
           required
@@ -231,7 +307,15 @@ const App: React.FC = () => {
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography sx={{ minWidth: '150px' }}>Model Owner Account</Typography>
-        <Typography sx={{ minWidth: '150px' }}>{address}</Typography>
+        <TextField
+          fullWidth
+          label="Account"
+          variant="outlined"
+          margin="normal"
+          placeholder="Enter your account address"
+          onChange={(e) => setMOAddress(e.target.value)}
+          required
+        />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography sx={{ minWidth: '150px' }}>Enter AppID</Typography>
@@ -248,6 +332,43 @@ const App: React.FC = () => {
           required
           type="number"
         />
+      </Box>
+      <Box>
+        {paramsData && (
+          <>
+            <Typography variant="subtitle2" gutterBottom>
+              Stored Model Parameters:
+            </Typography>
+            {Object.entries(paramsData).map(([key, value]) => (
+              <Box key={key} sx={{ mb: 1 }}>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Typography variant="caption" sx={{ minWidth: 80 }}>
+                    DO Address
+                  </Typography>
+                  <Typography variant="caption" sx={{ flex: 1 }}>
+                    {key}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Typography variant="caption" sx={{ minWidth: 80 }}>
+                    Hash
+                  </Typography>
+                  <Typography variant="caption" sx={{ flex: 1 }}>
+                    {value.paramHash}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Typography variant="caption" sx={{ minWidth: 80 }}>
+                    Key
+                  </Typography>
+                  <Typography variant="caption" sx={{ flex: 1 }}>
+                    {value.paramKey}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </>
+        )}
       </Box>
       <Button fullWidth variant="contained" sx={{ mt: 1 }} onClick={handleGetAllModelParams} disabled={loading}>
         Get All Model Params

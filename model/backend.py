@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
+from ipfs_configs import retrieve_model
 
 app = Flask(__name__)
 CORS(app)
@@ -21,5 +22,21 @@ def update_data():
     shared_data = request.json
     return jsonify({"message": "Data updated successfully"}), 200
 
+@app.route('/retrieve-model/<ipfs_hash>', methods=['GET'])
+def get_ipfs_model(ipfs_hash):
+    """Endpoint to retrieve and download model from IPFS."""
+    try:
+        filepath = retrieve_model(ipfs_hash)
+        return send_file(
+            filepath,
+            as_attachment=True,
+            download_name=f'{ipfs_hash}_model.ipynb',
+            mimetype='application/x-ipynb+json'
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+

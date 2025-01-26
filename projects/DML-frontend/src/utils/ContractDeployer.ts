@@ -24,10 +24,14 @@ export const generateAccount = () => {
   console.log('myAccount:', acc)
   console.log('Account address as string:', acc.addr.toString())
   console.log('Private key as mnemonic:', algosdk.secretKeyToMnemonic(acc.sk))
-  return algosdk.secretKeyToMnemonic(acc.sk)
+  return {
+    mnemonic: algosdk.secretKeyToMnemonic(acc.sk),
+    address: acc.addr,
+  }
 }
 
 export const createContract = async (ipfsHash: string, modelEvaluation: Classification, address: string) => {
+  console.log('inside create contract', ipfsHash, modelEvaluation, address)
   const algorand = AlgorandClient.defaultLocalNet()
 
   const dispenser = await algorand.account.localNetDispenser()
@@ -54,32 +58,21 @@ export const createContract = async (ipfsHash: string, modelEvaluation: Classifi
     amount: (1).algo(),
   })
 
-  const createBox = await client.send.storeClassificationSelectionCriteria({
+  await client.send.storeClassificationSelectionCriteria({
     args: {
       evaluationMetrics: modelEvaluation,
       mbrPay: mbrPayFirstDeposit,
     },
   })
 
-  console.log('this is create box', createBox)
-
-  const getStoredcriteria = await client.send.getClassificationCriteria()
-
-  console.log(getStoredcriteria, 'these are the metrics')
+  await client.send.getClassificationCriteria()
 
   return appID
 }
 
-export const modelSelectionCriteria = async (DOAddress: string, appID: bigint) => {
+export const modelSelectionCriteria = async (DOAddress: string, appID: bigint, selectionCriteria: Classification) => {
   const algorand = AlgorandClient.defaultLocalNet()
   algorand.setDefaultValidityWindow(1000)
-
-  const criteria: Classification = {
-    accuracy: 100n,
-    precision: 10n,
-    recall: 100n,
-    f1score: 1000n,
-  }
 
   const mnoAccount = algorand.account.fromMnemonic(DOAddress)
 
@@ -89,7 +82,7 @@ export const modelSelectionCriteria = async (DOAddress: string, appID: bigint) =
 
   const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
   const modelSelectionCriteria = await client.send.classModelSelectionCriteria({
-    args: { modelEvaluationMetrics: criteria },
+    args: { modelEvaluationMetrics: selectionCriteria },
   })
 
   return modelSelectionCriteria.return
@@ -100,14 +93,6 @@ export const submitModelParams = async (ParameterData: ParamsData, DOAddress: st
   algorand.setDefaultValidityWindow(1000)
 
   const mnoAccount = algorand.account.fromMnemonic(DOAddress)
-
-  const dispenser = await algorand.account.localNetDispenser()
-
-  await algorand.send.payment({
-    sender: dispenser.addr,
-    receiver: mnoAccount.account.addr,
-    amount: (1).algo(),
-  })
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
     defaultSender: mnoAccount.account.addr,
@@ -139,23 +124,52 @@ export const getStoredModelParams = async (MOAddress: string, appID: bigint) => 
 
   const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
 
-  const boxIDs = await algorand.app.getBoxNames(appID)
+  try {
+    const boxIDs = await algorand.app.getBoxNames(appID)
 
-  console.log('there are boxes', boxIDs)
+    const paramsMap: Record<string, { paramHash: string; paramKey: string }> = {}
 
-  boxIDs.forEach(async (box) => {
-    if (Object.keys(box.nameRaw).length === 32) {
-      try {
-        const extAddr = encodeAddress(box.nameRaw)
-        const getParams = await (await client.send.getBoxValue({ args: { address: extAddr } })).return
-        const paramHash = getParams?.paramHash
-        const paramKey = getParams?.paramKey
-        console.log('these are params for address', extAddr, 'hash - ', paramHash, 'paramskey -', paramKey)
-      } catch (error) {
-        console.error(`Error fetching box value for ${box.name}`, error)
+    for (const box of boxIDs) {
+      if (Object.keys(box.nameRaw).length === 32) {
+        try {
+          const extAddr = encodeAddress(box.nameRaw)
+          const getParams = await (await client.send.getBoxValue({ args: { address: extAddr } })).return
+
+          if (getParams?.paramHash && getParams?.paramKey) {
+            paramsMap[extAddr] = {
+              paramHash: getParams.paramHash,
+              paramKey: getParams.paramKey,
+            }
+          }
+
+          console.log('Added params for address', extAddr, paramsMap[extAddr])
+        } catch (error) {
+          console.error(`Error fetching box value for ${box.name}`, error)
+        }
       }
-    } else {
-      console.warn(`Skipped API call for box with name: ${box.name} due to being <32 for address type`)
     }
+
+    return paramsMap
+  } catch (error) {
+    return {} as Record<string, { paramHash: string; paramKey: string }>
+  }
+}
+
+export const getIpfsHash = async (appID: bigint) => {
+  const algorand = AlgorandClient.defaultLocalNet()
+  algorand.setDefaultValidityWindow(1000)
+
+  const randAcc = generateAccount().mnemonic
+
+  const mnoAccount = algorand.account.fromMnemonic(randAcc)
+
+  const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
+    defaultSender: mnoAccount.account.addr,
   })
+
+  const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
+
+  const ipfsHash = await client.state.global.ipfsHash()
+
+  return ipfsHash
 }
