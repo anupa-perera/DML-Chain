@@ -27,12 +27,7 @@ def get_ipfs_model(ipfs_hash):
     """Endpoint to retrieve and download model from IPFS."""
     try:
         filepath = retrieve_model(ipfs_hash)
-        return send_file(
-            filepath,
-            as_attachment=True,
-            download_name=f'{ipfs_hash}_model.ipynb',
-            mimetype='application/x-ipynb+json'
-        )
+        return filepath
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

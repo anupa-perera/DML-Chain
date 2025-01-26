@@ -119,23 +119,7 @@ const App: React.FC = () => {
         if (ipfsHash) {
           setIpfsHash(ipfsHash)
         }
-        const response = await axios.get(`http://127.0.0.1:5000/retrieve-model/${ipfsHash}`, {
-          responseType: 'blob', // Important for binary data
-        })
-
-        // Create download link
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', `${ipfsHash}_model.ipynb`)
-
-        // Trigger download
-        document.body.appendChild(link)
-        link.click()
-
-        // Cleanup
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(link)
+        await axios.get(`http://127.0.0.1:5000/retrieve-model/${ipfsHash}`)
       } catch (error) {
         console.log(error)
       } finally {

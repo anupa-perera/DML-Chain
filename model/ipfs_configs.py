@@ -32,7 +32,10 @@ def retrieve_model(ipfs_hash):
   response = requests.get(url, timeout=10)
   response.raise_for_status()
 
-  filepath = f'{ipfs_hash}_model.ipynb'
+  folder_path = f'{ipfs_hash}_model'
+  os.makedirs(folder_path, exist_ok=True)
+
+  filepath = os.path.join(folder_path, f'model.ipynb')
   with open(filepath, 'wb') as f:
     f.write(response.content)
   return filepath
