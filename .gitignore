@@ -168,3 +168,9 @@ cython_debug/
 # NPM
 node_modules
 
+# model data
+model/creditcard.csv
+model/DO1/DOData1.csv
+model/DO2/DOData2.csv
+model/MO/MOData.csv
+model/base_model/creditcard.csv

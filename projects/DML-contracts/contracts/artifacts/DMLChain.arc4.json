@@ -1,0 +1,135 @@
+{
+  "name": "DMLChain",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "args": [
+        {
+          "name": "modelHash",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "updateApplication",
+      "args": [
+        {
+          "name": "modelHash",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "printHash",
+      "args": [],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "storeClassificationSelectionCriteria",
+      "args": [
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        },
+        {
+          "name": "mbrPay",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "getClassificationCriteria",
+      "args": [],
+      "returns": {
+        "type": "(uint64,uint64,uint64,uint64)"
+      }
+    },
+    {
+      "name": "classModelSelectionCriteria",
+      "args": [
+        {
+          "name": "modelEvaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "storeModelRegressionSelectionCriteria",
+      "args": [
+        {
+          "name": "evaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "regModelSelectionCriteria",
+      "args": [
+        {
+          "name": "modelEvaluationMetrics",
+          "type": "(uint64,uint64,uint64,uint64)"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "storeModelParams",
+      "args": [
+        {
+          "name": "mbrPay",
+          "type": "pay"
+        },
+        {
+          "name": "Address",
+          "type": "address"
+        },
+        {
+          "name": "paramsData",
+          "type": "(string,string)"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "getBoxValue",
+      "args": [
+        {
+          "name": "Address",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "(string,string)"
+      }
+    },
+    {
+      "name": "deleteApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}
