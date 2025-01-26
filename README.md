@@ -6,7 +6,7 @@ DML-Chain introduces a novel architecture that integrates blockchain technology 
 - **Privacy-first Training:** Data remains on local devices, preserving user privacy while enabling collaborative training.
 - **Blockchain Accountability:** Blockchain records ensure transparency and track participant contributions securely.
 - **Smart Contract Incentives:** An incentive mechanism rewards high-quality contributions while penalizing malicious behaviors.
-- **Energy Efficiency:** Implemented on a carbon-negative blockchain(Algorand) to ensure sustainability and scalability.
+- **Energy Efficiency:** Implemented on a energy-efficient, quantum-secure, single-layer blockchain(Algorand) to ensure sustainability and scalability.
 
 Read More about Algorand on https://algorand.co/
 
