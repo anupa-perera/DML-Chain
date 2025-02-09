@@ -3,7 +3,6 @@ import { useWallet } from '@txnlab/use-wallet-react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
-import Transact from './components/Transact'
 import { createContract, getIpfsHash, getStoredModelParams, modelSelectionCriteria, submitModelParams } from './utils/ContractDeployer'
 
 interface DataType {
@@ -141,7 +140,6 @@ const xHome: React.FC = () => {
       <ConnectWallet />
       {activeAddress && (
         <>
-          <Transact />
           <Box> {response}</Box>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             {' '}

@@ -47,7 +47,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   algorand.setDefaultSigner(transactionSigner)
 
   const handleDeploy = async () => {
-    if (!transactionSigner || !activeAddress || !data) {
+    if (!transactionSigner || !activeAddress) {
       enqueueSnackbar('Please connect wallet first', { variant: 'warning' })
       return
     }
@@ -57,6 +57,13 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       defaultSender: activeAddress,
       algorand,
     })
+
+    await fetchData()
+
+    if (!data) {
+      enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
+      return
+    }
 
     try {
       const { appClient: client } = await factory.send.create.createApplication({ args: { modelHash: data?.model_ipfs_hash } })
@@ -119,7 +126,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       const response = await axios.get(`http://127.0.0.1:5000/data`)
       setData(response.data)
     } catch (error) {
-      console.error('Error fetching data:', error)
+      enqueueSnackbar('Error fetching data:', { variant: 'error' })
     }
   }
 
@@ -141,6 +148,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
             <DialogContentText>
               Please deploy a new contract to the host the model request listing. This action cannot be undone.
             </DialogContentText>
+            <DialogContentText sx={{ color: 'red' }}>**Please ensure your model is feeding data into the backend**</DialogContentText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">
                 {loading ? 'Deploying...' : 'Deploy Contract'}

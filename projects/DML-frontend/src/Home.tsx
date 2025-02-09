@@ -4,13 +4,19 @@ import { useWallet } from '@txnlab/use-wallet-react'
 import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import CreateContract from './components/CreateContract'
+import UpdateContract from './components/UpdateContract'
 
 const Home = () => {
   const { activeAddress } = useWallet()
   const [openDeployModal, setOpenDeployModal] = useState<boolean>(false)
+  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
 
   const toggleDeployModal = () => {
     setOpenDeployModal(!openDeployModal)
+  }
+
+  const toggleUpdateModal = () => {
+    setOpenUpdateModal(!openUpdateModal)
   }
 
   return (
@@ -85,7 +91,7 @@ const Home = () => {
                       }}
                       onClick={toggleDeployModal}
                     >
-                      Model Owner
+                      Request Model Training
                     </Button>
                   </Grid>
                   <Grid sx={{ width: '100%', mb: 2 }}>
@@ -98,8 +104,9 @@ const Home = () => {
                         fontFamily: 'Cursive, Arial, sans-serif',
                         fontWeight: 'bold',
                       }}
+                      onClick={toggleUpdateModal}
                     >
-                      Data Owner
+                      Train and Earn
                     </Button>
                   </Grid>
                   <Grid sx={{ width: '100%' }}>
@@ -113,7 +120,7 @@ const Home = () => {
                         fontWeight: 'bold',
                       }}
                     >
-                      Model verifier
+                      Fetch Trained Models
                     </Button>
                   </Grid>
                 </>
@@ -122,6 +129,7 @@ const Home = () => {
           </Grid>
         </Paper>
         <CreateContract openModal={openDeployModal} closeModal={toggleDeployModal} />
+        <UpdateContract openModal={openUpdateModal} closeModal={toggleUpdateModal} />
       </Container>
     </Box>
   )

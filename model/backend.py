@@ -22,14 +22,14 @@ def update_data():
     shared_data = request.json
     return jsonify({"message": "Data updated successfully"}), 200
 
-@app.route('/retrieve-model/<ipfs_hash>', methods=['GET'])
-def get_ipfs_model(ipfs_hash):
-    """Endpoint to retrieve and download model from IPFS."""
-    try:
-        filepath = retrieve_model(ipfs_hash)
-        return filepath
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+@app.route('/retrieve-model/<contract_id>/<ipfs_hash>', methods=['GET'])
+def get_ipfs_model(ipfs_hash, contract_id):
+  """Endpoint to retrieve and download model from IPFS."""
+  try:
+    filepath = retrieve_model(ipfs_hash, contract_id)
+    return filepath
+  except Exception as e:
+    return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

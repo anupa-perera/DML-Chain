@@ -3,14 +3,14 @@ import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import algosdk, { encodeAddress } from 'algosdk'
 import { DmlChainFactory } from '../contracts/DMLChain'
 
-type Classification = {
+export type Classification = {
   accuracy: bigint
   precision: bigint
   recall: bigint
   f1score: bigint
 }
 
-type ParamsData = {
+export type ParamsData = {
   paramHash: string
   paramKey: string
 }

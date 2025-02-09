@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, LinearProgress, Typography } from '@mui/
 import { useWallet } from '@txnlab/use-wallet-react'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Classification, DmlChainFactory } from '../contracts/DMLChain'
 
 interface DataType {
@@ -21,9 +21,10 @@ interface DataType {
 
 interface CreateUpdateContractInterface {
   readonly appID: bigint
+  closeModal: () => void
 }
 
-function CreateUpdateContract({ appID }: CreateUpdateContractInterface) {
+function CreateUpdateContract({ appID, closeModal }: CreateUpdateContractInterface) {
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<DataType | null>(null)
   const [appId, setAppId] = useState<bigint | null>(null)
@@ -33,14 +34,23 @@ function CreateUpdateContract({ appID }: CreateUpdateContractInterface) {
   const algorand = AlgorandClient.fromClients({ algod: algodClient })
   algorand.setDefaultSigner(transactionSigner)
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await axios.get('http://127.0.0.1:5000/data')
       setData(response.data)
     } catch (error) {
       console.error('Error fetching data:', error)
     }
-  }
+  }, [])
+
+  // Add cleanup effect
+  useEffect(() => {
+    return () => {
+      setLoading(false)
+      setData(null)
+      setAppId(null)
+    }
+  }, [])
 
   if (!transactionSigner || !activeAddress) {
     enqueueSnackbar('Please connect wallet first', { variant: 'warning' })
@@ -86,6 +96,9 @@ function CreateUpdateContract({ appID }: CreateUpdateContractInterface) {
       enqueueSnackbar(`Contract ${appID} has been updated successfully`, { variant: 'success' })
     } catch (e) {
       enqueueSnackbar('Failed to update contract', { variant: 'error' })
+    } finally {
+      closeModal()
+      setData(null)
       setAppId(null)
     }
   }
@@ -93,7 +106,7 @@ function CreateUpdateContract({ appID }: CreateUpdateContractInterface) {
   useEffect(() => {
     setAppId(appID)
     fetchData()
-  }, [])
+  }, [fetchData, appID])
 
   return (
     <Box sx={{ textAlign: 'center' }}>
