@@ -60,7 +60,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
     }
     try {
       setLoading(true)
-      const ipfsHash = await getIpfsHash(BigInt(appId))
+      const ipfsHash = await getIpfsHash(appId)
       await axios.get(`http://127.0.0.1:5000/retrieve-model/${appId}/${ipfsHash}`)
       enqueueSnackbar(`Download will begin shortly for contract ID ${appId}`, { variant: 'success' })
       setFileRetrieved(true)
@@ -91,35 +91,33 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         .classModelSelectionCriteria({
           args: { modelEvaluationMetrics: data.metrics },
         })
-        .send({ populateAppCallResources: true })
+        .simulate({
+          skipSignatures: true,
+          allowUnnamedResources: true,
+        })
 
-      const isAccepted = modelSelectionCriteria.returns
+      const isAccepted = modelSelectionCriteria
 
       if (isAccepted) {
-        const BoxMBRPay = await algorand.createTransaction.payment({
+        const boxMBRPay = await algorand.createTransaction.payment({
           sender: activeAddress,
           receiver: client.appAddress,
           amount: (1).algo(),
         })
 
-        const storeModelParameters = await client
-          .newGroup()
-          .storeModelParams({
-            args: {
-              mbrPay: BoxMBRPay,
-              address: activeAddress,
-              paramsData: {
-                paramHash: data.param_ipfs_hash,
-                paramKey: data.param_key,
-              },
+        await client.send.storeModelParams({
+          args: {
+            mbrPay: boxMBRPay,
+            address: activeAddress,
+            paramsData: {
+              paramHash: data.param_ipfs_hash,
+              paramKey: data.param_key,
             },
-          })
-          .send({ populateAppCallResources: true })
-
-        console.log(storeModelParameters, 'we are storing params')
+          },
+        })
       }
     } catch (error) {
-      console.log(`Error deploying contract' ${error}`)
+      enqueueSnackbar('Failed to submit data', { variant: 'warning' })
     } finally {
       setLoading(false)
       handleClose()

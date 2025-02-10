@@ -1,14 +1,14 @@
 [
   {
     "teal": 1,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       0
     ]
   },
   {
     "teal": 2,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       1,
       2,
@@ -25,7 +25,7 @@
   },
   {
     "teal": 3,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       12,
       13,
@@ -80,7 +80,7 @@
   },
   {
     "teal": 15,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       61,
       62
@@ -88,14 +88,14 @@
   },
   {
     "teal": 16,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       63
     ]
   },
   {
     "teal": 17,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       64,
       65
@@ -103,14 +103,14 @@
   },
   {
     "teal": 18,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       66
     ]
   },
   {
     "teal": 19,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       67,
       68
@@ -118,14 +118,14 @@
   },
   {
     "teal": 20,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       69
     ]
   },
   {
     "teal": 21,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       70,
       71,
@@ -157,7 +157,7 @@
   },
   {
     "teal": 25,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "source": "contracts\\Moderator.algo.ts:29",
     "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
       96
@@ -165,7 +165,7 @@
   },
   {
     "teal": 30,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       97,
       98,
@@ -174,7 +174,7 @@
   },
   {
     "teal": 31,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       100,
       101,
@@ -183,7 +183,7 @@
   },
   {
     "teal": 34,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       103,
       104,
@@ -192,21 +192,21 @@
   },
   {
     "teal": 35,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       106
     ]
   },
   {
     "teal": 36,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       107
     ]
   },
   {
     "teal": 40,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       108,
       109,
@@ -215,14 +215,14 @@
   },
   {
     "teal": 44,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       111
     ]
   },
   {
     "teal": 45,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       112,
       113
@@ -230,28 +230,28 @@
   },
   {
     "teal": 46,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       114
     ]
   },
   {
     "teal": 47,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       115
     ]
   },
   {
     "teal": 48,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       116
     ]
   },
   {
     "teal": 49,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       117,
       118,
@@ -260,35 +260,35 @@
   },
   {
     "teal": 50,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       120
     ]
   },
   {
     "teal": 51,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       121
     ]
   },
   {
     "teal": 52,
-    "source": "contracts\\Moderator.algo.ts:42",
+    "source": "contracts\\Moderator.algo.ts:43",
     "pc": [
       122
     ]
   },
   {
     "teal": 53,
-    "source": "contracts\\Moderator.algo.ts:41",
+    "source": "contracts\\Moderator.algo.ts:42",
     "pc": [
       123
     ]
   },
   {
     "teal": 58,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       124,
       125,
@@ -297,7 +297,7 @@
   },
   {
     "teal": 59,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       127,
       128,
@@ -306,7 +306,7 @@
   },
   {
     "teal": 62,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       130,
       131,
@@ -315,21 +315,21 @@
   },
   {
     "teal": 63,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       133
     ]
   },
   {
     "teal": 64,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       134
     ]
   },
   {
     "teal": 68,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       135,
       136,
@@ -338,7 +338,7 @@
   },
   {
     "teal": 72,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       138,
       139
@@ -346,7 +346,7 @@
   },
   {
     "teal": 73,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       140,
       141,
@@ -355,7 +355,7 @@
   },
   {
     "teal": 74,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       143,
       144
@@ -363,35 +363,35 @@
   },
   {
     "teal": 75,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       145
     ]
   },
   {
     "teal": 76,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       146
     ]
   },
   {
     "teal": 77,
-    "source": "contracts\\Moderator.algo.ts:47",
+    "source": "contracts\\Moderator.algo.ts:48",
     "pc": [
       147
     ]
   },
   {
     "teal": 81,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       148
     ]
   },
   {
     "teal": 82,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       149,
       150
@@ -399,28 +399,28 @@
   },
   {
     "teal": 83,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       151
     ]
   },
   {
     "teal": 84,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       152
     ]
   },
   {
     "teal": 85,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       153
     ]
   },
   {
     "teal": 86,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       154,
       155,
@@ -429,42 +429,42 @@
   },
   {
     "teal": 87,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       157
     ]
   },
   {
     "teal": 88,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       158
     ]
   },
   {
     "teal": 89,
-    "source": "contracts\\Moderator.algo.ts:48",
+    "source": "contracts\\Moderator.algo.ts:49",
     "pc": [
       159
     ]
   },
   {
     "teal": 90,
-    "source": "contracts\\Moderator.algo.ts:46",
+    "source": "contracts\\Moderator.algo.ts:47",
     "pc": [
       160
     ]
   },
   {
     "teal": 95,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       161
     ]
   },
   {
     "teal": 98,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       162,
       163,
@@ -473,28 +473,28 @@
   },
   {
     "teal": 99,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       165
     ]
   },
   {
     "teal": 100,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       166
     ]
   },
   {
     "teal": 101,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       167
     ]
   },
   {
     "teal": 102,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       168,
       169,
@@ -503,49 +503,49 @@
   },
   {
     "teal": 103,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       171
     ]
   },
   {
     "teal": 104,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       172
     ]
   },
   {
     "teal": 105,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       173
     ]
   },
   {
     "teal": 106,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       174
     ]
   },
   {
     "teal": 107,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       175
     ]
   },
   {
     "teal": 108,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       176
     ]
   },
   {
     "teal": 112,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       177,
       178,
@@ -554,21 +554,21 @@
   },
   {
     "teal": 116,
-    "source": "contracts\\Moderator.algo.ts:53",
+    "source": "contracts\\Moderator.algo.ts:54",
     "pc": [
       180
     ]
   },
   {
     "teal": 117,
-    "source": "contracts\\Moderator.algo.ts:53",
+    "source": "contracts\\Moderator.algo.ts:54",
     "pc": [
       181
     ]
   },
   {
     "teal": 118,
-    "source": "contracts\\Moderator.algo.ts:53",
+    "source": "contracts\\Moderator.algo.ts:54",
     "pc": [
       182,
       183,
@@ -577,742 +577,736 @@
   },
   {
     "teal": 119,
-    "source": "contracts\\Moderator.algo.ts:52",
+    "source": "contracts\\Moderator.algo.ts:53",
     "pc": [
       185
     ]
   },
   {
     "teal": 124,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
-      186,
-      187
-    ]
-  },
-  {
-    "teal": 125,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "pc": [
-      188
-    ]
-  },
-  {
-    "teal": 126,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "pc": [
-      189
+      186
     ]
   },
   {
     "teal": 127,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "source": "contracts\\Moderator.algo.ts:58",
+    "pc": [
+      187,
+      188,
+      189
+    ]
+  },
+  {
+    "teal": 128,
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
       190
     ]
   },
   {
-    "teal": 128,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 129,
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
-      191,
+      191
+    ]
+  },
+  {
+    "teal": 130,
+    "source": "contracts\\Moderator.algo.ts:58",
+    "pc": [
       192
     ]
   },
   {
-    "teal": 129,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 131,
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
       193
     ]
   },
   {
-    "teal": 130,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 132,
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
       194
     ]
   },
   {
-    "teal": 133,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "errorMessage": "argument 0 (mbrPay) for storeClassificationSelectionCriteria must be a pay transaction",
-    "pc": [
-      195
-    ]
-  },
-  {
     "teal": 136,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
+      195,
       196,
-      197,
-      198
+      197
     ]
   },
   {
-    "teal": 137,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 140,
+    "source": "contracts\\Moderator.algo.ts:59",
     "pc": [
-      199
-    ]
-  },
-  {
-    "teal": 138,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "pc": [
+      198,
+      199,
       200
     ]
   },
   {
-    "teal": 139,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 141,
+    "source": "contracts\\Moderator.algo.ts:58",
     "pc": [
       201
     ]
   },
   {
-    "teal": 140,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 146,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      202
-    ]
-  },
-  {
-    "teal": 143,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "errorMessage": "argument 1 (evaluationMetrics) for storeClassificationSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
-    "pc": [
+      202,
       203
     ]
   },
   {
-    "teal": 146,
-    "source": "contracts\\Moderator.algo.ts:57",
-    "pc": [
-      204,
-      205,
-      206
-    ]
-  },
-  {
     "teal": 147,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      207
+      204
     ]
   },
   {
     "teal": 148,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
+      205
+    ]
+  },
+  {
+    "teal": 149,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      206
+    ]
+  },
+  {
+    "teal": 150,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      207,
       208
     ]
   },
   {
-    "teal": 152,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 151,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      209,
-      210,
+      209
+    ]
+  },
+  {
+    "teal": 152,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      210
+    ]
+  },
+  {
+    "teal": 155,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "errorMessage": "argument 0 (mbrPay) for storeClassificationSelectionCriteria must be a pay transaction",
+    "pc": [
       211
     ]
   },
   {
-    "teal": 157,
-    "source": "contracts\\Moderator.algo.ts:58",
+    "teal": 158,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
       212,
-      213
-    ]
-  },
-  {
-    "teal": 158,
-    "source": "contracts\\Moderator.algo.ts:58",
-    "pc": [
-      214,
-      215,
-      216
+      213,
+      214
     ]
   },
   {
     "teal": 159,
-    "source": "contracts\\Moderator.algo.ts:58",
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      217,
-      218
+      215
     ]
   },
   {
     "teal": 160,
-    "source": "contracts\\Moderator.algo.ts:58",
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      216
+    ]
+  },
+  {
+    "teal": 161,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      217
+    ]
+  },
+  {
+    "teal": 162,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "pc": [
+      218
+    ]
+  },
+  {
+    "teal": 165,
+    "source": "contracts\\Moderator.algo.ts:63",
+    "errorMessage": "argument 1 (evaluationMetrics) for storeClassificationSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
     "pc": [
       219
     ]
   },
   {
-    "teal": 161,
-    "source": "contracts\\Moderator.algo.ts:58",
+    "teal": 168,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      220
+      220,
+      221,
+      222
     ]
   },
   {
-    "teal": 164,
-    "source": "contracts\\Moderator.algo.ts:58",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
+    "teal": 169,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      221
-    ]
-  },
-  {
-    "teal": 173,
-    "source": "contracts\\Moderator.algo.ts:59",
-    "pc": [
-      222,
       223
     ]
   },
   {
-    "teal": 174,
-    "source": "contracts\\Moderator.algo.ts:60",
+    "teal": 170,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
-      224,
-      225
+      224
     ]
   },
   {
-    "teal": 175,
-    "source": "contracts\\Moderator.algo.ts:60",
+    "teal": 174,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
+      225,
       226,
       227
     ]
   },
   {
-    "teal": 176,
-    "source": "contracts\\Moderator.algo.ts:60",
-    "pc": [
-      228
-    ]
-  },
-  {
     "teal": 179,
-    "source": "contracts\\Moderator.algo.ts:60",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
+    "source": "contracts\\Moderator.algo.ts:64",
     "pc": [
+      228,
       229
     ]
   },
   {
-    "teal": 182,
-    "source": "contracts\\Moderator.algo.ts:59",
+    "teal": 180,
+    "source": "contracts\\Moderator.algo.ts:64",
     "pc": [
       230,
-      231
+      231,
+      232
     ]
   },
   {
-    "teal": 183,
-    "source": "contracts\\Moderator.algo.ts:61",
+    "teal": 181,
+    "source": "contracts\\Moderator.algo.ts:64",
     "pc": [
-      232,
-      233
+      233,
+      234
     ]
   },
   {
-    "teal": 184,
-    "source": "contracts\\Moderator.algo.ts:61",
+    "teal": 182,
+    "source": "contracts\\Moderator.algo.ts:64",
     "pc": [
-      234,
       235
     ]
   },
   {
-    "teal": 185,
-    "source": "contracts\\Moderator.algo.ts:61",
+    "teal": 183,
+    "source": "contracts\\Moderator.algo.ts:64",
     "pc": [
       236
     ]
   },
   {
-    "teal": 188,
-    "source": "contracts\\Moderator.algo.ts:61",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
+    "teal": 186,
+    "source": "contracts\\Moderator.algo.ts:64",
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
     "pc": [
       237
     ]
   },
   {
-    "teal": 191,
-    "source": "contracts\\Moderator.algo.ts:59",
+    "teal": 195,
+    "source": "contracts\\Moderator.algo.ts:65",
     "pc": [
       238,
       239
     ]
   },
   {
-    "teal": 192,
-    "source": "contracts\\Moderator.algo.ts:62",
+    "teal": 196,
+    "source": "contracts\\Moderator.algo.ts:66",
     "pc": [
       240,
       241
     ]
   },
   {
-    "teal": 193,
-    "source": "contracts\\Moderator.algo.ts:62",
+    "teal": 197,
+    "source": "contracts\\Moderator.algo.ts:66",
     "pc": [
       242,
       243
     ]
   },
   {
-    "teal": 194,
-    "source": "contracts\\Moderator.algo.ts:62",
+    "teal": 198,
+    "source": "contracts\\Moderator.algo.ts:66",
     "pc": [
       244
     ]
   },
   {
-    "teal": 197,
-    "source": "contracts\\Moderator.algo.ts:62",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
+    "teal": 201,
+    "source": "contracts\\Moderator.algo.ts:66",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
     "pc": [
       245
-    ]
-  },
-  {
-    "teal": 201,
-    "source": "contracts\\Moderator.algo.ts:65",
-    "pc": [
-      246
-    ]
-  },
-  {
-    "teal": 202,
-    "source": "contracts\\Moderator.algo.ts:65",
-    "pc": [
-      247
-    ]
-  },
-  {
-    "teal": 203,
-    "source": "contracts\\Moderator.algo.ts:65",
-    "pc": [
-      248
     ]
   },
   {
     "teal": 204,
     "source": "contracts\\Moderator.algo.ts:65",
     "pc": [
+      246,
+      247
+    ]
+  },
+  {
+    "teal": 205,
+    "source": "contracts\\Moderator.algo.ts:67",
+    "pc": [
+      248,
       249
     ]
   },
   {
-    "teal": 208,
-    "source": "contracts\\Moderator.algo.ts:66",
+    "teal": 206,
+    "source": "contracts\\Moderator.algo.ts:67",
     "pc": [
-      250
+      250,
+      251
     ]
   },
   {
-    "teal": 209,
-    "source": "contracts\\Moderator.algo.ts:66",
+    "teal": 207,
+    "source": "contracts\\Moderator.algo.ts:67",
     "pc": [
-      251,
       252
     ]
   },
   {
     "teal": 210,
-    "source": "contracts\\Moderator.algo.ts:66",
+    "source": "contracts\\Moderator.algo.ts:67",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
     "pc": [
       253
     ]
   },
   {
-    "teal": 211,
-    "source": "contracts\\Moderator.algo.ts:57",
+    "teal": 213,
+    "source": "contracts\\Moderator.algo.ts:65",
     "pc": [
-      254
-    ]
-  },
-  {
-    "teal": 216,
-    "source": "contracts\\Moderator.algo.ts:70",
-    "pc": [
+      254,
       255
     ]
   },
   {
-    "teal": 219,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "teal": 214,
+    "source": "contracts\\Moderator.algo.ts:68",
     "pc": [
       256,
-      257,
-      258
+      257
     ]
   },
   {
-    "teal": 220,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "teal": 215,
+    "source": "contracts\\Moderator.algo.ts:68",
     "pc": [
+      258,
       259
     ]
   },
   {
-    "teal": 221,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "teal": 216,
+    "source": "contracts\\Moderator.algo.ts:68",
     "pc": [
       260
     ]
   },
   {
-    "teal": 222,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "teal": 219,
+    "source": "contracts\\Moderator.algo.ts:68",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
     "pc": [
       261
     ]
   },
   {
     "teal": 223,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "source": "contracts\\Moderator.algo.ts:71",
     "pc": [
       262
     ]
   },
   {
-    "teal": 227,
-    "source": "contracts\\Moderator.algo.ts:70",
+    "teal": 224,
+    "source": "contracts\\Moderator.algo.ts:71",
     "pc": [
-      263,
-      264,
+      263
+    ]
+  },
+  {
+    "teal": 225,
+    "source": "contracts\\Moderator.algo.ts:71",
+    "pc": [
+      264
+    ]
+  },
+  {
+    "teal": 226,
+    "source": "contracts\\Moderator.algo.ts:71",
+    "pc": [
       265
     ]
   },
   {
-    "teal": 231,
-    "source": "contracts\\Moderator.algo.ts:71",
+    "teal": 230,
+    "source": "contracts\\Moderator.algo.ts:72",
     "pc": [
       266
     ]
   },
   {
-    "teal": 232,
-    "source": "contracts\\Moderator.algo.ts:71",
+    "teal": 231,
+    "source": "contracts\\Moderator.algo.ts:72",
     "pc": [
-      267
-    ]
-  },
-  {
-    "teal": 233,
-    "source": "contracts\\Moderator.algo.ts:71",
-    "pc": [
+      267,
       268
     ]
   },
   {
-    "teal": 234,
-    "source": "contracts\\Moderator.algo.ts:71",
+    "teal": 232,
+    "source": "contracts\\Moderator.algo.ts:72",
     "pc": [
       269
     ]
   },
   {
-    "teal": 235,
-    "source": "contracts\\Moderator.algo.ts:71",
+    "teal": 233,
+    "source": "contracts\\Moderator.algo.ts:63",
     "pc": [
       270
     ]
   },
   {
-    "teal": 239,
-    "source": "contracts\\Moderator.algo.ts:72",
+    "teal": 238,
+    "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
       271
     ]
   },
   {
-    "teal": 240,
-    "source": "contracts\\Moderator.algo.ts:72",
+    "teal": 241,
+    "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
-      272
-    ]
-  },
-  {
-    "teal": 243,
-    "source": "contracts\\Moderator.algo.ts:72",
-    "errorMessage": "box value does not exist: this.classificationPerformanceMetrics('InitialModelMetrics').value",
-    "pc": [
-      273
-    ]
-  },
-  {
-    "teal": 244,
-    "source": "contracts\\Moderator.algo.ts:70",
-    "pc": [
+      272,
+      273,
       274
     ]
   },
   {
-    "teal": 249,
+    "teal": 242,
     "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
       275
     ]
   },
   {
-    "teal": 252,
+    "teal": 243,
     "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
-      276,
-      277,
+      276
+    ]
+  },
+  {
+    "teal": 244,
+    "source": "contracts\\Moderator.algo.ts:76",
+    "pc": [
+      277
+    ]
+  },
+  {
+    "teal": 245,
+    "source": "contracts\\Moderator.algo.ts:76",
+    "pc": [
       278
     ]
   },
   {
-    "teal": 253,
+    "teal": 249,
     "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
-      279
-    ]
-  },
-  {
-    "teal": 254,
-    "source": "contracts\\Moderator.algo.ts:76",
-    "pc": [
-      280
-    ]
-  },
-  {
-    "teal": 255,
-    "source": "contracts\\Moderator.algo.ts:76",
-    "pc": [
+      279,
+      280,
       281
     ]
   },
   {
-    "teal": 256,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 253,
+    "source": "contracts\\Moderator.algo.ts:77",
     "pc": [
       282
     ]
   },
   {
-    "teal": 259,
-    "source": "contracts\\Moderator.algo.ts:76",
-    "errorMessage": "argument 0 (modelEvaluationMetrics) for classModelSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
+    "teal": 254,
+    "source": "contracts\\Moderator.algo.ts:77",
     "pc": [
       283
     ]
   },
   {
-    "teal": 262,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 255,
+    "source": "contracts\\Moderator.algo.ts:77",
     "pc": [
-      284,
-      285,
+      284
+    ]
+  },
+  {
+    "teal": 256,
+    "source": "contracts\\Moderator.algo.ts:77",
+    "pc": [
+      285
+    ]
+  },
+  {
+    "teal": 257,
+    "source": "contracts\\Moderator.algo.ts:77",
+    "pc": [
       286
     ]
   },
   {
-    "teal": 263,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 261,
+    "source": "contracts\\Moderator.algo.ts:78",
     "pc": [
-      287,
-      288,
-      289
+      287
     ]
   },
   {
-    "teal": 264,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 262,
+    "source": "contracts\\Moderator.algo.ts:78",
     "pc": [
-      290
+      288
     ]
   },
   {
     "teal": 265,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "source": "contracts\\Moderator.algo.ts:78",
+    "errorMessage": "box value does not exist: this.classificationPerformanceMetrics('InitialModelMetrics').value",
     "pc": [
-      291,
-      292
+      289
     ]
   },
   {
     "teal": 266,
     "source": "contracts\\Moderator.algo.ts:76",
     "pc": [
-      293
+      290
     ]
   },
   {
-    "teal": 267,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 271,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
+      291
+    ]
+  },
+  {
+    "teal": 274,
+    "source": "contracts\\Moderator.algo.ts:82",
+    "pc": [
+      292,
+      293,
       294
     ]
   },
   {
-    "teal": 268,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 275,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       295
     ]
   },
   {
-    "teal": 269,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 276,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       296
     ]
   },
   {
-    "teal": 270,
-    "source": "contracts\\Moderator.algo.ts:76",
+    "teal": 277,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       297
     ]
   },
   {
-    "teal": 274,
-    "source": "contracts\\Moderator.algo.ts:76",
-    "pc": [
-      298,
-      299,
-      300
-    ]
-  },
-  {
     "teal": 278,
-    "source": "contracts\\Moderator.algo.ts:77",
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
-      301
-    ]
-  },
-  {
-    "teal": 279,
-    "source": "contracts\\Moderator.algo.ts:77",
-    "pc": [
-      302
-    ]
-  },
-  {
-    "teal": 280,
-    "source": "contracts\\Moderator.algo.ts:77",
-    "pc": [
-      303
+      298
     ]
   },
   {
     "teal": 281,
-    "source": "contracts\\Moderator.algo.ts:77",
+    "source": "contracts\\Moderator.algo.ts:82",
+    "errorMessage": "argument 0 (modelEvaluationMetrics) for classModelSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
     "pc": [
-      304
+      299
     ]
   },
   {
-    "teal": 282,
-    "source": "contracts\\Moderator.algo.ts:77",
+    "teal": 284,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
+      300,
+      301,
+      302
+    ]
+  },
+  {
+    "teal": 285,
+    "source": "contracts\\Moderator.algo.ts:82",
+    "pc": [
+      303,
+      304,
       305
     ]
   },
   {
-    "teal": 290,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 286,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
-      306,
-      307
+      306
     ]
   },
   {
-    "teal": 291,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 287,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
-      308,
-      309,
+      307,
+      308
+    ]
+  },
+  {
+    "teal": 288,
+    "source": "contracts\\Moderator.algo.ts:82",
+    "pc": [
+      309
+    ]
+  },
+  {
+    "teal": 289,
+    "source": "contracts\\Moderator.algo.ts:82",
+    "pc": [
       310
     ]
   },
   {
-    "teal": 292,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 290,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       311
     ]
   },
   {
-    "teal": 293,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 291,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       312
     ]
   },
   {
-    "teal": 294,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 292,
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
       313
     ]
   },
   {
-    "teal": 295,
-    "source": "contracts\\Moderator.algo.ts:78",
-    "pc": [
-      314
-    ]
-  },
-  {
     "teal": 296,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "source": "contracts\\Moderator.algo.ts:82",
     "pc": [
-      315
-    ]
-  },
-  {
-    "teal": 297,
-    "source": "contracts\\Moderator.algo.ts:80",
-    "pc": [
+      314,
+      315,
       316
     ]
   },
   {
-    "teal": 298,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 300,
+    "source": "contracts\\Moderator.algo.ts:83",
     "pc": [
       317
     ]
   },
   {
-    "teal": 299,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 301,
+    "source": "contracts\\Moderator.algo.ts:83",
     "pc": [
       318
     ]
   },
   {
-    "teal": 300,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 302,
+    "source": "contracts\\Moderator.algo.ts:83",
     "pc": [
-      319,
-      320,
+      319
+    ]
+  },
+  {
+    "teal": 303,
+    "source": "contracts\\Moderator.algo.ts:83",
+    "pc": [
+      320
+    ]
+  },
+  {
+    "teal": 304,
+    "source": "contracts\\Moderator.algo.ts:83",
+    "pc": [
       321
     ]
   },
   {
-    "teal": 301,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 312,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       322,
       323
     ]
   },
   {
-    "teal": 302,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 313,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       324,
       325,
@@ -1320,509 +1314,502 @@
     ]
   },
   {
-    "teal": 303,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 314,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       327
     ]
   },
   {
-    "teal": 304,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 315,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       328
     ]
   },
   {
-    "teal": 305,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 316,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       329
     ]
   },
   {
-    "teal": 306,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 317,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       330
     ]
   },
   {
-    "teal": 307,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 318,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       331
     ]
   },
   {
-    "teal": 308,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 319,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       332
     ]
   },
   {
-    "teal": 309,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 320,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       333
     ]
   },
   {
-    "teal": 310,
-    "source": "contracts\\Moderator.algo.ts:80",
+    "teal": 321,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       334
     ]
   },
   {
-    "teal": 313,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 322,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
-      335
-    ]
-  },
-  {
-    "teal": 314,
-    "source": "contracts\\Moderator.algo.ts:81",
-    "pc": [
+      335,
       336,
-      337,
-      338
+      337
     ]
   },
   {
-    "teal": 315,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 323,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
-      339,
-      340
+      338,
+      339
     ]
   },
   {
-    "teal": 316,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 324,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
+      340,
       341,
-      342,
+      342
+    ]
+  },
+  {
+    "teal": 325,
+    "source": "contracts\\Moderator.algo.ts:87",
+    "pc": [
       343
     ]
   },
   {
-    "teal": 317,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 326,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       344
     ]
   },
   {
-    "teal": 318,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 327,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       345
     ]
   },
   {
-    "teal": 319,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 328,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
-      346,
+      346
+    ]
+  },
+  {
+    "teal": 329,
+    "source": "contracts\\Moderator.algo.ts:84",
+    "pc": [
       347
     ]
   },
   {
-    "teal": 320,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 330,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
       348
     ]
   },
   {
-    "teal": 321,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 331,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
       349
     ]
   },
   {
-    "teal": 322,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 332,
+    "source": "contracts\\Moderator.algo.ts:86",
     "pc": [
       350
     ]
   },
   {
-    "teal": 323,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 335,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
       351
     ]
   },
   {
-    "teal": 324,
-    "source": "contracts\\Moderator.algo.ts:81",
+    "teal": 336,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
-      352
+      352,
+      353,
+      354
     ]
   },
   {
-    "teal": 327,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 337,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
-      353
-    ]
-  },
-  {
-    "teal": 328,
-    "source": "contracts\\Moderator.algo.ts:82",
-    "pc": [
-      354,
       355,
       356
     ]
   },
   {
-    "teal": 329,
-    "source": "contracts\\Moderator.algo.ts:83",
+    "teal": 338,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
       357,
-      358
+      358,
+      359
     ]
   },
   {
-    "teal": 330,
-    "source": "contracts\\Moderator.algo.ts:83",
+    "teal": 339,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
-      359,
-      360,
+      360
+    ]
+  },
+  {
+    "teal": 340,
+    "source": "contracts\\Moderator.algo.ts:84",
+    "pc": [
       361
     ]
   },
   {
-    "teal": 331,
-    "source": "contracts\\Moderator.algo.ts:83",
+    "teal": 341,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
-      362
-    ]
-  },
-  {
-    "teal": 332,
-    "source": "contracts\\Moderator.algo.ts:78",
-    "pc": [
+      362,
       363
     ]
   },
   {
-    "teal": 333,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 342,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
-      364,
+      364
+    ]
+  },
+  {
+    "teal": 343,
+    "source": "contracts\\Moderator.algo.ts:84",
+    "pc": [
       365
     ]
   },
   {
-    "teal": 334,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 344,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
       366
     ]
   },
   {
-    "teal": 335,
-    "source": "contracts\\Moderator.algo.ts:78",
+    "teal": 345,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
       367
     ]
   },
   {
-    "teal": 336,
-    "source": "contracts\\Moderator.algo.ts:83",
+    "teal": 346,
+    "source": "contracts\\Moderator.algo.ts:87",
     "pc": [
       368
     ]
   },
   {
-    "teal": 337,
-    "source": "contracts\\Moderator.algo.ts:83",
+    "teal": 349,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
       369
     ]
   },
   {
-    "teal": 338,
-    "source": "contracts\\Moderator.algo.ts:82",
+    "teal": 350,
+    "source": "contracts\\Moderator.algo.ts:88",
     "pc": [
-      370
-    ]
-  },
-  {
-    "teal": 341,
-    "source": "contracts\\Moderator.algo.ts:79",
-    "pc": [
+      370,
       371,
-      372,
-      373
+      372
     ]
   },
   {
-    "teal": 346,
-    "source": "contracts\\Moderator.algo.ts:85",
+    "teal": 351,
+    "source": "contracts\\Moderator.algo.ts:89",
     "pc": [
+      373,
       374
     ]
   },
   {
-    "teal": 347,
-    "source": "contracts\\Moderator.algo.ts:85",
-    "pc": [
-      375
-    ]
-  },
-  {
     "teal": 352,
-    "source": "contracts\\Moderator.algo.ts:87",
+    "source": "contracts\\Moderator.algo.ts:89",
     "pc": [
-      376
-    ]
-  },
-  {
-    "teal": 353,
-    "source": "contracts\\Moderator.algo.ts:76",
-    "pc": [
+      375,
+      376,
       377
     ]
   },
   {
-    "teal": 358,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "teal": 353,
+    "source": "contracts\\Moderator.algo.ts:89",
     "pc": [
-      378,
-      379,
-      380
+      378
     ]
   },
   {
-    "teal": 359,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "teal": 354,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
+      379
+    ]
+  },
+  {
+    "teal": 355,
+    "source": "contracts\\Moderator.algo.ts:84",
+    "pc": [
+      380,
       381
     ]
   },
   {
-    "teal": 360,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "teal": 356,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       382
     ]
   },
   {
-    "teal": 361,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "teal": 357,
+    "source": "contracts\\Moderator.algo.ts:84",
     "pc": [
       383
     ]
   },
   {
-    "teal": 362,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "teal": 358,
+    "source": "contracts\\Moderator.algo.ts:89",
     "pc": [
       384
     ]
   },
   {
-    "teal": 365,
-    "source": "contracts\\Moderator.algo.ts:91",
-    "errorMessage": "argument 0 (evaluationMetrics) for storeModelRegressionSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
+    "teal": 359,
+    "source": "contracts\\Moderator.algo.ts:89",
     "pc": [
       385
+    ]
+  },
+  {
+    "teal": 360,
+    "source": "contracts\\Moderator.algo.ts:88",
+    "pc": [
+      386
+    ]
+  },
+  {
+    "teal": 363,
+    "source": "contracts\\Moderator.algo.ts:85",
+    "pc": [
+      387,
+      388,
+      389
     ]
   },
   {
     "teal": 368,
     "source": "contracts\\Moderator.algo.ts:91",
     "pc": [
-      386,
-      387,
-      388
+      390
     ]
   },
   {
     "teal": 369,
     "source": "contracts\\Moderator.algo.ts:91",
     "pc": [
-      389
-    ]
-  },
-  {
-    "teal": 370,
-    "source": "contracts\\Moderator.algo.ts:91",
-    "pc": [
-      390
+      391
     ]
   },
   {
     "teal": 374,
-    "source": "contracts\\Moderator.algo.ts:91",
+    "source": "contracts\\Moderator.algo.ts:93",
     "pc": [
-      391,
-      392,
+      392
+    ]
+  },
+  {
+    "teal": 375,
+    "source": "contracts\\Moderator.algo.ts:82",
+    "pc": [
       393
     ]
   },
   {
-    "teal": 379,
-    "source": "contracts\\Moderator.algo.ts:92",
+    "teal": 380,
+    "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
       394,
-      395
-    ]
-  },
-  {
-    "teal": 380,
-    "source": "contracts\\Moderator.algo.ts:92",
-    "pc": [
-      396,
-      397,
-      398
+      395,
+      396
     ]
   },
   {
     "teal": 381,
-    "source": "contracts\\Moderator.algo.ts:92",
+    "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
-      399,
-      400
+      397
     ]
   },
   {
     "teal": 382,
-    "source": "contracts\\Moderator.algo.ts:92",
+    "source": "contracts\\Moderator.algo.ts:97",
+    "pc": [
+      398
+    ]
+  },
+  {
+    "teal": 383,
+    "source": "contracts\\Moderator.algo.ts:97",
+    "pc": [
+      399
+    ]
+  },
+  {
+    "teal": 384,
+    "source": "contracts\\Moderator.algo.ts:97",
+    "pc": [
+      400
+    ]
+  },
+  {
+    "teal": 387,
+    "source": "contracts\\Moderator.algo.ts:97",
+    "errorMessage": "argument 0 (evaluationMetrics) for storeModelRegressionSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
     "pc": [
       401
     ]
   },
   {
-    "teal": 383,
-    "source": "contracts\\Moderator.algo.ts:92",
-    "pc": [
-      402
-    ]
-  },
-  {
-    "teal": 386,
-    "source": "contracts\\Moderator.algo.ts:92",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
-    "pc": [
-      403
-    ]
-  },
-  {
     "teal": 390,
-    "source": "contracts\\Moderator.algo.ts:93",
+    "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
+      402,
+      403,
       404
     ]
   },
   {
     "teal": 391,
-    "source": "contracts\\Moderator.algo.ts:93",
+    "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
-      405,
-      406
+      405
     ]
   },
   {
     "teal": 392,
-    "source": "contracts\\Moderator.algo.ts:93",
-    "pc": [
-      407
-    ]
-  },
-  {
-    "teal": 393,
-    "source": "contracts\\Moderator.algo.ts:91",
-    "pc": [
-      408
-    ]
-  },
-  {
-    "teal": 398,
     "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
+      406
+    ]
+  },
+  {
+    "teal": 396,
+    "source": "contracts\\Moderator.algo.ts:97",
+    "pc": [
+      407,
+      408,
       409
     ]
   },
   {
     "teal": 401,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "source": "contracts\\Moderator.algo.ts:98",
     "pc": [
       410,
-      411,
-      412
+      411
     ]
   },
   {
     "teal": 402,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "source": "contracts\\Moderator.algo.ts:98",
     "pc": [
-      413
-    ]
-  },
-  {
-    "teal": 403,
-    "source": "contracts\\Moderator.algo.ts:97",
-    "pc": [
+      412,
+      413,
       414
     ]
   },
   {
-    "teal": 404,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 403,
+    "source": "contracts\\Moderator.algo.ts:98",
     "pc": [
-      415
-    ]
-  },
-  {
-    "teal": 405,
-    "source": "contracts\\Moderator.algo.ts:97",
-    "pc": [
+      415,
       416
     ]
   },
   {
-    "teal": 408,
-    "source": "contracts\\Moderator.algo.ts:97",
-    "errorMessage": "argument 0 (modelEvaluationMetrics) for regModelSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
+    "teal": 404,
+    "source": "contracts\\Moderator.algo.ts:98",
     "pc": [
       417
     ]
   },
   {
-    "teal": 411,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 405,
+    "source": "contracts\\Moderator.algo.ts:98",
     "pc": [
-      418,
-      419,
-      420
+      418
+    ]
+  },
+  {
+    "teal": 408,
+    "source": "contracts\\Moderator.algo.ts:98",
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
+    "pc": [
+      419
     ]
   },
   {
     "teal": 412,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "source": "contracts\\Moderator.algo.ts:99",
     "pc": [
-      421
+      420
     ]
   },
   {
     "teal": 413,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "source": "contracts\\Moderator.algo.ts:99",
     "pc": [
+      421,
       422
     ]
   },
   {
     "teal": 414,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "source": "contracts\\Moderator.algo.ts:99",
     "pc": [
       423
     ]
@@ -1831,138 +1818,145 @@
     "teal": 415,
     "source": "contracts\\Moderator.algo.ts:97",
     "pc": [
-      424,
-      425,
-      426
+      424
     ]
   },
   {
-    "teal": 416,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 420,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
-      427
+      425
     ]
   },
   {
-    "teal": 417,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 423,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
+      426,
+      427,
       428
     ]
   },
   {
-    "teal": 418,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 424,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       429
     ]
   },
   {
-    "teal": 419,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 425,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       430
     ]
   },
   {
-    "teal": 420,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 426,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       431
     ]
   },
   {
-    "teal": 421,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 427,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       432
     ]
   },
   {
-    "teal": 425,
-    "source": "contracts\\Moderator.algo.ts:97",
+    "teal": 430,
+    "source": "contracts\\Moderator.algo.ts:103",
+    "errorMessage": "argument 0 (modelEvaluationMetrics) for regModelSelectionCriteria must be a (uint64,uint64,uint64,uint64)",
     "pc": [
-      433,
-      434,
-      435
+      433
     ]
   },
   {
     "teal": 433,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
-      436,
-      437
+      434,
+      435,
+      436
     ]
   },
   {
     "teal": 434,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
-      438,
-      439,
-      440
+      437
     ]
   },
   {
     "teal": 435,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
-      441
+      438
     ]
   },
   {
     "teal": 436,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
-      442
+      439
     ]
   },
   {
     "teal": 437,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "source": "contracts\\Moderator.algo.ts:103",
+    "pc": [
+      440,
+      441,
+      442
+    ]
+  },
+  {
+    "teal": 438,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       443
     ]
   },
   {
-    "teal": 438,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 439,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       444
     ]
   },
   {
-    "teal": 439,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 440,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       445
     ]
   },
   {
-    "teal": 440,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "teal": 441,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       446
     ]
   },
   {
-    "teal": 441,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "teal": 442,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       447
     ]
   },
   {
-    "teal": 442,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "teal": 443,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       448
     ]
   },
   {
-    "teal": 443,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "teal": 447,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       449,
       450,
@@ -1970,16 +1964,16 @@
     ]
   },
   {
-    "teal": 444,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 455,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       452,
       453
     ]
   },
   {
-    "teal": 445,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 456,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       454,
       455,
@@ -1987,270 +1981,336 @@
     ]
   },
   {
-    "teal": 446,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 457,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       457
     ]
   },
   {
-    "teal": 447,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 458,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       458
     ]
   },
   {
-    "teal": 448,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 459,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
-      459,
+      459
+    ]
+  },
+  {
+    "teal": 460,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
       460
     ]
   },
   {
-    "teal": 449,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 461,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       461
     ]
   },
   {
-    "teal": 450,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 462,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       462
     ]
   },
   {
-    "teal": 451,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 463,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       463
     ]
   },
   {
-    "teal": 452,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 464,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       464
     ]
   },
   {
-    "teal": 453,
-    "source": "contracts\\Moderator.algo.ts:100",
+    "teal": 465,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
-      465
+      465,
+      466,
+      467
     ]
   },
   {
-    "teal": 456,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 466,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
-      466
-    ]
-  },
-  {
-    "teal": 457,
-    "source": "contracts\\Moderator.algo.ts:101",
-    "pc": [
-      467,
       468,
       469
     ]
   },
   {
-    "teal": 458,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 467,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
       470,
-      471
+      471,
+      472
     ]
   },
   {
-    "teal": 459,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 468,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
-      472,
-      473,
+      473
+    ]
+  },
+  {
+    "teal": 469,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
       474
     ]
   },
   {
-    "teal": 460,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 470,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
-      475
-    ]
-  },
-  {
-    "teal": 461,
-    "source": "contracts\\Moderator.algo.ts:98",
-    "pc": [
+      475,
       476
     ]
   },
   {
-    "teal": 462,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 471,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       477
     ]
   },
   {
-    "teal": 463,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 472,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       478
     ]
   },
   {
-    "teal": 464,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 473,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
       479
     ]
   },
   {
-    "teal": 465,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 474,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
       480
     ]
   },
   {
-    "teal": 466,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 475,
+    "source": "contracts\\Moderator.algo.ts:106",
     "pc": [
       481
     ]
   },
   {
-    "teal": 467,
-    "source": "contracts\\Moderator.algo.ts:101",
+    "teal": 478,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
       482
     ]
   },
   {
-    "teal": 470,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 479,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
-      483
-    ]
-  },
-  {
-    "teal": 471,
-    "source": "contracts\\Moderator.algo.ts:102",
-    "pc": [
+      483,
       484,
-      485,
-      486
+      485
     ]
   },
   {
-    "teal": 472,
-    "source": "contracts\\Moderator.algo.ts:103",
+    "teal": 480,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
-      487,
-      488
+      486,
+      487
     ]
   },
   {
-    "teal": 473,
-    "source": "contracts\\Moderator.algo.ts:103",
+    "teal": 481,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
+      488,
       489,
-      490,
+      490
+    ]
+  },
+  {
+    "teal": 482,
+    "source": "contracts\\Moderator.algo.ts:108",
+    "pc": [
       491
     ]
   },
   {
-    "teal": 474,
-    "source": "contracts\\Moderator.algo.ts:103",
+    "teal": 483,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       492
     ]
   },
   {
-    "teal": 475,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 484,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
       493
     ]
   },
   {
-    "teal": 476,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 485,
+    "source": "contracts\\Moderator.algo.ts:104",
     "pc": [
-      494,
+      494
+    ]
+  },
+  {
+    "teal": 486,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
       495
     ]
   },
   {
-    "teal": 477,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 487,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
       496
     ]
   },
   {
-    "teal": 478,
-    "source": "contracts\\Moderator.algo.ts:98",
+    "teal": 488,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
       497
     ]
   },
   {
-    "teal": 479,
-    "source": "contracts\\Moderator.algo.ts:103",
+    "teal": 489,
+    "source": "contracts\\Moderator.algo.ts:107",
     "pc": [
       498
     ]
   },
   {
-    "teal": 480,
-    "source": "contracts\\Moderator.algo.ts:103",
+    "teal": 492,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
       499
     ]
   },
   {
-    "teal": 481,
-    "source": "contracts\\Moderator.algo.ts:102",
+    "teal": 493,
+    "source": "contracts\\Moderator.algo.ts:108",
     "pc": [
-      500
-    ]
-  },
-  {
-    "teal": 484,
-    "source": "contracts\\Moderator.algo.ts:99",
-    "pc": [
+      500,
       501,
-      502,
-      503
+      502
     ]
   },
   {
-    "teal": 489,
-    "source": "contracts\\Moderator.algo.ts:105",
+    "teal": 494,
+    "source": "contracts\\Moderator.algo.ts:109",
     "pc": [
-      504,
+      503,
+      504
+    ]
+  },
+  {
+    "teal": 495,
+    "source": "contracts\\Moderator.algo.ts:109",
+    "pc": [
       505,
       506,
-      507,
-      508,
-      509,
+      507
+    ]
+  },
+  {
+    "teal": 496,
+    "source": "contracts\\Moderator.algo.ts:109",
+    "pc": [
+      508
+    ]
+  },
+  {
+    "teal": 497,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
+      509
+    ]
+  },
+  {
+    "teal": 498,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
       510,
-      511,
-      512,
-      513,
-      514,
-      515,
-      516,
+      511
+    ]
+  },
+  {
+    "teal": 499,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
+      512
+    ]
+  },
+  {
+    "teal": 500,
+    "source": "contracts\\Moderator.algo.ts:104",
+    "pc": [
+      513
+    ]
+  },
+  {
+    "teal": 501,
+    "source": "contracts\\Moderator.algo.ts:109",
+    "pc": [
+      514
+    ]
+  },
+  {
+    "teal": 502,
+    "source": "contracts\\Moderator.algo.ts:109",
+    "pc": [
+      515
+    ]
+  },
+  {
+    "teal": 503,
+    "source": "contracts\\Moderator.algo.ts:108",
+    "pc": [
+      516
+    ]
+  },
+  {
+    "teal": 506,
+    "source": "contracts\\Moderator.algo.ts:105",
+    "pc": [
       517,
       518,
-      519,
+      519
+    ]
+  },
+  {
+    "teal": 511,
+    "source": "contracts\\Moderator.algo.ts:111",
+    "pc": [
       520,
       521,
       522,
@@ -2285,20 +2345,8 @@
       551,
       552,
       553,
-      554
-    ]
-  },
-  {
-    "teal": 490,
-    "source": "contracts\\Moderator.algo.ts:105",
-    "pc": [
-      555
-    ]
-  },
-  {
-    "teal": 495,
-    "source": "contracts\\Moderator.algo.ts:107",
-    "pc": [
+      554,
+      555,
       556,
       557,
       558,
@@ -2313,8 +2361,20 @@
       567,
       568,
       569,
-      570,
-      571,
+      570
+    ]
+  },
+  {
+    "teal": 512,
+    "source": "contracts\\Moderator.algo.ts:111",
+    "pc": [
+      571
+    ]
+  },
+  {
+    "teal": 517,
+    "source": "contracts\\Moderator.algo.ts:113",
+    "pc": [
       572,
       573,
       574,
@@ -2331,349 +2391,287 @@
       585,
       586,
       587,
-      588
-    ]
-  },
-  {
-    "teal": 496,
-    "source": "contracts\\Moderator.algo.ts:97",
-    "pc": [
-      589
-    ]
-  },
-  {
-    "teal": 501,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      588,
+      589,
       590,
       591,
-      592
-    ]
-  },
-  {
-    "teal": 504,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      592,
       593,
       594,
-      595
-    ]
-  },
-  {
-    "teal": 505,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      596
-    ]
-  },
-  {
-    "teal": 506,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      597
-    ]
-  },
-  {
-    "teal": 507,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      598
-    ]
-  },
-  {
-    "teal": 508,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      599
-    ]
-  },
-  {
-    "teal": 511,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "errorMessage": "argument 1 (Address) for storeModelParams must be a address",
-    "pc": [
-      600
-    ]
-  },
-  {
-    "teal": 514,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
       601,
-      602
-    ]
-  },
-  {
-    "teal": 515,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      603
-    ]
-  },
-  {
-    "teal": 516,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      602,
+      603,
       604
     ]
   },
   {
-    "teal": 517,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "teal": 518,
+    "source": "contracts\\Moderator.algo.ts:103",
     "pc": [
       605
     ]
   },
   {
-    "teal": 518,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "teal": 523,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       606,
-      607
-    ]
-  },
-  {
-    "teal": 519,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      607,
       608
     ]
   },
   {
-    "teal": 520,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
-      609
-    ]
-  },
-  {
-    "teal": 523,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "errorMessage": "argument 2 (mbrPay) for storeModelParams must be a pay transaction",
-    "pc": [
-      610
-    ]
-  },
-  {
     "teal": 526,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
-      611,
-      612,
-      613
+      609,
+      610,
+      611
     ]
   },
   {
     "teal": 527,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
+      612
+    ]
+  },
+  {
+    "teal": 528,
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
+      613
+    ]
+  },
+  {
+    "teal": 529,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       614
     ]
   },
   {
-    "teal": 528,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "teal": 530,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       615
     ]
   },
   {
-    "teal": 532,
-    "source": "contracts\\Moderator.algo.ts:111",
+    "teal": 533,
+    "source": "contracts\\Moderator.algo.ts:117",
+    "errorMessage": "argument 1 (Address) for storeModelParams must be a address",
     "pc": [
-      616,
+      616
+    ]
+  },
+  {
+    "teal": 536,
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
       617,
       618
     ]
   },
   {
     "teal": 537,
-    "source": "contracts\\Moderator.algo.ts:112",
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
-      619,
-      620
+      619
     ]
   },
   {
     "teal": 538,
-    "source": "contracts\\Moderator.algo.ts:112",
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
+      620
+    ]
+  },
+  {
+    "teal": 539,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       621
     ]
   },
   {
-    "teal": 539,
-    "source": "contracts\\Moderator.algo.ts:112",
-    "pc": [
-      622
-    ]
-  },
-  {
     "teal": 540,
-    "source": "contracts\\Moderator.algo.ts:112",
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
+      622,
       623
     ]
   },
   {
     "teal": 541,
-    "source": "contracts\\Moderator.algo.ts:112",
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
-      624,
-      625,
+      624
+    ]
+  },
+  {
+    "teal": 542,
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
+      625
+    ]
+  },
+  {
+    "teal": 545,
+    "source": "contracts\\Moderator.algo.ts:117",
+    "errorMessage": "argument 2 (mbrPay) for storeModelParams must be a pay transaction",
+    "pc": [
       626
     ]
   },
   {
-    "teal": 547,
-    "source": "contracts\\Moderator.algo.ts:113",
+    "teal": 548,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       627,
-      628
-    ]
-  },
-  {
-    "teal": 548,
-    "source": "contracts\\Moderator.algo.ts:113",
-    "pc": [
-      629,
-      630
+      628,
+      629
     ]
   },
   {
     "teal": 549,
-    "source": "contracts\\Moderator.algo.ts:113",
+    "source": "contracts\\Moderator.algo.ts:117",
+    "pc": [
+      630
+    ]
+  },
+  {
+    "teal": 550,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       631
     ]
   },
   {
-    "teal": 552,
-    "source": "contracts\\Moderator.algo.ts:113",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
+    "teal": 554,
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
-      632
-    ]
-  },
-  {
-    "teal": 561,
-    "source": "contracts\\Moderator.algo.ts:114",
-    "pc": [
+      632,
       633,
       634
     ]
   },
   {
-    "teal": 562,
-    "source": "contracts\\Moderator.algo.ts:115",
+    "teal": 559,
+    "source": "contracts\\Moderator.algo.ts:118",
     "pc": [
       635,
       636
     ]
   },
   {
-    "teal": 563,
-    "source": "contracts\\Moderator.algo.ts:115",
+    "teal": 560,
+    "source": "contracts\\Moderator.algo.ts:118",
     "pc": [
-      637,
+      637
+    ]
+  },
+  {
+    "teal": 561,
+    "source": "contracts\\Moderator.algo.ts:118",
+    "pc": [
       638
     ]
   },
   {
-    "teal": 564,
-    "source": "contracts\\Moderator.algo.ts:115",
+    "teal": 562,
+    "source": "contracts\\Moderator.algo.ts:118",
     "pc": [
       639
     ]
   },
   {
-    "teal": 567,
-    "source": "contracts\\Moderator.algo.ts:115",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
+    "teal": 563,
+    "source": "contracts\\Moderator.algo.ts:118",
     "pc": [
-      640
-    ]
-  },
-  {
-    "teal": 570,
-    "source": "contracts\\Moderator.algo.ts:114",
-    "pc": [
+      640,
       641,
       642
     ]
   },
   {
-    "teal": 571,
-    "source": "contracts\\Moderator.algo.ts:116",
+    "teal": 569,
+    "source": "contracts\\Moderator.algo.ts:119",
     "pc": [
       643,
       644
     ]
   },
   {
-    "teal": 572,
-    "source": "contracts\\Moderator.algo.ts:116",
+    "teal": 570,
+    "source": "contracts\\Moderator.algo.ts:119",
     "pc": [
       645,
       646
     ]
   },
   {
-    "teal": 573,
-    "source": "contracts\\Moderator.algo.ts:116",
+    "teal": 571,
+    "source": "contracts\\Moderator.algo.ts:119",
     "pc": [
       647
     ]
   },
   {
-    "teal": 576,
-    "source": "contracts\\Moderator.algo.ts:116",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
+    "teal": 574,
+    "source": "contracts\\Moderator.algo.ts:119",
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
     "pc": [
       648
     ]
   },
   {
-    "teal": 579,
-    "source": "contracts\\Moderator.algo.ts:114",
+    "teal": 583,
+    "source": "contracts\\Moderator.algo.ts:120",
     "pc": [
       649,
       650
     ]
   },
   {
-    "teal": 580,
-    "source": "contracts\\Moderator.algo.ts:117",
+    "teal": 584,
+    "source": "contracts\\Moderator.algo.ts:121",
     "pc": [
       651,
       652
     ]
   },
   {
-    "teal": 581,
-    "source": "contracts\\Moderator.algo.ts:117",
+    "teal": 585,
+    "source": "contracts\\Moderator.algo.ts:121",
     "pc": [
       653,
       654
     ]
   },
   {
-    "teal": 582,
-    "source": "contracts\\Moderator.algo.ts:117",
+    "teal": 586,
+    "source": "contracts\\Moderator.algo.ts:121",
     "pc": [
       655
     ]
   },
   {
-    "teal": 585,
-    "source": "contracts\\Moderator.algo.ts:117",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
+    "teal": 589,
+    "source": "contracts\\Moderator.algo.ts:121",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
     "pc": [
       656
     ]
   },
   {
-    "teal": 589,
+    "teal": 592,
     "source": "contracts\\Moderator.algo.ts:120",
     "pc": [
       657,
@@ -2681,200 +2679,200 @@
     ]
   },
   {
-    "teal": 590,
-    "source": "contracts\\Moderator.algo.ts:120",
+    "teal": 593,
+    "source": "contracts\\Moderator.algo.ts:122",
     "pc": [
-      659
-    ]
-  },
-  {
-    "teal": 591,
-    "source": "contracts\\Moderator.algo.ts:120",
-    "pc": [
+      659,
       660
     ]
   },
   {
-    "teal": 592,
-    "source": "contracts\\Moderator.algo.ts:120",
+    "teal": 594,
+    "source": "contracts\\Moderator.algo.ts:122",
     "pc": [
-      661
+      661,
+      662
     ]
   },
   {
-    "teal": 593,
-    "source": "contracts\\Moderator.algo.ts:120",
+    "teal": 595,
+    "source": "contracts\\Moderator.algo.ts:122",
     "pc": [
-      662,
       663
     ]
   },
   {
-    "teal": 594,
-    "source": "contracts\\Moderator.algo.ts:120",
+    "teal": 598,
+    "source": "contracts\\Moderator.algo.ts:122",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
     "pc": [
       664
     ]
   },
   {
-    "teal": 595,
-    "source": "contracts\\Moderator.algo.ts:112",
+    "teal": 601,
+    "source": "contracts\\Moderator.algo.ts:120",
     "pc": [
       665,
-      666,
-      667
-    ]
-  },
-  {
-    "teal": 601,
-    "source": "contracts\\Moderator.algo.ts:122",
-    "pc": [
-      668,
-      669
+      666
     ]
   },
   {
     "teal": 602,
-    "source": "contracts\\Moderator.algo.ts:122",
+    "source": "contracts\\Moderator.algo.ts:123",
     "pc": [
-      670,
-      671
+      667,
+      668
     ]
   },
   {
     "teal": 603,
-    "source": "contracts\\Moderator.algo.ts:122",
+    "source": "contracts\\Moderator.algo.ts:123",
+    "pc": [
+      669,
+      670
+    ]
+  },
+  {
+    "teal": 604,
+    "source": "contracts\\Moderator.algo.ts:123",
+    "pc": [
+      671
+    ]
+  },
+  {
+    "teal": 607,
+    "source": "contracts\\Moderator.algo.ts:123",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
     "pc": [
       672
     ]
   },
   {
-    "teal": 606,
-    "source": "contracts\\Moderator.algo.ts:122",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
+    "teal": 611,
+    "source": "contracts\\Moderator.algo.ts:126",
     "pc": [
-      673
+      673,
+      674
     ]
   },
   {
-    "teal": 615,
-    "source": "contracts\\Moderator.algo.ts:123",
+    "teal": 612,
+    "source": "contracts\\Moderator.algo.ts:126",
     "pc": [
-      674,
       675
     ]
   },
   {
-    "teal": 616,
-    "source": "contracts\\Moderator.algo.ts:124",
+    "teal": 613,
+    "source": "contracts\\Moderator.algo.ts:126",
     "pc": [
-      676,
+      676
+    ]
+  },
+  {
+    "teal": 614,
+    "source": "contracts\\Moderator.algo.ts:126",
+    "pc": [
       677
     ]
   },
   {
-    "teal": 617,
-    "source": "contracts\\Moderator.algo.ts:124",
+    "teal": 615,
+    "source": "contracts\\Moderator.algo.ts:126",
     "pc": [
       678,
       679
     ]
   },
   {
-    "teal": 618,
-    "source": "contracts\\Moderator.algo.ts:124",
+    "teal": 616,
+    "source": "contracts\\Moderator.algo.ts:126",
     "pc": [
       680
     ]
   },
   {
-    "teal": 621,
-    "source": "contracts\\Moderator.algo.ts:124",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
+    "teal": 617,
+    "source": "contracts\\Moderator.algo.ts:118",
     "pc": [
-      681
-    ]
-  },
-  {
-    "teal": 624,
-    "source": "contracts\\Moderator.algo.ts:123",
-    "pc": [
+      681,
       682,
       683
     ]
   },
   {
-    "teal": 625,
-    "source": "contracts\\Moderator.algo.ts:125",
+    "teal": 623,
+    "source": "contracts\\Moderator.algo.ts:128",
     "pc": [
       684,
       685
     ]
   },
   {
-    "teal": 626,
-    "source": "contracts\\Moderator.algo.ts:125",
+    "teal": 624,
+    "source": "contracts\\Moderator.algo.ts:128",
     "pc": [
       686,
       687
     ]
   },
   {
-    "teal": 627,
-    "source": "contracts\\Moderator.algo.ts:125",
+    "teal": 625,
+    "source": "contracts\\Moderator.algo.ts:128",
     "pc": [
       688
     ]
   },
   {
-    "teal": 630,
-    "source": "contracts\\Moderator.algo.ts:125",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
+    "teal": 628,
+    "source": "contracts\\Moderator.algo.ts:128",
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
     "pc": [
       689
     ]
   },
   {
-    "teal": 633,
-    "source": "contracts\\Moderator.algo.ts:123",
+    "teal": 637,
+    "source": "contracts\\Moderator.algo.ts:129",
     "pc": [
       690,
       691
     ]
   },
   {
-    "teal": 634,
-    "source": "contracts\\Moderator.algo.ts:126",
+    "teal": 638,
+    "source": "contracts\\Moderator.algo.ts:130",
     "pc": [
       692,
       693
     ]
   },
   {
-    "teal": 635,
-    "source": "contracts\\Moderator.algo.ts:126",
+    "teal": 639,
+    "source": "contracts\\Moderator.algo.ts:130",
     "pc": [
       694,
       695
     ]
   },
   {
-    "teal": 636,
-    "source": "contracts\\Moderator.algo.ts:126",
+    "teal": 640,
+    "source": "contracts\\Moderator.algo.ts:130",
     "pc": [
       696
     ]
   },
   {
-    "teal": 639,
-    "source": "contracts\\Moderator.algo.ts:126",
-    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
+    "teal": 643,
+    "source": "contracts\\Moderator.algo.ts:130",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"sender\",\"expected\":\"this.txn.sender\"}",
     "pc": [
       697
     ]
   },
   {
-    "teal": 643,
+    "teal": 646,
     "source": "contracts\\Moderator.algo.ts:129",
     "pc": [
       698,
@@ -2882,552 +2880,637 @@
     ]
   },
   {
-    "teal": 644,
-    "source": "contracts\\Moderator.algo.ts:129",
+    "teal": 647,
+    "source": "contracts\\Moderator.algo.ts:131",
     "pc": [
-      700
-    ]
-  },
-  {
-    "teal": 645,
-    "source": "contracts\\Moderator.algo.ts:129",
-    "pc": [
+      700,
       701
     ]
   },
   {
-    "teal": 646,
-    "source": "contracts\\Moderator.algo.ts:129",
+    "teal": 648,
+    "source": "contracts\\Moderator.algo.ts:131",
     "pc": [
-      702
+      702,
+      703
     ]
   },
   {
-    "teal": 650,
-    "source": "contracts\\Moderator.algo.ts:130",
+    "teal": 649,
+    "source": "contracts\\Moderator.algo.ts:131",
     "pc": [
-      703,
       704
     ]
   },
   {
-    "teal": 651,
-    "source": "contracts\\Moderator.algo.ts:130",
+    "teal": 652,
+    "source": "contracts\\Moderator.algo.ts:131",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"receiver\",\"expected\":\"this.app.address\"}",
     "pc": [
       705
     ]
   },
   {
-    "teal": 652,
-    "source": "contracts\\Moderator.algo.ts:130",
+    "teal": 655,
+    "source": "contracts\\Moderator.algo.ts:129",
     "pc": [
-      706
-    ]
-  },
-  {
-    "teal": 653,
-    "source": "contracts\\Moderator.algo.ts:130",
-    "pc": [
+      706,
       707
     ]
   },
   {
-    "teal": 654,
-    "source": "contracts\\Moderator.algo.ts:130",
+    "teal": 656,
+    "source": "contracts\\Moderator.algo.ts:132",
     "pc": [
       708,
       709
     ]
   },
   {
-    "teal": 655,
-    "source": "contracts\\Moderator.algo.ts:130",
+    "teal": 657,
+    "source": "contracts\\Moderator.algo.ts:132",
     "pc": [
-      710
-    ]
-  },
-  {
-    "teal": 658,
-    "source": "contracts\\Moderator.algo.ts:111",
-    "pc": [
+      710,
       711
     ]
   },
   {
-    "teal": 663,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 658,
+    "source": "contracts\\Moderator.algo.ts:132",
     "pc": [
       712
+    ]
+  },
+  {
+    "teal": 661,
+    "source": "contracts\\Moderator.algo.ts:132",
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPay\",\"field\":\"amount\",\"expected\":\"boxMbr\"}",
+    "pc": [
+      713
+    ]
+  },
+  {
+    "teal": 665,
+    "source": "contracts\\Moderator.algo.ts:135",
+    "pc": [
+      714,
+      715
     ]
   },
   {
     "teal": 666,
     "source": "contracts\\Moderator.algo.ts:135",
     "pc": [
-      713,
-      714,
-      715
+      716
     ]
   },
   {
     "teal": 667,
     "source": "contracts\\Moderator.algo.ts:135",
     "pc": [
-      716
+      717
     ]
   },
   {
     "teal": 668,
     "source": "contracts\\Moderator.algo.ts:135",
     "pc": [
-      717
-    ]
-  },
-  {
-    "teal": 669,
-    "source": "contracts\\Moderator.algo.ts:135",
-    "pc": [
       718
     ]
   },
   {
-    "teal": 670,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 672,
+    "source": "contracts\\Moderator.algo.ts:136",
     "pc": [
-      719
-    ]
-  },
-  {
-    "teal": 673,
-    "source": "contracts\\Moderator.algo.ts:135",
-    "errorMessage": "argument 0 (Address) for getBoxValue must be a address",
-    "pc": [
+      719,
       720
     ]
   },
   {
-    "teal": 676,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 673,
+    "source": "contracts\\Moderator.algo.ts:136",
     "pc": [
-      721,
-      722,
+      721
+    ]
+  },
+  {
+    "teal": 674,
+    "source": "contracts\\Moderator.algo.ts:136",
+    "pc": [
+      722
+    ]
+  },
+  {
+    "teal": 675,
+    "source": "contracts\\Moderator.algo.ts:136",
+    "pc": [
       723
     ]
   },
   {
-    "teal": 677,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 676,
+    "source": "contracts\\Moderator.algo.ts:136",
     "pc": [
-      724
-    ]
-  },
-  {
-    "teal": 678,
-    "source": "contracts\\Moderator.algo.ts:135",
-    "pc": [
+      724,
       725
     ]
   },
   {
-    "teal": 679,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 677,
+    "source": "contracts\\Moderator.algo.ts:136",
     "pc": [
       726
     ]
   },
   {
     "teal": 680,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "source": "contracts\\Moderator.algo.ts:117",
     "pc": [
       727
     ]
   },
   {
-    "teal": 684,
-    "source": "contracts\\Moderator.algo.ts:135",
+    "teal": 685,
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      728,
+      728
+    ]
+  },
+  {
+    "teal": 688,
+    "source": "contracts\\Moderator.algo.ts:141",
+    "pc": [
       729,
-      730
+      730,
+      731
     ]
   },
   {
     "teal": 689,
-    "source": "contracts\\Moderator.algo.ts:136",
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      731,
       732
     ]
   },
   {
     "teal": 690,
-    "source": "contracts\\Moderator.algo.ts:136",
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      733,
-      734,
-      735
+      733
     ]
   },
   {
     "teal": 691,
-    "source": "contracts\\Moderator.algo.ts:136",
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      736,
-      737
+      734
     ]
   },
   {
     "teal": 692,
-    "source": "contracts\\Moderator.algo.ts:136",
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      738
+      735
     ]
   },
   {
-    "teal": 693,
-    "source": "contracts\\Moderator.algo.ts:136",
+    "teal": 695,
+    "source": "contracts\\Moderator.algo.ts:141",
+    "errorMessage": "argument 0 (Address) for getBoxValue must be a address",
     "pc": [
+      736
+    ]
+  },
+  {
+    "teal": 698,
+    "source": "contracts\\Moderator.algo.ts:141",
+    "pc": [
+      737,
+      738,
       739
     ]
   },
   {
-    "teal": 696,
-    "source": "contracts\\Moderator.algo.ts:136",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
+    "teal": 699,
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
       740
     ]
   },
   {
     "teal": 700,
-    "source": "contracts\\Moderator.algo.ts:137",
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      741,
-      742
+      741
     ]
   },
   {
     "teal": 701,
-    "source": "contracts\\Moderator.algo.ts:137",
+    "source": "contracts\\Moderator.algo.ts:141",
+    "pc": [
+      742
+    ]
+  },
+  {
+    "teal": 702,
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
       743
     ]
   },
   {
-    "teal": 702,
-    "source": "contracts\\Moderator.algo.ts:137",
+    "teal": 706,
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
-      744
-    ]
-  },
-  {
-    "teal": 703,
-    "source": "contracts\\Moderator.algo.ts:137",
-    "pc": [
-      745
-    ]
-  },
-  {
-    "teal": 704,
-    "source": "contracts\\Moderator.algo.ts:137",
-    "pc": [
+      744,
+      745,
       746
     ]
   },
   {
-    "teal": 708,
-    "source": "contracts\\Moderator.algo.ts:138",
+    "teal": 711,
+    "source": "contracts\\Moderator.algo.ts:142",
     "pc": [
       747,
       748
     ]
   },
   {
-    "teal": 709,
-    "source": "contracts\\Moderator.algo.ts:138",
-    "pc": [
-      749
-    ]
-  },
-  {
     "teal": 712,
-    "source": "contracts\\Moderator.algo.ts:138",
-    "errorMessage": "box value does not exist: this.paramsData(Address).value",
+    "source": "contracts\\Moderator.algo.ts:142",
     "pc": [
-      750
-    ]
-  },
-  {
-    "teal": 713,
-    "source": "contracts\\Moderator.algo.ts:135",
-    "pc": [
+      749,
+      750,
       751
     ]
   },
   {
-    "teal": 718,
+    "teal": 713,
     "source": "contracts\\Moderator.algo.ts:142",
     "pc": [
       752,
-      753,
+      753
+    ]
+  },
+  {
+    "teal": 714,
+    "source": "contracts\\Moderator.algo.ts:142",
+    "pc": [
       754
     ]
   },
   {
-    "teal": 719,
+    "teal": 715,
     "source": "contracts\\Moderator.algo.ts:142",
     "pc": [
       755
     ]
   },
   {
-    "teal": 720,
+    "teal": 718,
     "source": "contracts\\Moderator.algo.ts:142",
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.app.creator\"}",
     "pc": [
       756
     ]
   },
   {
-    "teal": 724,
-    "source": "contracts\\Moderator.algo.ts:142",
+    "teal": 722,
+    "source": "contracts\\Moderator.algo.ts:143",
     "pc": [
       757,
-      758,
+      758
+    ]
+  },
+  {
+    "teal": 723,
+    "source": "contracts\\Moderator.algo.ts:143",
+    "pc": [
       759
     ]
   },
   {
-    "teal": 728,
+    "teal": 724,
     "source": "contracts\\Moderator.algo.ts:143",
     "pc": [
-      760,
+      760
+    ]
+  },
+  {
+    "teal": 725,
+    "source": "contracts\\Moderator.algo.ts:143",
+    "pc": [
       761
     ]
   },
   {
-    "teal": 729,
+    "teal": 726,
     "source": "contracts\\Moderator.algo.ts:143",
     "pc": [
-      762,
+      762
+    ]
+  },
+  {
+    "teal": 730,
+    "source": "contracts\\Moderator.algo.ts:144",
+    "pc": [
       763,
       764
     ]
   },
   {
-    "teal": 730,
-    "source": "contracts\\Moderator.algo.ts:143",
+    "teal": 731,
+    "source": "contracts\\Moderator.algo.ts:144",
     "pc": [
-      765,
+      765
+    ]
+  },
+  {
+    "teal": 734,
+    "source": "contracts\\Moderator.algo.ts:144",
+    "errorMessage": "box value does not exist: this.paramsData(Address).value",
+    "pc": [
       766
     ]
   },
   {
-    "teal": 731,
-    "source": "contracts\\Moderator.algo.ts:143",
+    "teal": 735,
+    "source": "contracts\\Moderator.algo.ts:141",
     "pc": [
       767
     ]
   },
   {
-    "teal": 732,
-    "source": "contracts\\Moderator.algo.ts:143",
+    "teal": 740,
+    "source": "contracts\\Moderator.algo.ts:148",
     "pc": [
-      768
-    ]
-  },
-  {
-    "teal": 733,
-    "source": "contracts\\Moderator.algo.ts:143",
-    "pc": [
-      769
-    ]
-  },
-  {
-    "teal": 734,
-    "source": "contracts\\Moderator.algo.ts:142",
-    "pc": [
+      768,
+      769,
       770
     ]
   },
   {
-    "teal": 737,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 741,
+    "source": "contracts\\Moderator.algo.ts:148",
     "pc": [
-      771,
-      772,
-      773,
-      774,
-      775,
-      776
-    ]
-  },
-  {
-    "teal": 738,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "pc": [
-      777,
-      778,
-      779
-    ]
-  },
-  {
-    "teal": 739,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "pc": [
-      780,
-      781,
-      782,
-      783
+      771
     ]
   },
   {
     "teal": 742,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+    "source": "contracts\\Moderator.algo.ts:148",
+    "pc": [
+      772
+    ]
+  },
+  {
+    "teal": 746,
+    "source": "contracts\\Moderator.algo.ts:148",
+    "pc": [
+      773,
+      774,
+      775
+    ]
+  },
+  {
+    "teal": 750,
+    "source": "contracts\\Moderator.algo.ts:149",
+    "pc": [
+      776,
+      777
+    ]
+  },
+  {
+    "teal": 751,
+    "source": "contracts\\Moderator.algo.ts:149",
+    "pc": [
+      778,
+      779,
+      780
+    ]
+  },
+  {
+    "teal": 752,
+    "source": "contracts\\Moderator.algo.ts:149",
+    "pc": [
+      781,
+      782
+    ]
+  },
+  {
+    "teal": 753,
+    "source": "contracts\\Moderator.algo.ts:149",
+    "pc": [
+      783
+    ]
+  },
+  {
+    "teal": 754,
+    "source": "contracts\\Moderator.algo.ts:149",
     "pc": [
       784
     ]
   },
   {
-    "teal": 745,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 755,
+    "source": "contracts\\Moderator.algo.ts:149",
     "pc": [
-      785,
-      786,
-      787,
-      788,
-      789,
-      790
+      785
     ]
   },
   {
-    "teal": 746,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 761,
+    "source": "contracts\\Moderator.algo.ts:150",
     "pc": [
-      791,
+      786
+    ]
+  },
+  {
+    "teal": 762,
+    "source": "contracts\\Moderator.algo.ts:150",
+    "pc": [
+      787
+    ]
+  },
+  {
+    "teal": 763,
+    "source": "contracts\\Moderator.algo.ts:150",
+    "pc": [
+      788,
+      789
+    ]
+  },
+  {
+    "teal": 767,
+    "source": "contracts\\Moderator.algo.ts:151",
+    "pc": [
+      790,
+      791
+    ]
+  },
+  {
+    "teal": 768,
+    "source": "contracts\\Moderator.algo.ts:151",
+    "pc": [
       792,
-      793,
-      794,
+      793
+    ]
+  },
+  {
+    "teal": 771,
+    "source": "contracts\\Moderator.algo.ts:150",
+    "pc": [
+      794
+    ]
+  },
+  {
+    "teal": 772,
+    "source": "contracts\\Moderator.algo.ts:150",
+    "pc": [
       795,
       796
     ]
   },
   {
-    "teal": 747,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 775,
+    "source": "contracts\\Moderator.algo.ts:150",
     "pc": [
-      797,
-      798,
+      797
+    ]
+  },
+  {
+    "teal": 776,
+    "source": "contracts\\Moderator.algo.ts:148",
+    "pc": [
+      798
+    ]
+  },
+  {
+    "teal": 779,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
       799,
       800,
       801,
-      802
+      802,
+      803,
+      804
     ]
   },
   {
-    "teal": 748,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 780,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
-      803,
-      804,
       805,
       806,
-      807,
-      808
+      807
     ]
   },
   {
-    "teal": 749,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 781,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
+      808,
       809,
       810,
-      811,
-      812,
-      813,
-      814
+      811
     ]
   },
   {
-    "teal": 750,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 784,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
+      812
+    ]
+  },
+  {
+    "teal": 787,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      813,
+      814,
       815,
       816,
       817,
-      818,
-      819,
-      820
+      818
     ]
   },
   {
-    "teal": 751,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 788,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
+      819,
+      820,
       821,
       822,
       823,
-      824,
-      825,
-      826
+      824
     ]
   },
   {
-    "teal": 752,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 789,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
+      825,
+      826,
       827,
       828,
       829,
-      830,
-      831,
-      832
+      830
     ]
   },
   {
-    "teal": 753,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 790,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
+      831,
+      832,
       833,
       834,
-      835
+      835,
+      836
     ]
   },
   {
-    "teal": 754,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 791,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
-      836,
       837,
       838,
       839,
       840,
       841,
-      842,
+      842
+    ]
+  },
+  {
+    "teal": 792,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
       843,
       844,
       845,
       846,
       847,
-      848,
+      848
+    ]
+  },
+  {
+    "teal": 793,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
       849,
       850,
       851,
       852,
-      853
-    ]
-  },
-  {
-    "teal": 757,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
-    "pc": [
+      853,
       854
     ]
   },
   {
-    "teal": 760,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 794,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       855,
       856,
@@ -3438,69 +3521,136 @@
     ]
   },
   {
-    "teal": 761,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 795,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
       861,
       862,
-      863
-    ]
-  },
-  {
-    "teal": 762,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "pc": [
+      863,
       864,
       865,
-      866,
-      867
+      866
     ]
   },
   {
-    "teal": 765,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "errorMessage": "this contract does not implement the given ABI method for call UpdateApplication",
+    "teal": 796,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
-      868
+      867,
+      868,
+      869
     ]
   },
   {
-    "teal": 768,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 797,
+    "source": "contracts\\Moderator.algo.ts:29",
     "pc": [
-      869,
       870,
       871,
       872,
       873,
-      874
-    ]
-  },
-  {
-    "teal": 769,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "pc": [
+      874,
       875,
       876,
-      877
-    ]
-  },
-  {
-    "teal": 770,
-    "source": "contracts\\Moderator.algo.ts:28",
-    "pc": [
+      877,
       878,
       879,
       880,
-      881
+      881,
+      882,
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889
     ]
   },
   {
-    "teal": 773,
-    "source": "contracts\\Moderator.algo.ts:28",
+    "teal": 800,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
+    "pc": [
+      890
+    ]
+  },
+  {
+    "teal": 803,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      891,
+      892,
+      893,
+      894,
+      895,
+      896
+    ]
+  },
+  {
+    "teal": 804,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      897,
+      898,
+      899
+    ]
+  },
+  {
+    "teal": 805,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      900,
+      901,
+      902,
+      903
+    ]
+  },
+  {
+    "teal": 808,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "errorMessage": "this contract does not implement the given ABI method for call UpdateApplication",
+    "pc": [
+      904
+    ]
+  },
+  {
+    "teal": 811,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      905,
+      906,
+      907,
+      908,
+      909,
+      910
+    ]
+  },
+  {
+    "teal": 812,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      911,
+      912,
+      913
+    ]
+  },
+  {
+    "teal": 813,
+    "source": "contracts\\Moderator.algo.ts:29",
+    "pc": [
+      914,
+      915,
+      916,
+      917
+    ]
+  },
+  {
+    "teal": 816,
+    "source": "contracts\\Moderator.algo.ts:29",
     "errorMessage": "this contract does not implement the given ABI method for call DeleteApplication",
     "pc": [
-      882
+      918
     ]
   }
 ]
