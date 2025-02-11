@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 import base64
 from cryptography.fernet import Fernet
+import pickle
 
 load_dotenv()
 
@@ -41,17 +42,25 @@ def retrieve_model(ipfs_hash, contract_id):
   return filepath
 
 def retrieve_model_params(model_params_ipfs_hash, key):
-  url = f"https://gateway.pinata.cloud/ipfs/{model_params_ipfs_hash}"
-  response = requests.get(url, timeout=10)
-  response.raise_for_status()
+    url = f"https://gateway.pinata.cloud/ipfs/{model_params_ipfs_hash}"
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
 
-  decoded_key = base64.b64decode(key)
-  f = Fernet(decoded_key)
-  decrypted_content = f.decrypt(response.content)
-  with open(f'{model_params_ipfs_hash}_params.txt', 'wb') as f:
-    f.write(decrypted_content)
-  return decrypted_content.decode()
+    decoded_key = base64.b64decode(key)
+    cipher_suite = Fernet(decoded_key)
+    decrypted_content = cipher_suite.decrypt(response.content)
 
+    temp_file_path = f"{model_params_ipfs_hash}_params.pkl"
+    try:
+        with open(temp_file_path, 'wb') as temp_file:
+            temp_file.write(decrypted_content)
+        with open(temp_file_path, 'rb') as temp_file:
+            decrypted_params = pickle.load(temp_file)
+    finally:
+        if os.path.exists(temp_file_path):
+            os.remove(temp_file_path)
+
+    return decrypted_params
 
 
 
