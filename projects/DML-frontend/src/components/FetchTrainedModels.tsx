@@ -68,10 +68,9 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                 paramKey: getParams.paramKey,
               }
             }
-
-            console.log('Added params for address', extAddr, paramsMap[extAddr])
+            enqueueSnackbar('Model Parameters has been successfully downloaded', { variant: 'success' })
           } catch (error) {
-            console.error(`Error fetching box value for ${box.name}`, error)
+            enqueueSnackbar('Error fetching box value for', { variant: 'error' })
           }
         }
       }
