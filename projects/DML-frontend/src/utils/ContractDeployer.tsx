@@ -117,9 +117,8 @@ export const getStoredModelParams = async (MOAddress: string, appID: bigint) => 
     defaultSender: mnoAccount.account.addr,
   })
 
-  const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
-
   try {
+    const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
     const boxIDs = await algorand.app.getBoxNames(appID)
 
     const paramsMap: Record<string, { paramHash: string; paramKey: string }> = {}

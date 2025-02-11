@@ -1,12 +1,12 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { Config } from '@algorandfoundation/algokit-utils';
-import { ModeratorClient, ModeratorFactory } from '../contracts/clients/ModeratorClient';
+import { DmlChainClient, DmlChainFactory } from '../contracts/clients/DMLChainClient';
 
 const fixture = algorandFixture();
 Config.configure({ populateAppCallResources: true });
 
-let appClient: ModeratorClient;
+let appClient: DmlChainClient;
 
 describe('Moderator', () => {
   beforeEach(fixture.beforeEach);
@@ -16,31 +16,18 @@ describe('Moderator', () => {
     const { testAccount } = fixture.context;
     const { algorand } = fixture;
 
-    const factory = new ModeratorFactory({
+    const factory = new DmlChainFactory({
       algorand,
       defaultSender: testAccount.addr,
     });
 
-    const createResult = await factory.send.create.createApplication();
+    const createResult = await factory.send.create.createApplication({ args: { modelHash: 'test' } });
     appClient = createResult.appClient;
   });
 
-  test('sum', async () => {
-    const a = 13;
-    const b = 37;
-    const sum = await appClient.send.doMath({ args: { a, b, operation: 'sum' } });
-    expect(sum.return).toBe(BigInt(a + b));
-  });
+  test('reward distribution', async () => {
+    const reward = await appClient.send.distributeRewards();
 
-  test('difference', async () => {
-    const a = 13;
-    const b = 37;
-    const diff = await appClient.send.doMath({ args: { a, b, operation: 'difference' } });
-    expect(diff.return).toBe(BigInt(a >= b ? a - b : b - a));
-  });
-
-  test('hello', async () => {
-    const hello = await appClient.send.hello({ args: { name: 'world!' } });
-    expect(hello.return).toBe('Hello, world!');
+    expect(reward.return).toBe(BigInt(2000));
   });
 });

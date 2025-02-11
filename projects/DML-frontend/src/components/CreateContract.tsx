@@ -58,10 +58,11 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       algorand,
     })
 
-    await fetchData()
+    fetchData()
 
     if (!data) {
       enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
+      handleClose()
       return
     }
 
@@ -130,14 +131,15 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
     }
   }
 
-  const handleClose = () => {
-    setAppId(null)
-    closeModal()
-  }
-
   useEffect(() => {
     fetchData()
   }, [])
+
+  const handleClose = () => {
+    setAppId(null)
+    setLoading(false)
+    closeModal()
+  }
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>

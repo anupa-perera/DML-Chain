@@ -34,13 +34,6 @@
       }
     },
     {
-      "name": "calculateCost",
-      "args": [],
-      "returns": {
-        "type": "uint64"
-      }
-    },
-    {
       "name": "storeClassificationSelectionCriteria",
       "args": [
         {
@@ -129,6 +122,13 @@
       ],
       "returns": {
         "type": "(string,string)"
+      }
+    },
+    {
+      "name": "distributeRewards",
+      "args": [],
+      "returns": {
+        "type": "uint64"
       }
     },
     {

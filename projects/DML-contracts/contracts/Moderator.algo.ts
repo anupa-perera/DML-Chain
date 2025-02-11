@@ -1,9 +1,9 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-const COST_PER_BYTE = 400;
-const COST_PER_BOX = 2500;
-// const MAX_BOX_SIZE = 32768;
-const BOX_SIZE_BYTES = 32;
+// const COST_PER_BYTE = 400;
+// const COST_PER_BOX = 2500;
+// // const MAX_BOX_SIZE = 32768;
+// const BOX_SIZE_BYTES = 32;
 
 const boxMbr = 1_000_000;
 
@@ -52,11 +52,6 @@ export class DMLChain extends Contract {
   // printHash
   printHash(): string {
     return this.ipfsHash.value;
-  }
-
-  // calculate cost
-  calculateCost(): uint64 {
-    return COST_PER_BOX + COST_PER_BYTE * BOX_SIZE_BYTES;
   }
 
   // store classification model selection criteria
@@ -142,6 +137,17 @@ export class DMLChain extends Contract {
     verifyTxn(this.txn, { sender: this.app.creator });
     assert(this.paramsData(Address).exists);
     return this.paramsData(Address).value;
+  }
+
+  // distribute rewards
+  distributeRewards(): uint64 {
+    const baseCase = this.classificationPerformanceMetrics('InitialModelMetrics').value;
+    let total = 0;
+    total += baseCase.accuracy;
+    total += baseCase.precision;
+    total += baseCase.recall;
+    total += baseCase.f1score;
+    return total;
   }
 
   //  delete contract

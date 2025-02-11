@@ -4,12 +4,14 @@ import { useWallet } from '@txnlab/use-wallet-react'
 import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import CreateContract from './components/CreateContract'
+import FetchTrainedModels from './components/FetchTrainedModels'
 import UpdateContract from './components/UpdateContract'
 
 const Home = () => {
   const { activeAddress } = useWallet()
   const [openDeployModal, setOpenDeployModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
+  const [openFetchModelParamsModal, setFetchModelParamsModal] = useState<boolean>(false)
 
   const toggleDeployModal = () => {
     setOpenDeployModal(!openDeployModal)
@@ -17,6 +19,10 @@ const Home = () => {
 
   const toggleUpdateModal = () => {
     setOpenUpdateModal(!openUpdateModal)
+  }
+
+  const toggleFetchModelParamsModal = () => {
+    setFetchModelParamsModal(!openFetchModelParamsModal)
   }
 
   return (
@@ -119,6 +125,7 @@ const Home = () => {
                         fontFamily: 'Cursive, Arial, sans-serif',
                         fontWeight: 'bold',
                       }}
+                      onClick={toggleFetchModelParamsModal}
                     >
                       Fetch Trained Models
                     </Button>
@@ -130,6 +137,7 @@ const Home = () => {
         </Paper>
         <CreateContract openModal={openDeployModal} closeModal={toggleDeployModal} />
         <UpdateContract openModal={openUpdateModal} closeModal={toggleUpdateModal} />
+        <FetchTrainedModels openModal={openFetchModelParamsModal} closeModal={toggleFetchModelParamsModal} />
       </Container>
     </Box>
   )

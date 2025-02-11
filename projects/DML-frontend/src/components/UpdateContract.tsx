@@ -50,6 +50,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
   const handleClose = () => {
     setAppId(null)
     setFileRetrieved(false)
+    setLoading(false)
     closeModal()
   }
 
@@ -116,6 +117,8 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
           },
         })
       }
+
+      enqueueSnackbar('Your model data has been successfully submitted for evaluation', { variant: 'success' })
     } catch (error) {
       enqueueSnackbar('Failed to submit data', { variant: 'warning' })
     } finally {
@@ -134,8 +137,10 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [fileRetrieved])
+    if (openModal && fileRetrieved) {
+      fetchData()
+    }
+  }, [fileRetrieved, openModal])
 
   return (
     <Dialog open={openModal} onClose={handleClose}>
