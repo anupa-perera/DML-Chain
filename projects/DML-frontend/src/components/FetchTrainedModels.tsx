@@ -1,7 +1,8 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from '@mui/material'
+import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, Link, TextField, Typography } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { encodeAddress } from 'algosdk'
+import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
@@ -15,6 +16,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
   const [loading, setLoading] = useState<boolean>(false)
   const [appId, setAppId] = useState<bigint | null>(null)
   const [paramsData, setParamsData] = useState<Record<string, { paramHash: string; paramKey: string }> | null>(null)
+  const [displayNotification, setDisplayNotification] = useState<boolean>(false)
 
   const { transactionSigner, activeAddress, algodClient } = useWallet()
 
@@ -68,18 +70,25 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                 paramKey: getParams.paramKey,
               }
             }
-            enqueueSnackbar('Model Parameters has been successfully downloaded', { variant: 'success' })
           } catch (error) {
             enqueueSnackbar('Error fetching box value for', { variant: 'error' })
           }
         }
       }
 
-      console.log('this is params map', paramsMap)
-
       setParamsData(paramsMap)
+      if (paramsData) {
+        await axios.post(`http://127.0.0.1:5000/aggregate`, paramsData)
+        setDisplayNotification(true)
+        setTimeout(() => {
+          setDisplayNotification(false)
+          handleClose()
+        }, 10000)
+      }
+
+      enqueueSnackbar('Model Parameters has been successfully stored for aggregation', { variant: 'success' })
     } catch (error) {
-      console.log(error)
+      enqueueSnackbar('Error fetching data', { variant: 'error' })
     } finally {
       setLoading(false)
     }
@@ -175,6 +184,17 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                   ))}
                 </Box>
               </>
+            )}
+            {displayNotification && (
+              <Box sx={{ border: '2px solid red', borderRadius: 2, p: 2, mt: 2, color: 'red' }}>
+                <Typography align="left">
+                  Please fetch your model parameters from this{' '}
+                  <Link href="http://localhost:5000/data" target="_blank" rel="noopener noreferrer">
+                    end point
+                  </Link>{' '}
+                  for your preferred aggregation. This window will close shortly.
+                </Typography>
+              </Box>
             )}
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
