@@ -13,7 +13,7 @@ import {
 import { useWallet } from '@txnlab/use-wallet-react'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Classification, DmlChainFactory } from '../contracts/DMLChain'
 
 interface DeployContractInterface {
@@ -122,20 +122,25 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
     }
   }
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/data`)
+      const response = await axios.get('http://127.0.0.1:5000/data')
       setData(response.data)
     } catch (error) {
-      enqueueSnackbar('Error fetching data', { variant: 'error' })
+      console.error('Error fetching data:', error)
     }
-  }
+  }, [])
 
   const handleClose = () => {
     setAppId(null)
     setLoading(false)
     closeModal()
   }
+
+  useEffect(() => {
+    if (!openModal) return
+    fetchData()
+  }, [openModal])
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>

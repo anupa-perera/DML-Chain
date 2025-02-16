@@ -21,6 +21,10 @@ type Regression = {
   COD: uint64;
 };
 
+type rewardCalculation = {
+  score: uint64;
+};
+
 type ParamsData = {
   paramHash: string;
   paramKey: string;
@@ -140,13 +144,19 @@ export class DMLChain extends Contract {
   }
 
   // distribute rewards
-  distributeRewards(): uint64 {
+  distributeRewards(contributor: rewardCalculation): uint64 {
     const baseCase = this.classificationPerformanceMetrics('InitialModelMetrics').value;
     let total = 0;
     total += baseCase.accuracy;
     total += baseCase.precision;
     total += baseCase.recall;
     total += baseCase.f1score;
+    if (contributor.score <= total) {
+      total = 0;
+    } else {
+      total = contributor.score - total;
+    }
+
     return total;
   }
 

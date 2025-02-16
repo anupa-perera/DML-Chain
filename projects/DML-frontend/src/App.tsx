@@ -12,13 +12,13 @@ export default function App() {
     wallets: [
       {
         id: WalletId.LUTE,
-        options: { siteName: 'Example Site' },
+        options: { siteName: 'DML-CHAIN' },
       },
       WalletId.DEFLY,
       WalletId.PERA,
       WalletId.MNEMONIC,
     ],
-    network: NetworkId.LOCALNET,
+    defaultNetwork: NetworkId.LOCALNET,
   })
 
   return (

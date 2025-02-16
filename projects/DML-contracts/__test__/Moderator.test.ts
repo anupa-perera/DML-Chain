@@ -8,7 +8,7 @@ Config.configure({ populateAppCallResources: true });
 
 let appClient: DmlChainClient;
 
-describe('Moderator', () => {
+describe('HelloWorld', () => {
   beforeEach(fixture.beforeEach);
 
   beforeAll(async () => {
@@ -27,7 +27,6 @@ describe('Moderator', () => {
 
   test('reward distribution', async () => {
     const reward = await appClient.send.distributeRewards();
-
-    expect(reward.return).toBe(BigInt(2000));
+    expect(reward).toBe(true);
   });
 });

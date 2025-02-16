@@ -43,7 +43,6 @@ function CreateUpdateContract({ appID, closeModal }: CreateUpdateContractInterfa
     }
   }, [])
 
-  // Add cleanup effect
   useEffect(() => {
     return () => {
       setLoading(false)

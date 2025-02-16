@@ -126,7 +126,12 @@
     },
     {
       "name": "distributeRewards",
-      "args": [],
+      "args": [
+        {
+          "name": "contributor",
+          "type": "(uint64)"
+        }
+      ],
       "returns": {
         "type": "uint64"
       }
