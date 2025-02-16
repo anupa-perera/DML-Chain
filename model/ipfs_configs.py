@@ -28,12 +28,12 @@ def upload_file_to_ipfs(filepath):
 
     return ipfs_hash
 
-def retrieve_model(ipfs_hash):
+def retrieve_model(ipfs_hash, contract_id):
   url = f"https://gateway.pinata.cloud/ipfs/{ipfs_hash}"
   response = requests.get(url, timeout=10)
   response.raise_for_status()
 
-  folder_path = f'{ipfs_hash}_model'
+  folder_path = f'{contract_id}_model'
   os.makedirs(folder_path, exist_ok=True)
 
   filepath = os.path.join(folder_path, f'model.ipynb')

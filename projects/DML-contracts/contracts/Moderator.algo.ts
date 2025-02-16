@@ -2,7 +2,8 @@ import { Contract } from '@algorandfoundation/tealscript';
 
 // const COST_PER_BYTE = 400;
 // const COST_PER_BOX = 2500;
-// const MAX_BOX_SIZE = 32768;
+// // const MAX_BOX_SIZE = 32768;
+// const BOX_SIZE_BYTES = 32;
 
 const boxMbr = 1_000_000;
 
@@ -18,6 +19,10 @@ type Regression = {
   RMSE: uint64;
   MAE: uint64;
   COD: uint64;
+};
+
+type rewardCalculation = {
+  score: uint64;
 };
 
 type ParamsData = {
@@ -138,8 +143,28 @@ export class DMLChain extends Contract {
     return this.paramsData(Address).value;
   }
 
+  // distribute rewards
+  distributeRewards(contributor: rewardCalculation): uint64 {
+    const baseCase = this.classificationPerformanceMetrics('InitialModelMetrics').value;
+    let total = 0;
+    total += baseCase.accuracy;
+    total += baseCase.precision;
+    total += baseCase.recall;
+    total += baseCase.f1score;
+    if (contributor.score <= total) {
+      total = 0;
+    } else {
+      total = contributor.score - total;
+    }
+
+    return total;
+  }
+
   //  delete contract
   deleteApplication(): void {
     assert(this.txn.sender === this.app.creator);
+    sendPayment({
+      closeRemainderTo: this.txn.sender,
+    });
   }
 }

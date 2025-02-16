@@ -1,46 +1,68 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
-import { Config } from '@algorandfoundation/algokit-utils';
-import { ModeratorClient, ModeratorFactory } from '../contracts/clients/ModeratorClient';
+import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
+import algosdk from 'algosdk';
+import { DmlChainClient, DmlChainFactory, Classification } from '../contracts/clients/DMLChainClient';
 
 const fixture = algorandFixture();
 Config.configure({ populateAppCallResources: true });
 
-let appClient: ModeratorClient;
+let appClient: DmlChainClient;
 
-describe('Moderator', () => {
+describe('DML-CHAIN', () => {
   beforeEach(fixture.beforeEach);
+  let algorand: AlgorandClient;
+  let acc: algosdk.Account;
 
   beforeAll(async () => {
     await fixture.beforeEach();
-    const { testAccount } = fixture.context;
-    const { algorand } = fixture;
+    algorand = AlgorandClient.defaultLocalNet();
 
-    const factory = new ModeratorFactory({
-      algorand,
-      defaultSender: testAccount.addr,
+    const dispenser = await algorand.account.localNetDispenser();
+
+    acc = algosdk.generateAccount();
+
+    algorand.account.setSignerFromAccount(acc);
+
+    await algorand.send.payment({
+      sender: dispenser.addr,
+      receiver: acc.addr,
+      amount: (10).algo(),
     });
 
-    const createResult = await factory.send.create.createApplication();
+    const factory = new DmlChainFactory({
+      algorand,
+      defaultSender: acc.addr,
+    });
+
+    const createResult = await factory.send.create.createApplication({ args: { modelHash: 'test' } });
     appClient = createResult.appClient;
   });
 
-  test('sum', async () => {
-    const a = 13;
-    const b = 37;
-    const sum = await appClient.send.doMath({ args: { a, b, operation: 'sum' } });
-    expect(sum.return).toBe(BigInt(a + b));
-  });
+  test('reward distribution', async () => {
+    const mbrPayFirstDeposit = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: (1).algo(),
+    });
 
-  test('difference', async () => {
-    const a = 13;
-    const b = 37;
-    const diff = await appClient.send.doMath({ args: { a, b, operation: 'difference' } });
-    expect(diff.return).toBe(BigInt(a >= b ? a - b : b - a));
-  });
+    const classification: Classification = {
+      accuracy: 50n,
+      precision: 50n,
+      recall: 50n,
+      f1score: 50n,
+    };
 
-  test('hello', async () => {
-    const hello = await appClient.send.hello({ args: { name: 'world!' } });
-    expect(hello.return).toBe('Hello, world!');
+    await appClient.send.storeClassificationSelectionCriteria({
+      args: {
+        evaluationMetrics: classification,
+        mbrPay: mbrPayFirstDeposit,
+      },
+    });
+
+    const reward = await appClient.send.distributeRewards({
+      args: { contributor: { score: BigInt(300) } },
+    });
+    expect(reward.return).toBe(BigInt(100));
   });
 });

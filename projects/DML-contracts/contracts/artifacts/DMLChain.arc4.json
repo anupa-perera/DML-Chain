@@ -125,6 +125,18 @@
       }
     },
     {
+      "name": "distributeRewards",
+      "args": [
+        {
+          "name": "contributor",
+          "type": "(uint64)"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "deleteApplication",
       "args": [],
       "returns": {

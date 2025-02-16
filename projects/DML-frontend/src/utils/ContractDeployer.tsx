@@ -3,14 +3,14 @@ import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import algosdk, { encodeAddress } from 'algosdk'
 import { DmlChainFactory } from '../contracts/DMLChain'
 
-type Classification = {
+export type Classification = {
   accuracy: bigint
   precision: bigint
   recall: bigint
   f1score: bigint
 }
 
-type ParamsData = {
+export type ParamsData = {
   paramHash: string
   paramKey: string
 }
@@ -21,9 +21,6 @@ algokit.Config.configure({
 
 export const generateAccount = () => {
   const acc = algosdk.generateAccount()
-  console.log('myAccount:', acc)
-  console.log('Account address as string:', acc.addr.toString())
-  console.log('Private key as mnemonic:', algosdk.secretKeyToMnemonic(acc.sk))
   return {
     mnemonic: algosdk.secretKeyToMnemonic(acc.sk),
     address: acc.addr,
@@ -31,18 +28,15 @@ export const generateAccount = () => {
 }
 
 export const createContract = async (ipfsHash: string, modelEvaluation: Classification, address: string) => {
-  console.log('inside create contract', ipfsHash, modelEvaluation, address)
   const algorand = AlgorandClient.defaultLocalNet()
-
-  const dispenser = await algorand.account.localNetDispenser()
 
   const mnoAccount = algorand.account.fromMnemonic(address)
 
-  await algorand.send.payment({
-    sender: dispenser.addr,
-    receiver: mnoAccount.account.addr,
-    amount: (10).algo(),
-  })
+  // await algorand.send.payment({
+  //   sender: dispenser.addr,
+  //   receiver: mnoAccount.account.addr,
+  //   amount: (10).algo(),
+  // })
 
   const factory = algorand.client.getTypedAppFactory(DmlChainFactory, {
     defaultSender: mnoAccount.account.addr,
@@ -105,6 +99,7 @@ export const submitModelParams = async (ParameterData: ParamsData, DOAddress: st
     receiver: client.appAddress,
     amount: (1).algo(),
   })
+  console.log(BoxMBRPay, 'storing params')
 
   const storeModelParameters = await client.send.storeModelParams({
     args: { mbrPay: BoxMBRPay, address: mnoAccount.account.addr, paramsData: ParameterData },
@@ -122,9 +117,8 @@ export const getStoredModelParams = async (MOAddress: string, appID: bigint) => 
     defaultSender: mnoAccount.account.addr,
   })
 
-  const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
-
   try {
+    const client = await factory.getAppClientById({ defaultSender: mnoAccount.account.addr, appId: appID })
     const boxIDs = await algorand.app.getBoxNames(appID)
 
     const paramsMap: Record<string, { paramHash: string; paramKey: string }> = {}
