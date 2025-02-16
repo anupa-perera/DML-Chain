@@ -26,6 +26,7 @@ const ConnectWallet = () => {
                 sx={{
                   borderColor: '#9e9e9e',
                 }}
+                disableRipple
               >
                 <Box
                   component="img"

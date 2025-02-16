@@ -2,6 +2,7 @@ import * as algokit from '@algorandfoundation/algokit-utils'
 import { NetworkId, WalletId, WalletManager, WalletProvider } from '@txnlab/use-wallet-react'
 import { SnackbarProvider } from 'notistack'
 import Home from './Home'
+import './styles/main.css'
 
 algokit.Config.configure({
   populateAppCallResources: true,

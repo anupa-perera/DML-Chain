@@ -39,7 +39,7 @@ const Account = () => {
   }, [activeNetwork, activeAddress])
 
   return (
-    <Paper sx={{ p: 1 }}>
+    <Paper sx={{ p: 1, border: '0.5px solid #e0e0e0', boxShadow: '0 1px 3px rgba(0,0,0,0.12)' }}>
       <Box display="flex" flexDirection="column" sx={{ justifyContent: 'center' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           {activeWallet && (
@@ -49,15 +49,24 @@ const Account = () => {
               alt={`wallet_icon_${activeWallet.metadata.name}`}
               sx={{
                 width: 80,
-                height: 120,
+                height: 100,
                 objectFit: 'contain',
-                mr: 4,
+                mr: 1,
+                p: 1,
               }}
             />
           )}
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Typography variant="h5" sx={{ color: '#ff7043', mb: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', margin: 0 }}>
+            <Typography
+              variant="h5"
+              sx={{
+                color: '#ff7043',
+                mt: 1,
+                fontWeight: 'bold',
+                fontFamily: 'Arial, sans-serif',
+              }}
+            >
               Account Information
             </Typography>
 
@@ -65,14 +74,14 @@ const Account = () => {
               href={`https://lora.algokit.io/${activeNetwork}/account/${activeAddress}/`}
               target="_blank"
               underline="hover"
-              sx={{ color: '#2e7d32' }}
+              sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}
             >
               <Typography>Address: {ellipseAddress(activeAddress ?? 'No account')}</Typography>
             </Link>
-            <Typography sx={{ color: '#2e7d32' }}>
+            <Typography sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}>
               Active Network: {activeNetwork.charAt(0).toUpperCase() + activeNetwork.slice(1)}
             </Typography>
-            <Typography sx={{ color: '#2e7d32' }}>Balance: {balance} ALGO</Typography>
+            <Typography sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}>Balance: {balance} ALGO</Typography>
           </Box>
         </Box>
 
@@ -84,7 +93,7 @@ const Account = () => {
             sx={{ height: 30, width: 120, mt: 1, mb: 1 }}
           >
             {Object.keys(networkConfig).map((id) => (
-              <MenuItem key={id} value={id}>
+              <MenuItem key={id} value={id} sx={{ fontFamily: 'Arial, sans-serif' }}>
                 {id.charAt(0).toUpperCase() + id.slice(1)}
               </MenuItem>
             ))}
@@ -93,8 +102,15 @@ const Account = () => {
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 1 }}>
         {activeAddress && (
-          <Button variant="contained" color="error" data-test-id="logout" startIcon={<LogoutIcon />} onClick={handleDisconnect}>
-            Logout
+          <Button
+            variant="contained"
+            color="error"
+            data-test-id="logout"
+            startIcon={<LogoutIcon />}
+            onClick={handleDisconnect}
+            sx={{ textTransform: 'none' }}
+          >
+            Disconnect Wallet
           </Button>
         )}
       </Box>

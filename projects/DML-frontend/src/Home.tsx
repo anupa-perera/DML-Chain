@@ -74,7 +74,7 @@ const Home = () => {
               </Typography>
 
               <Typography variant="body1" sx={{ py: 2, color: '#757575', fontFamily: 'Cursive, Arial, sans-serif' }}>
-                Please click on your desired wallet to sign in
+                Please click on your desired wallet to Connect
               </Typography>
               <Divider />
             </>
