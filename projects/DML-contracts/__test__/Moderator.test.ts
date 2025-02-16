@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
-import algosdk, { Transaction } from 'algosdk';
+import algosdk from 'algosdk';
 import { DmlChainClient, DmlChainFactory, Classification } from '../contracts/clients/DMLChainClient';
 
 const fixture = algorandFixture();
@@ -9,7 +9,7 @@ Config.configure({ populateAppCallResources: true });
 
 let appClient: DmlChainClient;
 
-describe('HelloWorld', () => {
+describe('DML-CHAIN', () => {
   beforeEach(fixture.beforeEach);
   let algorand: AlgorandClient;
   let acc: algosdk.Account;
@@ -22,12 +22,7 @@ describe('HelloWorld', () => {
 
     acc = algosdk.generateAccount();
 
-    const signer = {
-      addr: acc.addr,
-      signer: async (txnGroup: Transaction[]) => {
-        return txnGroup.map((tx) => tx.signTxn(acc.sk));
-      },
-    };
+    algorand.account.setSignerFromAccount(acc);
 
     await algorand.send.payment({
       sender: dispenser.addr,
@@ -39,8 +34,6 @@ describe('HelloWorld', () => {
       algorand,
       defaultSender: acc.addr,
     });
-
-    algorand.setDefaultSigner(signer.signer);
 
     const createResult = await factory.send.create.createApplication({ args: { modelHash: 'test' } });
     appClient = createResult.appClient;
