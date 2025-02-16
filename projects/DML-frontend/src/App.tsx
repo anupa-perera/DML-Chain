@@ -7,20 +7,20 @@ algokit.Config.configure({
   populateAppCallResources: true,
 })
 
-export default function App() {
-  const walletManager = new WalletManager({
-    wallets: [
-      {
-        id: WalletId.LUTE,
-        options: { siteName: 'DML-CHAIN' },
-      },
-      WalletId.DEFLY,
-      WalletId.PERA,
-      WalletId.MNEMONIC,
-    ],
-    defaultNetwork: NetworkId.LOCALNET,
-  })
+const walletManager = new WalletManager({
+  wallets: [
+    {
+      id: WalletId.LUTE,
+      options: { siteName: 'DML-CHAIN' },
+    },
+    WalletId.DEFLY,
+    WalletId.PERA,
+    WalletId.MNEMONIC,
+  ],
+  defaultNetwork: NetworkId.LOCALNET,
+})
 
+export default function App() {
   return (
     <SnackbarProvider maxSnack={3}>
       <WalletProvider manager={walletManager}>
