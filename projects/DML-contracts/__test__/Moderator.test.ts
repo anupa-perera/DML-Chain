@@ -47,10 +47,10 @@ describe('DML-CHAIN', () => {
     });
 
     const classification: Classification = {
-      accuracy: BigInt(50),
-      precision: BigInt(50),
-      recall: BigInt(50),
-      f1score: BigInt(50),
+      accuracy: 50n,
+      precision: 50n,
+      recall: 50n,
+      f1score: 50n,
     };
 
     await appClient.send.storeClassificationSelectionCriteria({
