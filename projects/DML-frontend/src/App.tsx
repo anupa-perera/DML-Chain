@@ -18,6 +18,9 @@ const walletManager = new WalletManager({
     WalletId.MNEMONIC,
   ],
   defaultNetwork: NetworkId.LOCALNET,
+  options: {
+    resetNetwork: true,
+  },
 })
 
 export default function App() {

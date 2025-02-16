@@ -1,24 +1,19 @@
 import LogoutIcon from '@mui/icons-material/Logout'
-import { useWallet, Wallet } from '@txnlab/use-wallet-react'
-import { useMemo } from 'react'
+import { useNetwork, useWallet, Wallet } from '@txnlab/use-wallet-react'
 import { ellipseAddress } from '../utils/ellipseAddress'
-import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
 
-import { Box, Button, Link, Paper, Typography } from '@mui/material'
+import { Box, Button, Link, MenuItem, Paper, Select, Typography } from '@mui/material'
 
 const Account = () => {
   const { activeAddress, wallets } = useWallet()
-  const algoConfig = getAlgodConfigFromViteEnvironment()
 
-  const networkName = useMemo(() => {
-    return algoConfig.network === '' ? 'localnet' : algoConfig.network.toLocaleLowerCase()
-  }, [algoConfig.network])
+  const { activeNetwork, setActiveNetwork, networkConfig } = useNetwork()
 
   return (
     <Paper sx={{ p: 1 }}>
       <Box display="flex" flexDirection="column">
         <Link
-          href={`https://lora.algokit.io/${networkName}/account/${activeAddress}/`}
+          href={`https://lora.algokit.io/${activeNetwork}/account/${activeAddress}/`}
           target="_blank"
           underline="hover"
           sx={{ color: '#ff7043' }}
@@ -26,8 +21,25 @@ const Account = () => {
           <Typography variant="h6">Address: {ellipseAddress(activeAddress ?? 'No account')}</Typography>
         </Link>
         <Typography variant="h6" sx={{ color: '#2e7d32' }}>
-          Network: {networkName}
+          Active Network: {activeNetwork.charAt(0).toUpperCase() + activeNetwork.slice(1)}
         </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="body1" sx={{ color: '#2e7d32' }}>
+            Please select the desired network:
+          </Typography>
+          <Select
+            size="small"
+            value={activeNetwork}
+            onChange={(e) => setActiveNetwork(e.target.value)}
+            sx={{ height: 30, width: 120, mt: 1, mb: 1 }}
+          >
+            {Object.keys(networkConfig).map((id) => (
+              <MenuItem key={id} value={id}>
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 1 }}>
         {activeAddress && (

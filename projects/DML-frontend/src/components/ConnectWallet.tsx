@@ -6,7 +6,7 @@ const ConnectWallet = () => {
   const { activeAddress, wallets } = useWallet()
 
   return (
-    <>
+    <Box>
       <Box sx={{ my: 3 }}>
         {activeAddress && (
           <>
@@ -44,7 +44,7 @@ const ConnectWallet = () => {
           </Stack>
         )}
       </Box>
-    </>
+    </Box>
   )
 }
 
