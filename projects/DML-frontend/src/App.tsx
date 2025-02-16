@@ -20,6 +20,7 @@ const walletManager = new WalletManager({
   defaultNetwork: NetworkId.LOCALNET,
   options: {
     resetNetwork: true,
+    debug: true,
   },
 })
 
