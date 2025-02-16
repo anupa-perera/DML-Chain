@@ -100,15 +100,13 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       const rewardCalculation = {
         score: 300n,
       }
-      const reward = await client
+      await client
         .newGroup()
         .distributeRewards({ args: { contributor: rewardCalculation } })
         .simulate({
           skipSignatures: true,
           allowUnnamedResources: true,
         })
-
-      console.log(reward.returns, 'this is reward')
 
       const isAccepted = modelSelectionCriteria
 
@@ -134,7 +132,6 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       enqueueSnackbar('Your model data has been successfully submitted for evaluation', { variant: 'success' })
     } catch (error) {
       enqueueSnackbar('Failed to submit data', { variant: 'warning' })
-      console.log('this is error', error)
     } finally {
       setLoading(false)
       handleClose()
