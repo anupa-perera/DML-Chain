@@ -25,6 +25,8 @@ const ConnectWallet = () => {
                 onClick={() => wallet.connect()}
                 sx={{
                   borderColor: '#9e9e9e',
+                  textTransform: 'none',
+                  fontFamily: 'Arial, sans-serif',
                 }}
                 disableRipple
               >

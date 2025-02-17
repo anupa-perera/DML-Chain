@@ -151,7 +151,9 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
             <DialogContentText>
               Please deploy a new contract to the host the model request listing. This action cannot be undone.
             </DialogContentText>
-            <DialogContentText sx={{ color: 'red' }}>**Please ensure your model is feeding data into the backend**</DialogContentText>
+            <DialogContentText sx={{ color: 'red', textAlign: 'center' }}>
+              **Please ensure your model is feeding data into the backend**
+            </DialogContentText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">
                 {loading ? 'Deploying...' : 'Deploy Contract'}

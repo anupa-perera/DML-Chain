@@ -187,7 +187,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
             )}
             {displayNotification && (
               <Box sx={{ border: '2px solid red', borderRadius: 2, p: 2, mt: 2, color: 'red' }}>
-                <Typography align="left">
+                <Typography align="left" variant="subtitle2">
                   Please fetch your model parameters from this{' '}
                   <Link href="http://localhost:5000/data" target="_blank" rel="noopener noreferrer">
                     end point
