@@ -144,20 +144,43 @@ export class DMLChain extends Contract {
   }
 
   // distribute rewards
-  distributeRewards(contributor: rewardCalculation): uint64 {
+  distributeRewards(contributor: rewardCalculation): uint64[] {
     const baseCase = this.classificationPerformanceMetrics('InitialModelMetrics').value;
+    const honestyScores: StaticArray<uint64, 3> = [50, 50, 50];
+    const pricePool = 10_000_000;
+    let poolWeight = 0;
+
     let total = 0;
+    let excess = 0;
+    const rewardAmount: uint64[] = [];
+
     total += baseCase.accuracy;
     total += baseCase.precision;
     total += baseCase.recall;
     total += baseCase.f1score;
-    if (contributor.score <= total) {
-      total = 0;
-    } else {
-      total = contributor.score - total;
+    if (contributor.score > total) {
+      excess = contributor.score - total;
     }
 
-    return total;
+    honestyScores.forEach((honestyScore: uint64) => {
+      const repWeight = wideRatio([honestyScore * honestyScore * 1000], [100 * 100]);
+
+      const participantWeight = repWeight * excess;
+
+      poolWeight += participantWeight;
+    });
+
+    honestyScores.forEach((honestyScore: uint64) => {
+      const repWeight = wideRatio([honestyScore * honestyScore * 1000], [100 * 100]);
+
+      const participantWeight = repWeight * excess;
+
+      const reward = wideRatio([participantWeight * pricePool], [poolWeight]);
+
+      rewardAmount.push(reward);
+    });
+
+    return rewardAmount;
   }
 
   //  delete contract

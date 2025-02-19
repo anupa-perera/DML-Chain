@@ -133,7 +133,7 @@
         }
       ],
       "returns": {
-        "type": "uint64"
+        "type": "uint64[]"
       }
     },
     {

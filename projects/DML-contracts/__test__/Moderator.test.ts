@@ -63,6 +63,6 @@ describe('DML-CHAIN', () => {
     const reward = await appClient.send.distributeRewards({
       args: { contributor: { score: BigInt(300) } },
     });
-    expect(reward.return).toBe(BigInt(100));
+    expect(reward.return).toBe([3333333n, 3333333n, 3333333n]);
   });
 });
