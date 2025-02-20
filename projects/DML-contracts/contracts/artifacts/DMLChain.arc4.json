@@ -27,10 +27,26 @@
       }
     },
     {
-      "name": "printHash",
+      "name": "assignRewardPool",
+      "args": [
+        {
+          "name": "rewardPoolAmount",
+          "type": "uint64"
+        },
+        {
+          "name": "rewardPoolTxn",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "checkBalance",
       "args": [],
       "returns": {
-        "type": "string"
+        "type": "uint64"
       }
     },
     {
@@ -105,7 +121,7 @@
         },
         {
           "name": "paramsData",
-          "type": "(string,string)"
+          "type": "(string,string,uint64,uint64)"
         }
       ],
       "returns": {
@@ -121,7 +137,7 @@
         }
       ],
       "returns": {
-        "type": "(string,string)"
+        "type": "(string,string,uint64,uint64)"
       }
     },
     {

@@ -28,11 +28,15 @@ type rewardCalculation = {
 type ParamsData = {
   paramHash: string;
   paramKey: string;
+  score: uint64;
+  reputation: uint64;
 };
 
 export class DMLChain extends Contract {
   // store hash on global state
   ipfsHash = GlobalStateKey<string>({ key: 'ipfsHash' });
+
+  rewardPool = GlobalStateKey<uint64>({ key: 'rewardPool' });
 
   // Store params in BoxMap
   paramsData = BoxMap<Address, ParamsData>({ allowPotentialCollisions: true });
@@ -53,9 +57,20 @@ export class DMLChain extends Contract {
     this.ipfsHash.value = modelHash;
   }
 
-  // printHash
-  printHash(): string {
-    return this.ipfsHash.value;
+  // assign reward pool to smart contract
+  assignRewardPool(rewardPoolAmount: uint64, rewardPoolTxn: PayTxn): uint64 {
+    verifyPayTxn(rewardPoolTxn, {
+      sender: this.txn.sender,
+      receiver: this.app.address,
+      amount: rewardPoolAmount,
+    });
+    this.rewardPool.value = rewardPoolAmount;
+    return this.rewardPool.value;
+  }
+
+  // check contract balance
+  checkBalance(): uint64 {
+    return this.app.address.balance;
   }
 
   // store classification model selection criteria
@@ -150,14 +165,10 @@ export class DMLChain extends Contract {
     const pricePool = 10_000_000;
     let poolWeight = 0;
 
-    let total = 0;
+    const total = baseCase.accuracy + baseCase.precision + baseCase.recall + baseCase.f1score;
     let excess = 0;
     const rewardAmount: uint64[] = [];
 
-    total += baseCase.accuracy;
-    total += baseCase.precision;
-    total += baseCase.recall;
-    total += baseCase.f1score;
     if (contributor.score > total) {
       excess = contributor.score - total;
     }

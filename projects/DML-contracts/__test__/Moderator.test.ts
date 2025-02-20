@@ -16,6 +16,7 @@ describe('DML-CHAIN', () => {
 
   beforeAll(async () => {
     await fixture.beforeEach();
+
     algorand = AlgorandClient.defaultLocalNet();
 
     const dispenser = await algorand.account.localNetDispenser();
@@ -27,7 +28,7 @@ describe('DML-CHAIN', () => {
     await algorand.send.payment({
       sender: dispenser.addr,
       receiver: acc.addr,
-      amount: (10).algo(),
+      amount: (100000).algo(),
     });
 
     const factory = new DmlChainFactory({
@@ -37,6 +38,28 @@ describe('DML-CHAIN', () => {
 
     const createResult = await factory.send.create.createApplication({ args: { modelHash: 'test' } });
     appClient = createResult.appClient;
+  });
+
+  test('assign reward pool to contract', async () => {
+    const rewardPoolTxn = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: (10).algos(),
+    });
+
+    const rewardPool = await appClient.send.assignRewardPool({ args: { rewardPoolAmount: 10_000_000, rewardPoolTxn } });
+    expect(rewardPool.return).toEqual(10n * 10n ** 6n);
+  });
+
+  test('check smart contract balance', async () => {
+    await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: (10).algos(),
+    });
+
+    const checkBalance = await appClient.send.checkBalance();
+    expect(checkBalance.return).toEqual(10n * 10n ** 6n);
   });
 
   test('reward distribution', async () => {
@@ -63,6 +86,6 @@ describe('DML-CHAIN', () => {
     const reward = await appClient.send.distributeRewards({
       args: { contributor: { score: BigInt(300) } },
     });
-    expect(reward.return).toBe([3333333n, 3333333n, 3333333n]);
+    expect(reward.return).toEqual([3333333n, 3333333n, 3333333n]);
   });
 });

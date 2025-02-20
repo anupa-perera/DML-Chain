@@ -6,6 +6,16 @@ import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
+import { calculateReward } from '../utils/methods'
+
+export interface ParamsData {
+  [address: string]: {
+    paramHash: string
+    paramKey: string
+    score: bigint
+    reputation: bigint
+  }
+}
 
 interface UpdateFetchTrainedModelsInterface {
   openModal: boolean
@@ -15,7 +25,8 @@ interface UpdateFetchTrainedModelsInterface {
 const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [appId, setAppId] = useState<bigint | null>(null)
-  const [paramsData, setParamsData] = useState<Record<string, { paramHash: string; paramKey: string }> | null>(null)
+
+  const [paramsData, setParamsData] = useState<ParamsData | null>(null)
   const [displayNotification, setDisplayNotification] = useState<boolean>(false)
 
   const { transactionSigner, activeAddress, algodClient } = useWallet()
@@ -49,7 +60,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
       const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
       const boxIDs = await algorand.app.getBoxNames(appId)
 
-      const paramsMap: Record<string, { paramHash: string; paramKey: string }> = {}
+      const paramsMap: Record<string, { paramHash: string; paramKey: string; score: bigint; reputation: bigint }> = {}
       for (const box of boxIDs) {
         if (Object.keys(box.nameRaw).length === 32) {
           try {
@@ -64,10 +75,12 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
 
             const getParams = getBox.returns[0]
 
-            if (getParams?.paramHash && getParams?.paramKey) {
+            if (getParams) {
               paramsMap[extAddr] = {
                 paramHash: getParams.paramHash,
                 paramKey: getParams.paramKey,
+                score: getParams.score,
+                reputation: getParams.reputation,
               }
             }
           } catch (error) {
@@ -77,8 +90,33 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
       }
 
       setParamsData(paramsMap)
+
+      const fixedPool = BigInt((await algorand.app.getGlobalState(appId)).rewardPool?.value)
+
+      const baseCriteria = await client
+        .newGroup()
+        .getClassificationCriteria()
+        .simulate({
+          skipSignatures: true,
+          allowUnnamedResources: true,
+        })
+        .then((result) => {
+          return result.returns[0]
+        })
+
+      if (paramsData && fixedPool && baseCriteria) {
+        const rewards = calculateReward(paramsData, fixedPool, baseCriteria)
+        console.log(rewards, 'these are rewards')
+      }
+
       if (paramsData) {
-        await axios.post(`http://127.0.0.1:5000/aggregate`, paramsData)
+        const filteredParams = Object.fromEntries(
+          Object.entries(paramsData).map(([key, value]) => {
+            const { paramHash, paramKey } = value
+            return [key, { paramHash, paramKey }]
+          }),
+        )
+        await axios.post('http://127.0.0.1:5000/aggregate', filteredParams)
         setDisplayNotification(true)
         setTimeout(() => {
           setDisplayNotification(false)
@@ -178,6 +216,38 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                           }}
                         >
                           {value.paramKey}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                        <Typography variant="caption" sx={{ minWidth: 80, fontWeight: 'bold' }}>
+                          Reputation
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            flex: 1,
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {Number(value.reputation)}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                        <Typography variant="caption" sx={{ minWidth: 80, fontWeight: 'bold' }}>
+                          Model Score
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            flex: 1,
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {Number(value.score)}
                         </Typography>
                       </Box>
                     </Box>

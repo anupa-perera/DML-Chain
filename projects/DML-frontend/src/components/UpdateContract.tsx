@@ -124,6 +124,8 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
             paramsData: {
               paramHash: data.param_ipfs_hash,
               paramKey: data.param_key,
+              score: 350n,
+              reputation: 50n,
             },
           },
         })

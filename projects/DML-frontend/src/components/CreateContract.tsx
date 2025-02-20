@@ -8,6 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   LinearProgress,
+  TextField,
   Typography,
 } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
@@ -38,6 +39,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [appId, setAppId] = useState<bigint | null>(null)
   const [data, setData] = useState<DataType | null>(null)
+  const [rewardAmount, setRewardAmount] = useState<bigint | null>(null)
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -106,12 +108,29 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         f1score: evaluationMetrics.f1score,
       }
 
-      await client.send.storeClassificationSelectionCriteria({
-        args: {
-          evaluationMetrics: modelEvaluation,
-          mbrPay: mbrPayFirstDeposit,
-        },
+      if (!rewardAmount || rewardAmount < 10) {
+        enqueueSnackbar('Please enter a valid amount', { variant: 'error' })
+        return
+      }
+
+      const rewardPoolTxn = await algorand.createTransaction.payment({
+        sender: activeAddress,
+        receiver: client.appAddress,
+        amount: rewardAmount.algo(),
       })
+
+      const rewardpool = await client
+        .newGroup()
+        .assignRewardPool({ args: { rewardPoolAmount: rewardAmount * 10n ** 6n, rewardPoolTxn } })
+        .storeClassificationSelectionCriteria({
+          args: {
+            evaluationMetrics: modelEvaluation,
+            mbrPay: mbrPayFirstDeposit,
+          },
+        })
+        .send({ populateAppCallResources: true })
+
+      console.log('this is group txn', rewardpool)
 
       enqueueSnackbar(`Contract ${appId} has been updated successfully`, { variant: 'success' })
     } catch (e) {
@@ -133,6 +152,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
 
   const handleClose = () => {
     setAppId(null)
+    setRewardAmount(null)
     setLoading(false)
     closeModal()
   }
@@ -167,10 +187,10 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       )}
       {!!appId && (
         <>
-          <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Update Contract</DialogTitle>
+          <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Submit Model Data</DialogTitle>
           <DialogContent>
             <Box sx={{ textAlign: 'center' }}>
-              <Typography> Please Ensure Data Is Accurate Prior To Updating</Typography>
+              <Typography> Please Ensure Data Is Accurate Prior To Submission</Typography>
               <Box sx={{ mb: 2 }}>
                 {data ? (
                   <Box
@@ -192,8 +212,25 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
                   <LinearProgress color="inherit" />
                 )}
               </Box>
-
-              <Button variant="contained" color="primary" onClick={handleUpdate} disabled={loading} fullWidth>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography> Please Enter the reward amount</Typography>
+                <Typography sx={{ color: 'red', fontSize: '0.875rem' }}> (*Minimum allowed amount is 10 Algos)</Typography>
+              </Box>
+              <TextField
+                size="small"
+                label="Reward amount in Algos"
+                variant="outlined"
+                margin="dense"
+                onChange={(e) => {
+                  const value = BigInt(e.target.value)
+                  setRewardAmount(value)
+                }}
+                required
+                type="number"
+                fullWidth
+                sx={{ mb: 2 }}
+              />
+              <Button variant="contained" color="primary" onClick={handleUpdate} disabled={loading || !rewardAmount} fullWidth>
                 {loading ? <CircularProgress size={24} /> : 'Update Contract'}
               </Button>
             </Box>
