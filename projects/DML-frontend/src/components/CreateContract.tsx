@@ -119,7 +119,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         amount: rewardAmount.algo(),
       })
 
-      const rewardpool = await client
+      await client
         .newGroup()
         .assignRewardPool({ args: { rewardPoolAmount: rewardAmount * 10n ** 6n, rewardPoolTxn } })
         .storeClassificationSelectionCriteria({
@@ -130,13 +130,10 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         })
         .send({ populateAppCallResources: true })
 
-      console.log('this is group txn', rewardpool)
-
       enqueueSnackbar(`Contract ${appId} has been updated successfully`, { variant: 'success' })
     } catch (e) {
       enqueueSnackbar('Failed to update contract', { variant: 'error' })
     } finally {
-      setAppId(null)
       closeModal()
     }
   }

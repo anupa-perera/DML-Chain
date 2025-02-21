@@ -28,7 +28,7 @@ describe('DML-CHAIN', () => {
     await algorand.send.payment({
       sender: dispenser.addr,
       receiver: acc.addr,
-      amount: (100000).algo(),
+      amount: (1000000).algo(),
     });
 
     const factory = new DmlChainFactory({
@@ -87,5 +87,38 @@ describe('DML-CHAIN', () => {
       args: { contributor: { score: BigInt(300) } },
     });
     expect(reward.return).toEqual([3333333n, 3333333n, 3333333n]);
+  });
+
+  test('bulkPayoutRewards distribute rewards to participants', async () => {
+    const TESTACC1 = algosdk.generateAccount().addr;
+    const TESTACC2 = algosdk.generateAccount().addr;
+
+    const addresses: string[] = [TESTACC1.toString(), TESTACC2.toString()];
+
+    const SIZE = addresses.length;
+
+    const rewards = [1000000n, 2000000n];
+
+    const rewardPoolAmount = 20n;
+
+    const rewardPoolTxn = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: rewardPoolAmount.algo(),
+    });
+
+    await appClient.send.assignRewardPool({
+      args: { rewardPoolAmount: rewardPoolAmount * 10n ** 6n, rewardPoolTxn },
+    });
+
+    const payout = await appClient.send.bulkPayoutRewards({
+      args: {
+        addresses,
+        rewards,
+      },
+      extraFee: (0.001 * SIZE).algo(),
+    });
+
+    expect(payout.return).toEqual('success');
   });
 });

@@ -22,10 +22,8 @@ export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseC
     }
   })
 
-  const rewards = participants.map((participant) => ({
-    address: participant.address,
-    reward: (participant.weight * fixedPool) / poolWeight,
-  }))
+  const addresses = participants.map((participant) => participant.address)
+  const rewards = participants.map((participant) => (participant.weight * fixedPool) / poolWeight)
 
-  return rewards
+  return { addresses, rewards }
 }

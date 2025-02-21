@@ -50,6 +50,38 @@
       }
     },
     {
+      "name": "payoutRewards",
+      "args": [
+        {
+          "name": "Address",
+          "type": "address"
+        },
+        {
+          "name": "reward",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "bulkPayoutRewards",
+      "args": [
+        {
+          "name": "addresses",
+          "type": "address[]"
+        },
+        {
+          "name": "rewards",
+          "type": "uint64[]"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
       "name": "storeClassificationSelectionCriteria",
       "args": [
         {

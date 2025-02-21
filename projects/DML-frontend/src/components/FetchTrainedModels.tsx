@@ -105,8 +105,11 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
         })
 
       if (paramsData && fixedPool && baseCriteria) {
-        const rewards = calculateReward(paramsData, fixedPool, baseCriteria)
-        console.log(rewards, 'these are rewards')
+        const { addresses, rewards } = calculateReward(paramsData, fixedPool, baseCriteria)
+
+        const SIZE = addresses.length
+
+        await client.send.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE).algo() })
       }
 
       if (paramsData) {
@@ -126,7 +129,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
 
       enqueueSnackbar('Model Parameters has been successfully stored for aggregation', { variant: 'success' })
     } catch (error) {
-      enqueueSnackbar('Error fetching data', { variant: 'error' })
+      enqueueSnackbar('Error connecting to the end point', { variant: 'error' })
     } finally {
       setLoading(false)
     }

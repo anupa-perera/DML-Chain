@@ -145,7 +145,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       const response = await axios.get(`http://127.0.0.1:5000/data`)
       setData(response.data)
     } catch (error) {
-      console.error('Error fetching data:', error)
+      enqueueSnackbar('Error fetching data', { variant: 'warning' })
     }
   }
 

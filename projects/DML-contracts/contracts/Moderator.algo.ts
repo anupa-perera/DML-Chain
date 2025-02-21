@@ -73,6 +73,39 @@ export class DMLChain extends Contract {
     return this.app.address.balance;
   }
 
+  // payout rewards to relevant addresses
+  payoutRewards(Address: Address, reward: uint64): string {
+    sendPayment({
+      amount: reward,
+      receiver: Address,
+      note: 'reward',
+    });
+
+    return 'success';
+  }
+
+  // bulk reward pay
+  bulkPayoutRewards(addresses: Address[], rewards: uint64[]): string {
+    assert(addresses.length === rewards.length, 'Arrays must have the same length');
+
+    let totalReward = 0;
+    for (let i = 0; i < rewards.length; i += 1) {
+      totalReward += rewards[i];
+    }
+
+    assert(this.rewardPool.value >= totalReward, 'Insufficient balance for rewards');
+
+    for (let i = 0; i < addresses.length; i += 1) {
+      sendPayment({
+        amount: rewards[i],
+        receiver: addresses[i],
+        note: 'reward',
+      });
+    }
+
+    return 'success';
+  }
+
   // store classification model selection criteria
   storeClassificationSelectionCriteria(evaluationMetrics: Classification, mbrPay: PayTxn): void {
     verifyTxn(this.txn, { sender: this.app.creator });
