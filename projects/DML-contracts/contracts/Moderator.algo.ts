@@ -36,7 +36,11 @@ export class DMLChain extends Contract {
   // store hash on global state
   ipfsHash = GlobalStateKey<string>({ key: 'ipfsHash' });
 
+  // store reward pool amount
   rewardPool = GlobalStateKey<uint64>({ key: 'rewardPool' });
+
+  // store stake amount
+  stakeAmount = GlobalStateKey<uint64>({ key: 'stakeAmount' });
 
   // Store params in BoxMap
   paramsData = BoxMap<Address, ParamsData>({ allowPotentialCollisions: true });
@@ -65,7 +69,19 @@ export class DMLChain extends Contract {
       amount: rewardPoolAmount,
     });
     this.rewardPool.value = rewardPoolAmount;
-    return this.rewardPool.value;
+    this.stakeAmount.value = wideRatio([rewardPoolAmount], [2]);
+    return 1;
+  }
+
+  // commit to listing by staking
+  commitToListing(stakeAmountTxn: PayTxn): uint64 {
+    verifyPayTxn(stakeAmountTxn, {
+      sender: this.txn.sender,
+      receiver: this.app.address,
+      amount: this.stakeAmount.value,
+    });
+
+    return 1;
   }
 
   // check contract balance
@@ -85,7 +101,7 @@ export class DMLChain extends Contract {
   }
 
   // bulk reward pay
-  bulkPayoutRewards(addresses: Address[], rewards: uint64[]): string {
+  bulkPayoutRewards(addresses: Address[], rewards: uint64[]): uint64 {
     assert(addresses.length === rewards.length, 'Arrays must have the same length');
 
     let totalReward = 0;
@@ -93,17 +109,21 @@ export class DMLChain extends Contract {
       totalReward += rewards[i];
     }
 
-    assert(this.rewardPool.value >= totalReward, 'Insufficient balance for rewards');
+    const totalStakeAmount = wideRatio([addresses.length, this.stakeAmount.value], [1]);
+
+    const totalPayout = totalReward + totalStakeAmount;
+
+    assert(this.app.address.balance >= totalPayout, 'Insufficient balance for rewards');
 
     for (let i = 0; i < addresses.length; i += 1) {
       sendPayment({
-        amount: rewards[i],
+        amount: rewards[i] + this.stakeAmount.value,
         receiver: addresses[i],
         note: 'reward',
       });
     }
 
-    return 'success';
+    return 1;
   }
 
   // store classification model selection criteria

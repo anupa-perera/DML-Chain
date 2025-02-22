@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
+import { encodeAddress } from 'algosdk'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
@@ -55,13 +56,51 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
   }
 
   const retrieveModelFile = async () => {
+    if (!activeAddress) {
+      enqueueSnackbar('Please Connect to an account', { variant: 'warning' })
+      return
+    }
     if (!appId) {
       enqueueSnackbar('Please Enter a valid contract ID', { variant: 'warning' })
       return
     }
+    const factory = new DmlChainFactory({
+      defaultSender: activeAddress,
+      algorand,
+    })
     try {
       setLoading(true)
+      const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
+
       const ipfsHash = await getIpfsHash(appId)
+
+      const isBoxExist = async () => {
+        const boxIDs = await algorand.app.getBoxNames(appId)
+
+        for (const box of boxIDs) {
+          if (box.nameRaw.length == 32) {
+            const extAddr = encodeAddress(box.nameRaw)
+            if (extAddr === activeAddress) {
+              return true
+            }
+          }
+        }
+        return false
+      }
+
+      const boxExists = await isBoxExist()
+
+      if (!boxExists) {
+        const stakeAmount = Number((await algorand.app.getGlobalState(client.appId)).stakeAmount?.value) / 10 ** 6
+        const stakeAmountTxn = await algorand.createTransaction.payment({
+          sender: activeAddress,
+          receiver: client.appAddress,
+          amount: stakeAmount.algos(),
+        })
+
+        await client.send.commitToListing({ args: { stakeAmountTxn } })
+      }
+
       await axios.get(`http://127.0.0.1:5000/retrieve-model/${appId}/${ipfsHash}`)
       enqueueSnackbar(`Download will begin shortly for contract ID ${appId}`, { variant: 'success' })
       setFileRetrieved(true)
@@ -92,17 +131,6 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         .classModelSelectionCriteria({
           args: { modelEvaluationMetrics: data.metrics },
         })
-        .simulate({
-          skipSignatures: true,
-          allowUnnamedResources: true,
-        })
-
-      const rewardCalculation = {
-        score: 300n,
-      }
-      await client
-        .newGroup()
-        .distributeRewards({ args: { contributor: rewardCalculation } })
         .simulate({
           skipSignatures: true,
           allowUnnamedResources: true,

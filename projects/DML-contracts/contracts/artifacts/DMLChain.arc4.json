@@ -43,6 +43,18 @@
       }
     },
     {
+      "name": "commitToListing",
+      "args": [
+        {
+          "name": "stakeAmountTxn",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "checkBalance",
       "args": [],
       "returns": {
@@ -78,7 +90,7 @@
         }
       ],
       "returns": {
-        "type": "string"
+        "type": "uint64"
       }
     },
     {

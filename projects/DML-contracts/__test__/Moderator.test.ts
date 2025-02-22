@@ -48,7 +48,22 @@ describe('DML-CHAIN', () => {
     });
 
     const rewardPool = await appClient.send.assignRewardPool({ args: { rewardPoolAmount: 10_000_000, rewardPoolTxn } });
-    expect(rewardPool.return).toEqual(10n * 10n ** 6n);
+
+    expect(rewardPool.return).toEqual(1n);
+  });
+
+  test('commit to listing', async () => {
+    const stakeAmount = Number((await algorand.app.getGlobalState(appClient.appId)).stakeAmount?.value) / 10 ** 6;
+
+    const stakeAmountTxn = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: stakeAmount.algos(),
+    });
+
+    const commitToStake = await appClient.send.commitToListing({ args: { stakeAmountTxn } });
+
+    expect(commitToStake.return).toEqual(1n);
   });
 
   test('check smart contract balance', async () => {
@@ -59,10 +74,10 @@ describe('DML-CHAIN', () => {
     });
 
     const checkBalance = await appClient.send.checkBalance();
-    expect(checkBalance.return).toEqual(10n * 10n ** 6n);
+    expect(checkBalance.return).toEqual(15n * 10n ** 6n);
   });
 
-  test('reward distribution', async () => {
+  test('distribute reward distribution to a participant', async () => {
     const mbrPayFirstDeposit = await algorand.createTransaction.payment({
       sender: acc.addr,
       receiver: appClient.appAddress,
@@ -89,7 +104,7 @@ describe('DML-CHAIN', () => {
     expect(reward.return).toEqual([3333333n, 3333333n, 3333333n]);
   });
 
-  test('bulkPayoutRewards distribute rewards to participants', async () => {
+  test('distribute rewards to participants', async () => {
     const TESTACC1 = algosdk.generateAccount().addr;
     const TESTACC2 = algosdk.generateAccount().addr;
 
@@ -119,6 +134,6 @@ describe('DML-CHAIN', () => {
       extraFee: (0.001 * SIZE).algo(),
     });
 
-    expect(payout.return).toEqual('success');
+    expect(payout.return).toEqual(1n);
   });
 });

@@ -135,6 +135,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       enqueueSnackbar('Failed to update contract', { variant: 'error' })
     } finally {
       closeModal()
+      console.log('these are the states', appId, rewardAmount)
     }
   }
 
@@ -151,13 +152,21 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
     setAppId(null)
     setRewardAmount(null)
     setLoading(false)
+    setData(null)
     closeModal()
   }
 
   useEffect(() => {
-    if (!openModal) return
-    fetchData()
-  }, [openModal])
+    if (openModal) {
+      fetchData()
+    } else {
+      // Reset all states when modal is closed
+      setAppId(null)
+      setRewardAmount(null)
+      setLoading(false)
+      setData(null)
+    }
+  }, [openModal, fetchData])
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>
