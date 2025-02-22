@@ -71,7 +71,8 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
               }
             }
           } catch (error) {
-            enqueueSnackbar('Error fetching box value for', { variant: 'error' })
+            enqueueSnackbar('Error fetching box value for this listing', { variant: 'error' })
+            return
           }
         }
       }
@@ -114,7 +115,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
             type="number"
           />
           <Box>
-            {paramsData && (
+            {paramsData && paramsData !== null && (
               <>
                 <Typography variant="subtitle2" gutterBottom>
                   Stored Model Parameters:
