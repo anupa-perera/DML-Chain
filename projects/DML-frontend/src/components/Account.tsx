@@ -4,25 +4,20 @@ import { ellipseAddress } from '../utils/ellipseAddress'
 
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import { Box, Button, Link, MenuItem, Paper, Select, Typography } from '@mui/material'
+import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { BACKEND_SERVER } from '../utils/types'
 
 const Account = () => {
   const { activeAddress, algodClient, activeWallet } = useWallet()
 
   const { activeNetwork, setActiveNetwork, networkConfig } = useNetwork()
   const [balance, setBalance] = useState<number>(0)
+  const [reputation, setReputation] = useState<number | null>(null)
   const { enqueueSnackbar } = useSnackbar()
 
   const algorand = AlgorandClient.fromClients({ algod: algodClient })
-
-  const getAddressInfo = async () => {
-    if (activeAddress) {
-      const accountInfo = await algorand.account.getInformation(activeAddress)
-      const balance = accountInfo.balance.algos
-      setBalance(balance)
-    }
-  }
 
   const handleDisconnect = async () => {
     if (!activeWallet) return
@@ -34,7 +29,23 @@ const Account = () => {
     }
   }
 
-  useMemo(() => {
+  const getAddressInfo = async () => {
+    if (!activeAddress) {
+      return
+    }
+
+    const accountInfo = await algorand.account.getInformation(activeAddress)
+    const balance = accountInfo.balance.algos
+    setTimeout(async () => {
+      const getDataResponse = await axios.get(`${BACKEND_SERVER}/get-user/${activeAddress}`)
+      const reputation = await getDataResponse.data.reputation
+      setReputation(reputation)
+    }, 1000)
+
+    setBalance(balance)
+  }
+
+  useEffect(() => {
     getAddressInfo()
   }, [activeNetwork, activeAddress])
 
@@ -69,7 +80,6 @@ const Account = () => {
             >
               Account Information
             </Typography>
-
             <Link
               href={`https://lora.algokit.io/${activeNetwork}/account/${activeAddress}/`}
               target="_blank"
@@ -77,11 +87,23 @@ const Account = () => {
               sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}
             >
               <Typography>Address: {ellipseAddress(activeAddress ?? 'No account')}</Typography>
-            </Link>
+            </Link>{' '}
             <Typography sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}>
               Active Network: {activeNetwork.charAt(0).toUpperCase() + activeNetwork.slice(1)}
             </Typography>
             <Typography sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}>Balance: {balance} ALGO</Typography>
+            {reputation === null ? (
+              <Typography sx={{ color: '#2e7d32', fontFamily: 'Arial, sans-serif' }}>Loading...</Typography>
+            ) : (
+              <Typography
+                sx={{
+                  color: reputation > 75 ? '#2e7d32' : reputation > 50 ? '#ffeb3b' : '#f50057',
+                  fontFamily: 'Arial, sans-serif',
+                }}
+              >
+                Reputation: {reputation} HP
+              </Typography>
+            )}
           </Box>
         </Box>
 

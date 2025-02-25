@@ -7,6 +7,7 @@ import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
 import { calculateReward } from '../utils/methods'
+import { BACKEND_SERVER } from '../utils/types'
 
 export interface ParamsData {
   [address: string]: {
@@ -120,7 +121,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
             return [key, { paramHash, paramKey }]
           }),
         )
-        await axios.post('http://127.0.0.1:5000/aggregate', filteredParams)
+        await axios.post(`${BACKEND_SERVER}/aggregate`, filteredParams)
         setDisplayNotification(true)
         setTimeout(() => {
           setDisplayNotification(false)
@@ -263,7 +264,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
               <Box sx={{ border: '2px solid red', borderRadius: 2, p: 2, mt: 2, color: 'red' }}>
                 <Typography align="left" variant="subtitle2">
                   Please fetch your model parameters from this{' '}
-                  <Link href="http://localhost:5000/data" target="_blank" rel="noopener noreferrer">
+                  <Link href={`${BACKEND_SERVER}/data`} target="_blank" rel="noopener noreferrer">
                     end point
                   </Link>{' '}
                   for your preferred aggregation. This window will close shortly.

@@ -1,17 +1,20 @@
 import { Box, Button, Container, Divider, Paper, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useWallet } from '@txnlab/use-wallet-react'
-import { useState } from 'react'
+import axios from 'axios'
+import { enqueueSnackbar } from 'notistack'
+import { useEffect, useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import CreateContract from './components/CreateContract'
 import FetchTrainedModels from './components/FetchTrainedModels'
 import UpdateContract from './components/UpdateContract'
+import { BACKEND_SERVER } from './utils/types'
 
 const Home = () => {
   const { activeAddress } = useWallet()
   const [openDeployModal, setOpenDeployModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
-  const [openFetchModelParamsModal, setFetchModelParamsModal] = useState<boolean>(false)
+  const [openFetchModelParams, setFetchModelParams] = useState<boolean>(false)
 
   const toggleDeployModal = () => {
     setOpenDeployModal(!openDeployModal)
@@ -22,8 +25,30 @@ const Home = () => {
   }
 
   const toggleFetchModelParamsModal = () => {
-    setFetchModelParamsModal(!openFetchModelParamsModal)
+    setFetchModelParams(!openFetchModelParams)
   }
+
+  const fetchAccountDetails = async () => {
+    try {
+      const checkAccountResponse = await axios.get(`${BACKEND_SERVER}/check-address/${activeAddress}`)
+      const isAccountExist = await checkAccountResponse.data.exists
+      if (!isAccountExist) {
+        await axios.post(`${BACKEND_SERVER}/create-user/${activeAddress}`)
+      }
+    } catch (error) {
+      enqueueSnackbar('Error fetching data', { variant: 'error' })
+    }
+  }
+
+  useEffect(() => {
+    let isMounted = true
+    if (activeAddress && isMounted) {
+      fetchAccountDetails()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [activeAddress])
 
   return (
     <Box
@@ -137,7 +162,7 @@ const Home = () => {
         </Paper>
         <CreateContract openModal={openDeployModal} closeModal={toggleDeployModal} />
         <UpdateContract openModal={openUpdateModal} closeModal={toggleUpdateModal} />
-        <FetchTrainedModels openModal={openFetchModelParamsModal} closeModal={toggleFetchModelParamsModal} />
+        <FetchTrainedModels openModal={openFetchModelParams} closeModal={toggleFetchModelParamsModal} />
       </Container>
     </Box>
   )

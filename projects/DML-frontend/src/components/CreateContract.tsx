@@ -14,8 +14,10 @@ import {
 import { useWallet } from '@txnlab/use-wallet-react'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Classification, DmlChainFactory } from '../contracts/DMLChain'
+import { addListing } from '../utils/methods'
+import { BACKEND_SERVER } from '../utils/types'
 
 interface DeployContractInterface {
   openModal: boolean
@@ -59,8 +61,6 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       defaultSender: activeAddress,
       algorand,
     })
-
-    fetchData()
 
     if (!data) {
       enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
@@ -130,23 +130,22 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         })
         .send({ populateAppCallResources: true })
 
+      const listingData = {
+        address: activeAddress,
+        contractId: Number(client.appId),
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      }
+
+      await addListing(listingData)
+
       enqueueSnackbar(`Contract ${appId} has been updated successfully`, { variant: 'success' })
     } catch (e) {
       enqueueSnackbar('Failed to update contract', { variant: 'error' })
     } finally {
-      closeModal()
-      console.log('these are the states', appId, rewardAmount)
+      handleClose()
     }
   }
-
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:5000/data')
-      setData(response.data)
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    }
-  }, [])
 
   const handleClose = () => {
     setAppId(null)
@@ -157,16 +156,21 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   }
 
   useEffect(() => {
-    if (openModal) {
-      fetchData()
-    } else {
-      // Reset all states when modal is closed
-      setAppId(null)
-      setRewardAmount(null)
-      setLoading(false)
-      setData(null)
+    if (!openModal) {
+      return
     }
-  }, [openModal, fetchData])
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_SERVER}/data`)
+        setData(response.data)
+      } catch (error) {
+        enqueueSnackbar('Error fetching data', { variant: 'error' })
+      }
+    }
+
+    fetchData()
+  }, [openModal, enqueueSnackbar])
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>

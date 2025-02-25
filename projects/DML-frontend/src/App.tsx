@@ -27,7 +27,7 @@ const walletManager = new WalletManager({
 
 export default function App() {
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={2}>
       <WalletProvider manager={walletManager}>
         <Home />
       </WalletProvider>

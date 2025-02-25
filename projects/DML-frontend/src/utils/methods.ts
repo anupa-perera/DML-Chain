@@ -1,10 +1,6 @@
 import { ParamsData } from '../components/FetchTrainedModels'
 import { Classification } from '../contracts/DMLChain'
-
-interface ParticipantInfo {
-  address: string
-  weight: bigint
-}
+import { AddListingPayload, BACKEND_SERVER, ParticipantInfo } from './types'
 
 export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseCriteria: Classification) => {
   let poolWeight: bigint = 0n
@@ -26,4 +22,22 @@ export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseC
   const rewards = participants.map((participant) => (participant.weight * fixedPool) / poolWeight)
 
   return { addresses, rewards }
+}
+
+export const addListing = async (payload: AddListingPayload) => {
+  const response = await fetch(`${BACKEND_SERVER}/add-listing`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to add listing')
+  }
+
+  return data
 }

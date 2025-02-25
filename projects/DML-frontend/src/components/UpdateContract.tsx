@@ -17,6 +17,7 @@ import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
 import { getIpfsHash } from '../utils/ContractDeployer'
+import { BACKEND_SERVER } from '../utils/types'
 
 interface UpdateContractInterface {
   openModal: boolean
@@ -101,7 +102,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         await client.send.commitToListing({ args: { stakeAmountTxn } })
       }
 
-      await axios.get(`http://127.0.0.1:5000/retrieve-model/${appId}/${ipfsHash}`)
+      await axios.get(`${BACKEND_SERVER}/retrieve-model/${appId}/${ipfsHash}`)
       enqueueSnackbar(`Download will begin shortly for contract ID ${appId}`, { variant: 'success' })
       setFileRetrieved(true)
     } catch (error) {
@@ -170,7 +171,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/data`)
+      const response = await axios.get(`${BACKEND_SERVER}/data`)
       setData(response.data)
     } catch (error) {
       enqueueSnackbar('Error fetching data', { variant: 'warning' })
