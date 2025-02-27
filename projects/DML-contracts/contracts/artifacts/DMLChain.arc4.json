@@ -125,7 +125,7 @@
         }
       ],
       "returns": {
-        "type": "bool"
+        "type": "uint64"
       }
     },
     {

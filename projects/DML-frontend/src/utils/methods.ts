@@ -1,6 +1,7 @@
+import axios from 'axios'
 import { ParamsData } from '../components/FetchTrainedModels'
 import { Classification } from '../contracts/DMLChain'
-import { AddListingPayload, BACKEND_SERVER, ParticipantInfo } from './types'
+import { AddListingPayload, AddSubscribedListingsPayload, BACKEND_SERVER, ParticipantInfo, SubscribedListingDTO } from './types'
 
 export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseCriteria: Classification) => {
   let poolWeight: bigint = 0n
@@ -40,4 +41,43 @@ export const addListing = async (payload: AddListingPayload) => {
   }
 
   return data
+}
+
+export const fetchListings = async (address: string) => {
+  const response = await axios.get(`${BACKEND_SERVER}/get-filtered-listings/${address}`)
+
+  if (response.status !== 200) {
+    throw new Error(response.data.error || 'Failed to get listings')
+  }
+
+  return response.data
+}
+
+export const addSubscribedListing = async (listingData: AddSubscribedListingsPayload) => {
+  try {
+    const response = await axios.post(`${BACKEND_SERVER}/add-subscribed-listing`, {
+      address: listingData.address,
+      contractId: listingData.contractId,
+      createdAt: listingData.createdAt,
+      expiresAt: listingData.expiresAt,
+      url: listingData.url,
+      creatorAddress: listingData.creatorAddress,
+      reputation: listingData.reputation,
+    })
+
+    return response.data
+  } catch (error) {
+    console.error('Error adding subscribed listing:', error)
+    throw error
+  }
+}
+
+export const getSubscribedListings = async (address: string): Promise<SubscribedListingDTO[]> => {
+  try {
+    const response = await axios.get<SubscribedListingDTO[]>(`${BACKEND_SERVER}/get-subscribed-listings/${address}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching subscribed listings:', error)
+    throw error
+  }
 }

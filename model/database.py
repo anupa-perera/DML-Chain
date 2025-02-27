@@ -1,5 +1,7 @@
 import os
+import time
 from pymongo import MongoClient
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,11 +41,12 @@ def get_user_by_address(address):
     print(f"An error occurred: {e}")
     return None
 
-def add_listing_to_created(address, contract_id, created_at, expires_at):
+def add_listing_to_created(address, contract_id, created_at, expires_at, url):
   listing = {
     "contractId": contract_id,
     "createdAt": created_at,
-    "expiresAt": expires_at
+    "expiresAt": expires_at,
+    "url": url
   }
   try:
     collection.update_one(
@@ -54,5 +57,75 @@ def add_listing_to_created(address, contract_id, created_at, expires_at):
   except Exception as e:
     print(f"An error occurred: {e}")
     return None
+
+def add_listing_to_subscribed(address, contract_id, created_at, expires_at, url, creator_address, reputation):
+  listing = {
+    "creatorAddress": creator_address,
+    "reputation": reputation,
+    "contractId": contract_id,
+    "createdAt": created_at,
+    "expiresAt": expires_at,
+    "url": url,
+    "feedback": False
+  }
+  try:
+    user = collection.find_one({
+      "address": address,
+      "subscribedListings.contractId": contract_id
+    })
+
+    if user:
+      return False
+
+    collection.update_one(
+      {"address": address},
+      {"$push": {"subscribedListings": listing}}
+    )
+    return True
+  except Exception as e:
+    print(f"An error occurred: {e}")
+    return None
+
+def get_subscribed_listings(address):
+  try:
+    user = get_user_by_address(address)
+    if not user:
+      return None
+
+    subscribed_listings = user.get('subscribedListings', [])
+    return subscribed_listings
+  except Exception as e:
+    print(f"An error occurred: {e}")
+    return None
+
+def get_filtered_listings(requested_address):
+  try:
+    user = get_user_by_address(requested_address)
+    if not user:
+      return None
+
+    user_reputation = user.get('reputation', 0)
+    current_time = int(time.time())
+
+    all_users = collection.find({})
+    filtered_listings = []
+
+    for user in all_users:
+      for listing in user.get('createdListings', []):
+        expires_at = datetime.strptime(listing.get('expiresAt'), "%Y-%m-%dT%H:%M:%S.%fZ").timestamp()
+        if int(expires_at) > current_time:
+          creator_reputation = user.get('reputation', 0)
+          if creator_reputation <= user_reputation:
+            listing['creator'] = user['address']
+            listing['reputation'] = creator_reputation
+            filtered_listings.append(listing)
+
+    return filtered_listings
+
+  except Exception as e:
+    print(f"An error occurred: {e}")
+    return None
+
+
 
 

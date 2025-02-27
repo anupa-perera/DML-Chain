@@ -77,14 +77,14 @@ describe('DML-CHAIN', () => {
     expect(checkBalance.return).toEqual(15n * 10n ** 6n);
   });
 
-  test('distribute reward distribution to a participant', async () => {
+  test('get the excess score', async () => {
     const mbrPayFirstDeposit = await algorand.createTransaction.payment({
       sender: acc.addr,
       receiver: appClient.appAddress,
       amount: (1).algo(),
     });
 
-    const classification: Classification = {
+    const baselineModelClassification: Classification = {
       accuracy: 50n,
       precision: 50n,
       recall: 50n,
@@ -93,15 +93,25 @@ describe('DML-CHAIN', () => {
 
     await appClient.send.storeClassificationSelectionCriteria({
       args: {
-        evaluationMetrics: classification,
+        evaluationMetrics: baselineModelClassification,
         mbrPay: mbrPayFirstDeposit,
       },
     });
 
-    const reward = await appClient.send.distributeRewards({
-      args: { contributor: { score: BigInt(300) } },
+    const classification: Classification = {
+      accuracy: 100n,
+      precision: 100n,
+      recall: 50n,
+      f1score: 50n,
+    };
+
+    const score = await appClient.send.classModelSelectionCriteria({
+      args: {
+        modelEvaluationMetrics: classification,
+      },
     });
-    expect(reward.return).toEqual([3333333n, 3333333n, 3333333n]);
+
+    expect(score.return).toEqual(100n);
   });
 
   test('distribute rewards to participants', async () => {

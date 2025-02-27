@@ -1,4 +1,6 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import DownloadIcon from '@mui/icons-material/Download'
+import FeedIcon from '@mui/icons-material/Feed'
 import {
   Box,
   Button,
@@ -7,17 +9,21 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
   LinearProgress,
-  TextField,
+  List,
+  ListItem,
+  ListItemText,
 } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { encodeAddress } from 'algosdk'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
 import { getIpfsHash } from '../utils/ContractDeployer'
-import { BACKEND_SERVER } from '../utils/types'
+import { addSubscribedListing, fetchListings } from '../utils/methods'
+import { AddSubscribedListingsPayload, BACKEND_SERVER, ListingsDTO } from '../utils/types'
 
 interface UpdateContractInterface {
   openModal: boolean
@@ -43,6 +49,8 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
   const { enqueueSnackbar } = useSnackbar()
   const [fileRetrieved, setFileRetrieved] = useState<boolean>(false)
   const [data, setData] = useState<DataType | null>(null)
+  const [listings, setListings] = useState<Array<ListingsDTO>>([])
+  const [listing, setListing] = useState<ListingsDTO | null>(null)
 
   const { transactionSigner, activeAddress, algodClient } = useWallet()
 
@@ -52,16 +60,17 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
   const handleClose = () => {
     setAppId(null)
     setFileRetrieved(false)
+    setListings([])
     setLoading(false)
     closeModal()
   }
 
-  const retrieveModelFile = async () => {
+  const retrieveModelFile = async (id: bigint) => {
     if (!activeAddress) {
       enqueueSnackbar('Please Connect to an account', { variant: 'warning' })
       return
     }
-    if (!appId) {
+    if (!id) {
       enqueueSnackbar('Please Enter a valid contract ID', { variant: 'warning' })
       return
     }
@@ -71,12 +80,12 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
     })
     try {
       setLoading(true)
-      const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
+      const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: id })
 
-      const ipfsHash = await getIpfsHash(appId)
+      const ipfsHash = await getIpfsHash(id)
 
       const isBoxExist = async () => {
-        const boxIDs = await algorand.app.getBoxNames(appId)
+        const boxIDs = await algorand.app.getBoxNames(id)
 
         for (const box of boxIDs) {
           if (box.nameRaw.length == 32) {
@@ -102,8 +111,8 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         await client.send.commitToListing({ args: { stakeAmountTxn } })
       }
 
-      await axios.get(`${BACKEND_SERVER}/retrieve-model/${appId}/${ipfsHash}`)
-      enqueueSnackbar(`Download will begin shortly for contract ID ${appId}`, { variant: 'success' })
+      await axios.get(`${BACKEND_SERVER}/retrieve-model/${id}/${ipfsHash}`)
+      enqueueSnackbar(`Download will begin shortly`, { variant: 'success' })
       setFileRetrieved(true)
     } catch (error) {
       enqueueSnackbar('Failed to download model file, please check the contract ID & try again!', { variant: 'error' })
@@ -125,44 +134,81 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
     })
 
     try {
+      const getDataResponse = await axios.get(`${BACKEND_SERVER}/get-user/${activeAddress}`)
+      const reputation = await getDataResponse.data.reputation
       const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
 
-      const modelSelectionCriteria = await client
+      console.log('this is response', getDataResponse)
+
+      const baseCriteria = await client
         .newGroup()
-        .classModelSelectionCriteria({
-          args: { modelEvaluationMetrics: data.metrics },
-        })
+        .getClassificationCriteria()
         .simulate({
           skipSignatures: true,
           allowUnnamedResources: true,
         })
-
-      const isAccepted = modelSelectionCriteria
-
-      if (isAccepted) {
-        const boxMBRPay = await algorand.createTransaction.payment({
-          sender: activeAddress,
-          receiver: client.appAddress,
-          amount: (1).algo(),
+        .then((result) => {
+          return result.returns[0]
         })
 
-        await client.send.storeModelParams({
-          args: {
-            mbrPay: boxMBRPay,
-            address: activeAddress,
-            paramsData: {
-              paramHash: data.param_ipfs_hash,
-              paramKey: data.param_key,
-              score: 350n,
-              reputation: 50n,
-            },
+      const baseScore =
+        typeof baseCriteria === 'object' && baseCriteria !== null
+          ? Object.values(baseCriteria).reduce((total, value) => {
+              if (typeof value === 'bigint') {
+                return total + value
+              }
+              return total
+            }, 0n)
+          : 0n
+
+      const score = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
+
+      const excessScore = score > baseScore ? score - baseScore : 0n
+
+      const boxMBRPay = await algorand.createTransaction.payment({
+        sender: activeAddress,
+        receiver: client.appAddress,
+        amount: (1).algo(),
+      })
+
+      await client.send.storeModelParams({
+        args: {
+          mbrPay: boxMBRPay,
+          address: activeAddress,
+          paramsData: {
+            paramHash: data.param_ipfs_hash,
+            paramKey: data.param_key,
+            score: excessScore,
+            reputation: reputation,
           },
-        })
+        },
+      })
+
+      console.log('this is userlisting datra', listing)
+
+      if (!listing) {
+        enqueueSnackbar('No Listing has been found', { variant: 'warning' })
+        return
       }
+
+      const userSubscribedData: AddSubscribedListingsPayload = {
+        address: activeAddress,
+        creatorAddress: listing.creator,
+        reputation: listing.reputation,
+        contractId: listing.contractId,
+        createdAt: listing.createdAt,
+        expiresAt: listing.expiresAt,
+        url: listing.url,
+      }
+
+      const suslist = await addSubscribedListing(userSubscribedData)
+
+      console.log('User created listing for this contract:', suslist)
 
       enqueueSnackbar('Your model data has been successfully submitted for evaluation', { variant: 'success' })
     } catch (error) {
-      enqueueSnackbar('Failed to submit data', { variant: 'warning' })
+      enqueueSnackbar(`Failed to submit data `, { variant: 'warning' })
+      console.log(error, 'this is error')
     } finally {
       setLoading(false)
       handleClose()
@@ -178,37 +224,124 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
     }
   }
 
-  useEffect(() => {
-    if (openModal && fileRetrieved) {
-      fetchData()
+  useMemo(async () => {
+    if (openModal && activeAddress) {
+      const data = await fetchListings(activeAddress)
+      setListings(data)
     }
-  }, [fileRetrieved, openModal])
+  }, [activeAddress, openModal])
 
   return (
     <Dialog open={openModal} onClose={handleClose}>
       <>
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Train & Earn</DialogTitle>
+        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', padding: 1 }}>
+          {appId ? `Subscribing to App ID: ${appId.toString()}` : 'View All Model Listings'}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>Please Enter The Contract ID to download the Model</DialogContentText>
-          <TextField
-            fullWidth
-            label="Contract ID"
-            variant="outlined"
-            margin="normal"
-            placeholder="Enter your Contract ID"
-            onChange={(e) => {
-              const value = BigInt(e.target.value)
-              setAppId(value)
-            }}
-            required
-            type="number"
-            disabled={fileRetrieved}
-          />
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
-            <Button onClick={retrieveModelFile} disabled={loading || fileRetrieved} variant="contained" color="primary">
-              {loading ? 'Downloading...' : 'Download Model'}
-            </Button>
-          </Box>
+          {!fileRetrieved && (
+            <Box sx={{ mb: 2, p: 1, maxHeight: '500px', overflow: 'auto' }}>
+              <Box
+                sx={{
+                  borderRadius: '4px',
+                  overflow: 'auto',
+                  width: '500px',
+                }}
+              >
+                {listings.length > 0 ? (
+                  <List sx={{ width: '100%', maxHeight: 300 }}>
+                    {listings.map((listing) => (
+                      <ListItem
+                        key={listing.contractId.toString()}
+                        disableGutters
+                        sx={{
+                          mb: 1,
+                          borderRadius: 1,
+                          border: '1px solid #e0e0e0',
+                          padding: '8px 15px',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                            cursor: 'pointer',
+                          },
+                          transition: 'background-color 0.2s ease',
+                        }}
+                        secondaryAction={
+                          <Box sx={{ display: 'flex' }}>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                ml: 1,
+                                color: 'primary.main',
+                                '&:hover': { color: 'primary.dark' },
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                if (listing.url) {
+                                  window.open(listing.url, '_blank')
+                                }
+                              }}
+                              title="View Documentation"
+                            >
+                              <FeedIcon />
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              sx={{
+                                color: 'success.main',
+                                '&:hover': { color: 'success.dark' },
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setAppId(BigInt(listing.contractId))
+                                retrieveModelFile(BigInt(listing.contractId))
+                                setListing(listing)
+                              }}
+                              title="Download Model"
+                            >
+                              <DownloadIcon />
+                            </IconButton>
+                          </Box>
+                        }
+                      >
+                        <ListItemText
+                          primary={`ID: ${listing.contractId.toString()}`}
+                          secondary={
+                            <span
+                              style={{
+                                color: listing.reputation > 75 ? '#2e7d32' : listing.reputation > 50 ? '#ffeb3b' : '#f50057',
+                              }}
+                            >
+                              {`Reputation: ${listing.reputation || 'N/A'}`}
+                            </span>
+                          }
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      p: 3,
+                      textAlign: 'center',
+                      border: '1px solid #e0e0e0',
+                      borderRadius: 1,
+                      backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                      minHeight: '150px',
+                    }}
+                  >
+                    <DialogContentText>No listings found.</DialogContentText>
+                    <DialogContentText sx={{ mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
+                      Please check back later or create a new listing.
+                    </DialogContentText>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+          )}
+
           {fileRetrieved && (
             <Box sx={{ textAlign: 'center' }}>
               <DialogContentText sx={{ mt: 1, mb: 1 }}>Please Ensure Data Is Accurate Prior To Submitting</DialogContentText>
@@ -233,7 +366,11 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
                   <LinearProgress color="inherit" />
                 )}
               </Box>
-
+              {!data && (
+                <Button variant="contained" color="primary" sx={{ mt: 1, mb: 1 }} onClick={fetchData} disabled={loading} fullWidth>
+                  {loading ? <CircularProgress size={24} /> : 'Fetch Model Data'}
+                </Button>
+              )}
               <Button variant="contained" color="primary" onClick={handleSubmitModelParams} disabled={loading} fullWidth>
                 {loading ? <CircularProgress size={24} /> : 'Submit Model'}
               </Button>

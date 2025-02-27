@@ -2,8 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created
-from bson import ObjectId
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings
 
 app = Flask(__name__)
 CORS(app)
@@ -28,6 +27,7 @@ def update_data():
 # retrieve and download model from IPFS.
 @app.route('/retrieve-model/<contract_id>/<ipfs_hash>', methods=['GET'])
 def get_ipfs_model(ipfs_hash, contract_id):
+  print(f"Retrieving model with IPFS hash: {ipfs_hash}, Contract ID: {contract_id}")
   try:
     filepath = retrieve_model(ipfs_hash, contract_id)
     return filepath
@@ -55,7 +55,6 @@ def aggregate_model():
 # check for address existence
 @app.route('/check-address/<address>', methods=['GET'])
 def check_address(address):
-  """Endpoint to check if an address exists in the database."""
   if not address:
     return jsonify({"error": "Address parameter is required"}), 400
 
@@ -66,7 +65,6 @@ def check_address(address):
 # create a new user
 @app.route('/create-user/<address>', methods=['POST'])
 def insert_record(address):
-  """Endpoint to insert a record into the database using path parameter."""
   if not address:
     return jsonify({"error": "Address parameter is required"}), 400
 
@@ -92,26 +90,75 @@ def get_user(address):
     else:
         return jsonify({"error": "User not found"}), 404
 
+# add a listing to the created listings of a user.
 @app.route('/add-listing', methods=['POST'])
 def add_listing():
-    """Endpoint to add a listing to the created listings of a user."""
     data = request.json
     address = data.get('address')
     contract_id = data.get('contractId')
     created_at = data.get('createdAt')
     expires_at = data.get('expiresAt')
+    url = data.get('url')
 
-    if not address or not contract_id or not created_at or not expires_at:
-        return jsonify({"error": "All parameters (address, contractId, createdAt, expiresAt) are required"}), 400
+    if not address or not contract_id or not created_at or not expires_at or not url:
+        return jsonify({"error": "All parameters (address, contractId, createdAt, expiresAt, URL) are required"}), 400
 
     if not address_exists(address):
         return jsonify({"error": "User does not exist"}), 404
 
-    success = add_listing_to_created(address, contract_id, created_at, expires_at)
+    success = add_listing_to_created(address, contract_id, created_at, expires_at, url)
     if success:
         return jsonify({"message": "Listing added successfully"}), 200
     else:
         return jsonify({"error": "Failed to add listing"}), 500
+
+
+# Endpoint to get filtered listings based on the user's address.
+@app.route('/get-filtered-listings/<address>', methods=['GET'])
+def get_filtered_listings_endpoint(address):
+    if not address:
+        return jsonify({"error": "Address parameter is required"}), 400
+
+    listings = get_filtered_listings(address)
+    if listings is not None:
+        return jsonify(listings), 200
+    else:
+        return jsonify({"error": "Failed to retrieve listings"}), 500
+
+@app.route('/add-subscribed-listing', methods=['POST'])
+def add_subscribed_listing():
+    """Endpoint to add a listing to the subscribed listings of a user."""
+    data = request.json
+    address = data.get('address')
+    contract_id = data.get('contractId')
+    created_at = data.get('createdAt')
+    expires_at = data.get('expiresAt')
+    url = data.get('url')
+    creator_address = data.get('creatorAddress')
+    reputation = data.get('reputation')
+
+    if not all([address, contract_id, created_at, expires_at, url, creator_address, reputation]):
+        return jsonify({"error": "All parameters are required"}), 400
+
+    if not address_exists(address):
+        return jsonify({"error": "User does not exist"}), 404
+
+    success = add_listing_to_subscribed(address, contract_id, created_at, expires_at, url, creator_address, reputation)
+    if success:
+        return jsonify({"message": "Subscribed listing added successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to add subscribed listing"}), 500
+
+@app.route('/get-subscribed-listings/<address>', methods=['GET'])
+def get_subscribed_listings_endpoint(address):
+    if not address:
+        return jsonify({"error": "Address parameter is required"}), 400
+
+    listings = get_subscribed_listings(address)
+    if listings is not None:
+        return jsonify(listings), 200
+    else:
+        return jsonify({"error": "Failed to retrieve subscribed listings"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

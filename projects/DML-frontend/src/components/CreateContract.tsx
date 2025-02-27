@@ -8,6 +8,8 @@ import {
   DialogContentText,
   DialogTitle,
   LinearProgress,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material'
@@ -42,6 +44,8 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   const [appId, setAppId] = useState<bigint | null>(null)
   const [data, setData] = useState<DataType | null>(null)
   const [rewardAmount, setRewardAmount] = useState<bigint | null>(null)
+  const [listingPeriod, setListingPeriod] = useState<number>(1)
+  const [url, seturl] = useState<string>('')
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -51,6 +55,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   algorand.setDefaultSigner(transactionSigner)
 
   const handleDeploy = async () => {
+    setLoading(true)
     if (!transactionSigner || !activeAddress) {
       enqueueSnackbar('Please connect wallet first', { variant: 'warning' })
       return
@@ -76,11 +81,14 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       enqueueSnackbar(`Contract deployed with App ID: ${appID}`, { variant: 'success' })
     } catch (e) {
       enqueueSnackbar('Failed to deploy contract', { variant: 'error' })
+      handleClose()
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const handleUpdate = async () => {
+    setLoading(true)
     if (!data || !appId || !activeAddress) {
       enqueueSnackbar('Please check for missing data', { variant: 'warning' })
       return
@@ -133,8 +141,9 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       const listingData = {
         address: activeAddress,
         contractId: Number(client.appId),
-        createdAt: new Date().toISOString(),
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        createdAt: new Date(),
+        expiresAt: new Date(new Date().setDate(new Date().getDate() + listingPeriod)),
+        url: url,
       }
 
       await addListing(listingData)
@@ -223,12 +232,36 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
                 )}
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography> Please Enter the reward amount</Typography>
+                <Typography> Listing Period</Typography>
+                <Typography sx={{ color: 'red', fontSize: '0.875rem' }}> (*Maximum 31 days)</Typography>
+              </Box>
+              <Select
+                size="small"
+                variant="outlined"
+                fullWidth
+                value={listingPeriod}
+                onChange={(e) => setListingPeriod(Number(e.target.value))}
+                sx={{ mb: 2 }}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 200,
+                    },
+                  },
+                }}
+              >
+                {[...Array(31)].map((_, i) => (
+                  <MenuItem key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography> Reward Amount</Typography>
                 <Typography sx={{ color: 'red', fontSize: '0.875rem' }}> (*Minimum allowed amount is 10 Algos)</Typography>
               </Box>
               <TextField
                 size="small"
-                label="Reward amount in Algos"
                 variant="outlined"
                 margin="dense"
                 onChange={(e) => {
@@ -237,6 +270,28 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
                 }}
                 required
                 type="number"
+                fullWidth
+                sx={{ mb: 2 }}
+              />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography> Link to Listing Advert</Typography>
+                <Typography sx={{ color: 'red', fontSize: '0.875rem' }}>
+                  (*Refer to template{' '}
+                  <a href="https://tinyurl.com/3c2s3syt" target="_blank" rel="noopener noreferrer">
+                    here
+                  </a>
+                  )
+                </Typography>
+              </Box>
+              <TextField
+                size="small"
+                variant="outlined"
+                margin="dense"
+                onChange={(e) => {
+                  const value = String(e.target.value)
+                  seturl(value)
+                }}
+                required
                 fullWidth
                 sx={{ mb: 2 }}
               />

@@ -146,18 +146,27 @@ export class DMLChain extends Contract {
   }
 
   // model selection criteria for classification models
-  classModelSelectionCriteria(modelEvaluationMetrics: Classification): boolean {
+  classModelSelectionCriteria(modelEvaluationMetrics: Classification): uint64 {
     assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists);
     const baselineClassMetrics = this.classificationPerformanceMetrics('InitialModelMetrics').value;
-    if (
-      modelEvaluationMetrics.accuracy >= baselineClassMetrics.accuracy &&
-      modelEvaluationMetrics.precision >= baselineClassMetrics.precision &&
-      modelEvaluationMetrics.recall >= baselineClassMetrics.recall &&
-      modelEvaluationMetrics.f1score >= baselineClassMetrics.f1score
-    ) {
-      return true;
+
+    const baselineScore =
+      baselineClassMetrics.accuracy +
+      baselineClassMetrics.precision +
+      baselineClassMetrics.recall +
+      baselineClassMetrics.f1score;
+
+    const modelScore =
+      modelEvaluationMetrics.accuracy +
+      modelEvaluationMetrics.precision +
+      modelEvaluationMetrics.recall +
+      modelEvaluationMetrics.f1score;
+
+    if (modelScore <= baselineScore) {
+      return 0;
     }
-    return false;
+
+    return modelScore - baselineScore;
   }
 
   // store Regression model selection criteria

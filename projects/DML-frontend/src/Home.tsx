@@ -6,6 +6,7 @@ import { enqueueSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import CreateContract from './components/CreateContract'
+import FetchSubsscribedListings from './components/FetchSubscribedListings'
 import FetchTrainedModels from './components/FetchTrainedModels'
 import UpdateContract from './components/UpdateContract'
 import { BACKEND_SERVER } from './utils/types'
@@ -15,6 +16,7 @@ const Home = () => {
   const [openDeployModal, setOpenDeployModal] = useState<boolean>(false)
   const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false)
   const [openFetchModelParams, setFetchModelParams] = useState<boolean>(false)
+  const [openFetchSubscribedListings, setFetchSubscribedListings] = useState<boolean>(false)
 
   const toggleDeployModal = () => {
     setOpenDeployModal(!openDeployModal)
@@ -26,6 +28,10 @@ const Home = () => {
 
   const toggleFetchModelParamsModal = () => {
     setFetchModelParams(!openFetchModelParams)
+  }
+
+  const toggleFetchSubsscribedListings = () => {
+    setFetchSubscribedListings(!openFetchSubscribedListings)
   }
 
   const fetchAccountDetails = async () => {
@@ -137,7 +143,22 @@ const Home = () => {
                       }}
                       onClick={toggleUpdateModal}
                     >
-                      Train and Earn
+                      View All Model listings
+                    </Button>
+                  </Grid>
+                  <Grid sx={{ width: '100%', mb: 2 }}>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        borderColor: '#b23c17',
+                        width: '100%',
+                        color: '#b23c17',
+                        fontFamily: 'Cursive, Arial, sans-serif',
+                        fontWeight: 'bold',
+                      }}
+                      onClick={toggleFetchSubsscribedListings}
+                    >
+                      View Subscribed Model listings
                     </Button>
                   </Grid>
                   <Grid sx={{ width: '100%' }}>
@@ -163,6 +184,7 @@ const Home = () => {
         <CreateContract openModal={openDeployModal} closeModal={toggleDeployModal} />
         <UpdateContract openModal={openUpdateModal} closeModal={toggleUpdateModal} />
         <FetchTrainedModels openModal={openFetchModelParams} closeModal={toggleFetchModelParamsModal} />
+        <FetchSubsscribedListings openModal={openFetchSubscribedListings} closeModal={toggleFetchSubsscribedListings} />
       </Container>
     </Box>
   )

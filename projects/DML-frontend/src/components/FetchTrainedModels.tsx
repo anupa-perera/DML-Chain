@@ -85,7 +85,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
               }
             }
           } catch (error) {
-            enqueueSnackbar('Error fetching box value for this listing', { variant: 'error' })
+            enqueueSnackbar(`An error has occurred`, { variant: 'error' })
             return
           }
         }
@@ -131,7 +131,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
 
       enqueueSnackbar('Model Parameters has been successfully stored for aggregation', { variant: 'success' })
     } catch (error) {
-      enqueueSnackbar('Error connecting to the end point', { variant: 'error' })
+      enqueueSnackbar(`An Error has occurred, ${error}`, { variant: 'error' })
     } finally {
       setLoading(false)
     }
