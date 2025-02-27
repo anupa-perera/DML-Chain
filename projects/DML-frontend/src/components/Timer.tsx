@@ -30,16 +30,19 @@ const Timer: React.FC<{ endDate: Date }> = ({ endDate }) => {
   const getTimeUnits = (ms: number) => {
     const seconds = Math.floor((ms / 1000) % 60)
     const minutes = Math.floor((ms / (1000 * 60)) % 60)
-    const hours = Math.floor(ms / (1000 * 60 * 60))
+    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24)
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24))
 
-    return { hours, minutes, seconds }
+    return { days, hours, minutes, seconds }
   }
 
   const timeUnits = getTimeUnits(timeLeft)
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Box sx={{ display: 'flex', color: 'red' }}>
+      <Box sx={{ display: 'flex', color: 'green' }}>
+        <Typography>{timeUnits.days.toString().padStart(2, '0')}</Typography>
+        <Typography>:</Typography>
         <Typography>{timeUnits.hours.toString().padStart(2, '0')}</Typography>
         <Typography>:</Typography>
         <Typography>{timeUnits.minutes.toString().padStart(2, '0')}</Typography>

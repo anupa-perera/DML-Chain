@@ -30,7 +30,7 @@ const Home = () => {
     setFetchModelParams(!openFetchModelParams)
   }
 
-  const toggleFetchSubsscribedListings = () => {
+  const toggleFetchSubscribedListings = () => {
     setFetchSubscribedListings(!openFetchSubscribedListings)
   }
 
@@ -156,7 +156,7 @@ const Home = () => {
                         fontFamily: 'Cursive, Arial, sans-serif',
                         fontWeight: 'bold',
                       }}
-                      onClick={toggleFetchSubsscribedListings}
+                      onClick={toggleFetchSubscribedListings}
                     >
                       View Subscribed Model listings
                     </Button>
@@ -184,7 +184,7 @@ const Home = () => {
         <CreateContract openModal={openDeployModal} closeModal={toggleDeployModal} />
         <UpdateContract openModal={openUpdateModal} closeModal={toggleUpdateModal} />
         <FetchTrainedModels openModal={openFetchModelParams} closeModal={toggleFetchModelParamsModal} />
-        <FetchSubsscribedListings openModal={openFetchSubscribedListings} closeModal={toggleFetchSubsscribedListings} />
+        <FetchSubsscribedListings openModal={openFetchSubscribedListings} closeModal={toggleFetchSubscribedListings} />
       </Container>
     </Box>
   )

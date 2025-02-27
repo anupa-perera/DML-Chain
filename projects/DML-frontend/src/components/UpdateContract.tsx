@@ -115,7 +115,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       enqueueSnackbar(`Download will begin shortly`, { variant: 'success' })
       setFileRetrieved(true)
     } catch (error) {
-      enqueueSnackbar('Failed to download model file, please check the contract ID & try again!', { variant: 'error' })
+      enqueueSnackbar('Failed to download model file', { variant: 'error' })
     } finally {
       setLoading(false)
     }

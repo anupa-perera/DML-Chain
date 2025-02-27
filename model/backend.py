@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings
 
 app = Flask(__name__)
 CORS(app)
@@ -160,7 +160,67 @@ def get_subscribed_listings_endpoint(address):
     else:
         return jsonify({"error": "Failed to retrieve subscribed listings"}), 500
 
+# Update user reputation with merit/demerit
+@app.route('/update-reputation', methods=['POST'])
+def update_reputation():
+  data = request.json
+  if not data:
+    print("Request body is missing")
+    return jsonify({"error": "Request body is required"}), 400
+
+  address = data.get('address')
+  action = data.get('action')
+
+  if not address:
+    print("Address is missing")
+    return jsonify({"error": "Address is required"}), 400
+  if action not in ['merit', 'demerit']:
+    print(f"Invalid action: {action}")
+    return jsonify({"error": "Action must be either 'merit' or 'demerit'"}), 400
+
+  user = get_user_by_address(address)
+  if not user:
+    print(f"User not found for address: {address}")
+    return jsonify({"error": "User not found"}), 404
+
+  if 'reputation' not in user:
+    print(f"User has no reputation score for address: {address}")
+    return jsonify({"error": "User has no reputation score"}), 400
+
+  current_reputation = user['reputation']
+  print(f"Current reputation for address {address}: {current_reputation}")
+
+  if action == 'merit':
+    new_reputation = min(100, current_reputation + 1)
+  else:
+    new_reputation = max(0, current_reputation - 1)
+
+  print(f"New reputation for address {address}: {new_reputation}")
+
+  success = update_user_reputation(address, new_reputation)
+
+  if success:
+    print(f"Reputation updated successfully for address {address}")
+    return jsonify({
+      "message": f"Reputation updated successfully",
+      "previousReputation": current_reputation,
+      "newReputation": new_reputation
+    }), 200
+  else:
+    print(f"Failed to update reputation for address {address}")
+    return jsonify({"error": "Failed to update reputation"}), 500
+
+@app.route('/get-created-listings/<address>', methods=['GET'])
+def get_created_listings_endpoint(address):
+    if not address:
+        return jsonify({"error": "Address parameter is required"}), 400
+
+    listings = get_created_listings(address)
+    print(f"Created listings for address {address}: {listings}")
+    if listings is not None:
+        return jsonify(listings), 200
+    else:
+        return jsonify({"error": "Failed to retrieve created listings"}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-

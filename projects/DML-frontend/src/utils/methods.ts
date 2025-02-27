@@ -1,7 +1,15 @@
 import axios from 'axios'
 import { ParamsData } from '../components/FetchTrainedModels'
 import { Classification } from '../contracts/DMLChain'
-import { AddListingPayload, AddSubscribedListingsPayload, BACKEND_SERVER, ParticipantInfo, SubscribedListingDTO } from './types'
+import {
+  AddListingPayload,
+  AddSubscribedListingsPayload,
+  BACKEND_SERVER,
+  ParticipantInfo,
+  ReputationResponseDTO,
+  ReputationType,
+  SubscribedListingDTO,
+} from './types'
 
 export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseCriteria: Classification) => {
   let poolWeight: bigint = 0n
@@ -26,21 +34,13 @@ export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseC
 }
 
 export const addListing = async (payload: AddListingPayload) => {
-  const response = await fetch(`${BACKEND_SERVER}/add-listing`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+  const response = await axios.post(`${BACKEND_SERVER}/add-listing`, payload)
 
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to add listing')
+  if (response.status !== 200) {
+    throw new Error(response.data.error || 'Failed to add listing')
   }
 
-  return data
+  return response.data
 }
 
 export const fetchListings = async (address: string) => {
@@ -54,32 +54,22 @@ export const fetchListings = async (address: string) => {
 }
 
 export const addSubscribedListing = async (listingData: AddSubscribedListingsPayload) => {
-  try {
-    const response = await axios.post(`${BACKEND_SERVER}/add-subscribed-listing`, {
-      address: listingData.address,
-      contractId: listingData.contractId,
-      createdAt: listingData.createdAt,
-      expiresAt: listingData.expiresAt,
-      url: listingData.url,
-      creatorAddress: listingData.creatorAddress,
-      reputation: listingData.reputation,
-    })
+  const response = await axios.post(`${BACKEND_SERVER}/add-subscribed-listing`, {
+    address: listingData.address,
+    contractId: listingData.contractId,
+    createdAt: listingData.createdAt,
+    expiresAt: listingData.expiresAt,
+    url: listingData.url,
+    creatorAddress: listingData.creatorAddress,
+    reputation: listingData.reputation,
+  })
 
-    return response.data
-  } catch (error) {
-    console.error('Error adding subscribed listing:', error)
-    throw error
-  }
+  return response.data
 }
 
 export const getSubscribedListings = async (address: string): Promise<SubscribedListingDTO[]> => {
-  try {
-    const response = await axios.get<SubscribedListingDTO[]>(`${BACKEND_SERVER}/get-subscribed-listings/${address}`)
-    return response.data
-  } catch (error) {
-    console.error('Error fetching subscribed listings:', error)
-    throw error
-  }
+  const response = await axios.get<SubscribedListingDTO[]>(`${BACKEND_SERVER}/get-subscribed-listings/${address}`)
+  return response.data
 }
 
 export const calculateTimeRemaining = (endDate: Date): number => {
@@ -89,4 +79,24 @@ export const calculateTimeRemaining = (endDate: Date): number => {
 
   const seconds = Math.floor(timeLeft / 1000)
   return seconds
+}
+
+export const updateReputation = async (address: string, action: ReputationType): Promise<ReputationResponseDTO> => {
+  try {
+    const { data } = await axios.post<ReputationResponseDTO>(`${BACKEND_SERVER}/update-reputation`, {
+      address,
+      action,
+    })
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to update reputation')
+    }
+    throw error
+  }
+}
+
+export const getCreatedListings = async (address: string) => {
+  const response = await axios.get(`${BACKEND_SERVER}/get-created-listings/${address}`)
+  return response.data
 }

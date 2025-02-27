@@ -41,3 +41,24 @@ export interface SubscribedListingDTO {
   reputation: number
   feedback: boolean
 }
+
+export interface CreatedListingDTO {
+  contractId: string
+  createdAt: Date
+  expiresAt: Date
+  url: string
+}
+
+export interface ReputationResponseDTO {
+  message: string
+  action: ReputationType
+  previousReputation: number
+  newReputation: number
+}
+
+export const ReputationType = {
+  MERIT: 'merit',
+  DEMERIT: 'demerit',
+} as const
+
+export type ReputationType = (typeof ReputationType)[keyof typeof ReputationType]

@@ -1,13 +1,13 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, Link, TextField, Typography } from '@mui/material'
+import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, Link, List, ListItem, ListItemText, Typography } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { encodeAddress } from 'algosdk'
 import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
-import { calculateReward } from '../utils/methods'
-import { BACKEND_SERVER } from '../utils/types'
+import { calculateReward, getCreatedListings } from '../utils/methods'
+import { BACKEND_SERVER, CreatedListingDTO } from '../utils/types'
 
 export interface ParamsData {
   [address: string]: {
@@ -26,7 +26,7 @@ interface UpdateFetchTrainedModelsInterface {
 const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [appId, setAppId] = useState<bigint | null>(null)
-
+  const [listings, setListings] = useState<Array<CreatedListingDTO>>([])
   const [paramsData, setParamsData] = useState<ParamsData | null>(null)
   const [displayNotification, setDisplayNotification] = useState<boolean>(false)
 
@@ -123,10 +123,8 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
         )
         await axios.post(`${BACKEND_SERVER}/aggregate`, filteredParams)
         setDisplayNotification(true)
-        setTimeout(() => {
-          setDisplayNotification(false)
-          handleClose()
-        }, 10000)
+        setDisplayNotification(false)
+        handleClose()
       }
 
       enqueueSnackbar('Model Parameters has been successfully stored for aggregation', { variant: 'success' })
@@ -137,25 +135,91 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
     }
   }
 
+  useEffect(() => {
+    const fetchListings = async () => {
+      if (openModal && activeAddress) {
+        const listings = await getCreatedListings(activeAddress)
+        setListings(listings)
+      }
+    }
+
+    fetchListings()
+  }, [openModal, activeAddress])
+
+  useEffect(() => {
+    const fetchparams = async () => {
+      if (openModal && appId !== null) {
+        handleGetAllModelParams()
+      }
+    }
+
+    fetchparams()
+  }, [appId])
+
   return (
     <Dialog open={openModal} onClose={handleClose}>
       <>
         <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Fetch Trained Models</DialogTitle>
         <DialogContent>
-          <DialogContentText>Please Enter The Contract ID fetch the collected parameter data</DialogContentText>
-          <TextField
-            fullWidth
-            label="Contract ID"
-            variant="outlined"
-            margin="normal"
-            placeholder="Enter your Contract ID"
-            onChange={(e) => {
-              const value = BigInt(e.target.value)
-              setAppId(value)
-            }}
-            required
-            type="number"
-          />
+          {!appId && (
+            <Box sx={{ mb: 2, p: 1, maxHeight: '500px', overflow: 'auto' }}>
+              <DialogContentText sx={{ mb: 2, textAlign: 'center' }}>
+                Please Click The Desired Listing to download Model Parameters
+              </DialogContentText>
+              <Box
+                sx={{
+                  borderRadius: '4px',
+                  overflow: 'auto',
+                  width: '500px',
+                }}
+              >
+                {listings.length > 0 ? (
+                  <List sx={{ width: '100%', maxHeight: 300 }}>
+                    {listings.map((listing) => (
+                      <ListItem
+                        key={listing.contractId.toString()}
+                        disableGutters
+                        onClick={() => setAppId(BigInt(listing.contractId))}
+                        sx={{
+                          mb: 1,
+                          borderRadius: 1,
+                          border: '1px solid #e0e0e0',
+                          padding: '8px 15px',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                            cursor: 'pointer',
+                          },
+                          transition: 'background-color 0.2s ease',
+                        }}
+                      >
+                        <ListItemText primary={`ID: ${listing.contractId.toString()}`} />
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      p: 3,
+                      textAlign: 'center',
+                      border: '1px solid #e0e0e0',
+                      borderRadius: 1,
+                      backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                      minHeight: '150px',
+                    }}
+                  >
+                    <DialogContentText>No listings found.</DialogContentText>
+                    <DialogContentText sx={{ mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
+                      Please subscribe to a model to display any listing.
+                    </DialogContentText>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+          )}
           <Box>
             {paramsData && paramsData !== null && (
               <>
@@ -271,14 +335,6 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                 </Typography>
               </Box>
             )}
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
-            <Button onClick={handleGetAllModelParams} disabled={loading} variant="contained" color="primary">
-              {loading ? 'Downloading...' : 'Download Model Parameters'}
-            </Button>
-            <Button variant="contained" onClick={handleClose} disabled={loading} color="error">
-              Cancel
-            </Button>
           </Box>
         </DialogContent>
       </>

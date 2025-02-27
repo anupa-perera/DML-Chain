@@ -126,6 +126,26 @@ def get_filtered_listings(requested_address):
     print(f"An error occurred: {e}")
     return None
 
+def update_user_reputation(address, new_reputation):
+  try:
+    result = collection.update_one(
+      {"address": address},
+      {"$set": {"reputation": new_reputation}}
+    )
+    return result.modified_count > 0
+  except Exception as e:
+    print(f"An error occurred: {e}")
+    return False
 
+def get_created_listings(address):
+  try:
+    user = get_user_by_address(address)
+    if not user:
+      return None
 
+    created_listings = user.get('createdListings', [])
+    return created_listings
+  except Exception as e:
+    print(f"An error occurred: {e}")
+    return None
 

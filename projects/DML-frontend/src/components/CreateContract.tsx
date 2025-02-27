@@ -174,8 +174,10 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    if (openModal) {
+      fetchData()
+    }
+  }, [openModal])
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>

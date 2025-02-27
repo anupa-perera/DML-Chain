@@ -3,8 +3,8 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { useEffect, useState } from 'react'
-import { calculateTimeRemaining, getSubscribedListings } from '../utils/methods'
-import { SubscribedListingDTO } from '../utils/types'
+import { calculateTimeRemaining, getSubscribedListings, updateReputation } from '../utils/methods'
+import { ReputationType, SubscribedListingDTO } from '../utils/types'
 import Timer from './Timer'
 
 interface FetchSubscribedListingsInterface {
@@ -28,6 +28,10 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
     } else {
       return false
     }
+  }
+
+  const sendFeedback = async (creatorAddress: string, action: ReputationType) => {
+    await updateReputation(creatorAddress, action)
   }
 
   useEffect(() => {
@@ -79,8 +83,10 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                               color: 'primary.main',
                               '&:hover': { color: 'primary.dark' },
                             }}
-                            onClick={(e) => {}}
-                            title="View Documentation"
+                            onClick={() => {
+                              sendFeedback(listing.creatorAddress, ReputationType.MERIT)
+                            }}
+                            title="Merit Icon"
                           >
                             <ThumbUpIcon sx={{ color: 'green' }} />
                           </IconButton>
@@ -91,8 +97,8 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                               color: 'success.main',
                               '&:hover': { color: 'success.dark' },
                             }}
-                            onClick={(e) => {}}
-                            title="Download Model"
+                            onClick={() => sendFeedback(listing.creatorAddress, ReputationType.DEMERIT)}
+                            title="Demerit Icon"
                           >
                             <ThumbDownIcon sx={{ color: 'red' }} />
                           </IconButton>
@@ -106,7 +112,7 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                             mr: 2,
                           }}
                         >
-                          <Timer endDate={listing.expiresAt}/>
+                          <Timer endDate={listing.expiresAt} />
                         </Box>
                       )
                     }
