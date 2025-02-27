@@ -81,3 +81,12 @@ export const getSubscribedListings = async (address: string): Promise<Subscribed
     throw error
   }
 }
+
+export const calculateTimeRemaining = (endDate: Date): number => {
+  const end = new Date(endDate).getTime()
+  const now = new Date().getTime()
+  const timeLeft = end - now
+
+  const seconds = Math.floor(timeLeft / 1000)
+  return seconds
+}

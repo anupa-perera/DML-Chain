@@ -3,8 +3,9 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { useEffect, useState } from 'react'
-import { getSubscribedListings } from '../utils/methods'
+import { calculateTimeRemaining, getSubscribedListings } from '../utils/methods'
 import { SubscribedListingDTO } from '../utils/types'
+import Timer from './Timer'
 
 interface FetchSubscribedListingsInterface {
   openModal: boolean
@@ -19,6 +20,15 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
   const { activeAddress } = useWallet()
 
   const [listings, setListings] = useState<Array<SubscribedListingDTO>>([])
+
+  const isComplete = (endDate: Date): boolean => {
+    const timeRemaining = calculateTimeRemaining(endDate)
+    if (timeRemaining <= 0) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -60,44 +70,59 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                       transition: 'background-color 0.2s ease',
                     }}
                     secondaryAction={
-                      <Box sx={{ display: 'flex' }}>
-                        <IconButton
-                          size="small"
+                      isComplete(listing.expiresAt) ? (
+                        <Box sx={{ display: 'flex' }}>
+                          <IconButton
+                            size="small"
+                            sx={{
+                              ml: 1,
+                              color: 'primary.main',
+                              '&:hover': { color: 'primary.dark' },
+                            }}
+                            onClick={(e) => {}}
+                            title="View Documentation"
+                          >
+                            <ThumbUpIcon sx={{ color: 'green' }} />
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            sx={{
+                              mr: 1,
+                              color: 'success.main',
+                              '&:hover': { color: 'success.dark' },
+                            }}
+                            onClick={(e) => {}}
+                            title="Download Model"
+                          >
+                            <ThumbDownIcon sx={{ color: 'red' }} />
+                          </IconButton>
+                        </Box>
+                      ) : (
+                        <Box
                           sx={{
-                            ml: 1,
-                            color: 'primary.main',
-                            '&:hover': { color: 'primary.dark' },
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            mr: 2,
                           }}
-                          onClick={(e) => {}}
-                          title="View Documentation"
                         >
-                          <ThumbUpIcon sx={{ color: 'green' }} />
-                        </IconButton>
-                        <IconButton
-                          size="small"
-                          sx={{
-                            mr: 1,
-                            color: 'success.main',
-                            '&:hover': { color: 'success.dark' },
-                          }}
-                          onClick={(e) => {}}
-                          title="Download Model"
-                        >
-                          <ThumbDownIcon sx={{ color: 'red' }} />
-                        </IconButton>
-                      </Box>
+                          <Timer endDate={listing.expiresAt}/>
+                        </Box>
+                      )
                     }
                   >
                     <ListItemText
                       primary={`ID: ${listing.contractId.toString()}`}
                       secondary={
-                        <span
-                          style={{
-                            color: listing.reputation > 75 ? '#2e7d32' : listing.reputation > 50 ? '#ffeb3b' : '#f50057',
-                          }}
-                        >
-                          {`Reputation: ${listing.reputation || 'N/A'}`}
-                        </span>
+                        <>
+                          <span
+                            style={{
+                              color: listing.reputation > 75 ? '#2e7d32' : listing.reputation > 50 ? '#ffeb3b' : '#f50057',
+                            }}
+                          >
+                            {`Reputation: ${listing.reputation || 'N/A'}`}
+                          </span>
+                        </>
                       }
                     />
                   </ListItem>

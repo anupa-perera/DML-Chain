@@ -61,19 +61,19 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       return
     }
     setLoading(true)
-
-    const factory = new DmlChainFactory({
-      defaultSender: activeAddress,
-      algorand,
-    })
-
-    if (!data) {
-      enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
-      handleClose()
-      return
-    }
-
     try {
+      await fetchData()
+      const factory = new DmlChainFactory({
+        defaultSender: activeAddress,
+        algorand,
+      })
+
+      if (!data) {
+        enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
+        handleClose()
+        return
+      }
+
       const { appClient: client } = await factory.send.create.createApplication({ args: { modelHash: data?.model_ipfs_hash } })
       const appID = client.appId
       setAppId(appID)
@@ -164,22 +164,18 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
     closeModal()
   }
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_SERVER}/data`)
+      setData(response.data)
+    } catch (error) {
+      enqueueSnackbar('Error fetching data', { variant: 'error' })
+    }
+  }
+
   useEffect(() => {
-    if (!openModal) {
-      return
-    }
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_SERVER}/data`)
-        setData(response.data)
-      } catch (error) {
-        enqueueSnackbar('Error fetching data', { variant: 'error' })
-      }
-    }
-
     fetchData()
-  }, [openModal, enqueueSnackbar])
+  }, [])
 
   return (
     <Dialog open={openModal} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -197,6 +193,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">
                 {loading ? 'Deploying...' : 'Deploy Contract'}
               </Button>
+
               <Button variant="contained" onClick={handleClose} disabled={loading} color="error">
                 Cancel
               </Button>
