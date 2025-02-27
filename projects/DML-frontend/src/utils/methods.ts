@@ -100,3 +100,12 @@ export const getCreatedListings = async (address: string) => {
   const response = await axios.get(`${BACKEND_SERVER}/get-created-listings/${address}`)
   return response.data
 }
+
+export const isComplete = (endDate: Date): boolean => {
+  const timeRemaining = calculateTimeRemaining(endDate)
+  if (timeRemaining <= 0) {
+    return true
+  } else {
+    return false
+  }
+}

@@ -3,7 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { useEffect, useState } from 'react'
-import { calculateTimeRemaining, getSubscribedListings, updateReputation } from '../utils/methods'
+import { getSubscribedListings, isComplete, updateReputation } from '../utils/methods'
 import { ReputationType, SubscribedListingDTO } from '../utils/types'
 import Timer from './Timer'
 
@@ -20,15 +20,6 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
   const { activeAddress } = useWallet()
 
   const [listings, setListings] = useState<Array<SubscribedListingDTO>>([])
-
-  const isComplete = (endDate: Date): boolean => {
-    const timeRemaining = calculateTimeRemaining(endDate)
-    if (timeRemaining <= 0) {
-      return true
-    } else {
-      return false
-    }
-  }
 
   const sendFeedback = async (creatorAddress: string, action: ReputationType) => {
     await updateReputation(creatorAddress, action)

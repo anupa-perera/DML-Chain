@@ -6,8 +6,9 @@ import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
-import { calculateReward, getCreatedListings } from '../utils/methods'
+import { calculateReward, getCreatedListings, isComplete } from '../utils/methods'
 import { BACKEND_SERVER, CreatedListingDTO } from '../utils/types'
+import Timer from './Timer'
 
 export interface ParamsData {
   [address: string]: {
@@ -190,9 +191,21 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                             cursor: 'pointer',
                           },
                           transition: 'background-color 0.2s ease',
+                          pointerEvents: !isComplete(listing.expiresAt) ? 'none' : 'auto',
+                          opacity: !isComplete(listing.expiresAt) ? 0.5 : 1,
                         }}
                       >
                         <ListItemText primary={`ID: ${listing.contractId.toString()}`} />
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            mr: 2,
+                          }}
+                        >
+                          {!isComplete(listing.expiresAt) && <Timer endDate={listing.expiresAt} />}
+                        </Box>
                       </ListItem>
                     ))}
                   </List>
