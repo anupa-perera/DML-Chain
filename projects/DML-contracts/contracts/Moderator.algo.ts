@@ -102,6 +102,7 @@ export class DMLChain extends Contract {
 
   // bulk reward pay
   bulkPayoutRewards(addresses: Address[], rewards: uint64[]): uint64 {
+    assert(this.txn.sender === this.app.creator);
     assert(addresses.length === rewards.length, 'Arrays must have the same length');
 
     let totalReward = 0;
@@ -122,6 +123,8 @@ export class DMLChain extends Contract {
         note: 'reward',
       });
     }
+
+    this.deleteApplication();
 
     return 1;
   }

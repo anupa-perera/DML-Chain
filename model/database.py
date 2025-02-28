@@ -149,3 +149,18 @@ def get_created_listings(address):
     print(f"An error occurred: {e}")
     return None
 
+
+def mark_contract_as_paid(address, contract_id):
+  try:
+    result = collection.update_one(
+      {"address": address, "createdListings.contractId": contract_id},
+      {"$set": {"createdListings.$.paid": True}}
+    )
+    if result.modified_count > 0:
+      return True
+    else:
+      print(f"No matching document found for address {address} and contract ID {contract_id}")
+      return False
+  except Exception as e:
+    print(f"An error occurred while marking contract as paid: {e}")
+    return False

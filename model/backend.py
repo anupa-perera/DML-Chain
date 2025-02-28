@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, mark_contract_as_paid
 
 app = Flask(__name__)
 CORS(app)
@@ -160,7 +160,7 @@ def get_subscribed_listings_endpoint(address):
     else:
         return jsonify({"error": "Failed to retrieve subscribed listings"}), 500
 
-# Update user reputation with merit/demerit
+# Update user reputation with merit/demerit upon user feedback
 @app.route('/update-reputation', methods=['POST'])
 def update_reputation():
   data = request.json
@@ -222,5 +222,95 @@ def get_created_listings_endpoint(address):
     else:
         return jsonify({"error": "Failed to retrieve created listings"}), 500
 
+# Update user reputation with merit/demerit upon reward distribution
+@app.route('/update-multiple-reputations', methods=['POST'])
+def update_multiple_reputations():
+  data = request.json
+  if not data:
+    return jsonify({"error": "Request body is required"}), 400
+
+  merit_addresses = data.get('meritAddresses', [])
+  demerit_addresses = data.get('demeritAddresses', [])
+
+  results = {
+    "successful": [],
+    "failed": []
+  }
+
+  # Process merit addresses
+  for address in merit_addresses:
+    user = get_user_by_address(address)
+    if not user or 'reputation' not in user:
+      results["failed"].append({
+        "address": address,
+        "reason": "User not found or no reputation score"
+      })
+      continue
+
+    current_reputation = user['reputation']
+    new_reputation = min(100, current_reputation + 1)
+
+    if update_user_reputation(address, new_reputation):
+      results["successful"].append({
+        "address": address,
+        "previousReputation": current_reputation,
+        "newReputation": new_reputation,
+        "action": "merit"
+      })
+    else:
+      results["failed"].append({
+        "address": address,
+        "reason": "Database update failed"
+      })
+
+  # Process demerit addresses
+  for address in demerit_addresses:
+    user = get_user_by_address(address)
+    if not user or 'reputation' not in user:
+      results["failed"].append({
+        "address": address,
+        "reason": "User not found or no reputation score"
+      })
+      continue
+
+    current_reputation = user['reputation']
+    new_reputation = max(0, current_reputation - 1)
+
+    if update_user_reputation(address, new_reputation):
+      results["successful"].append({
+        "address": address,
+        "previousReputation": current_reputation,
+        "newReputation": new_reputation,
+        "action": "demerit"
+      })
+    else:
+      results["failed"].append({
+        "address": address,
+        "reason": "Database update failed"
+      })
+
+  return jsonify({
+    "message": f"Processed {len(results['successful'])} successful updates and {len(results['failed'])} failed updates",
+    "results": results
+  }), 200
+
+@app.route('/mark-contract-paid', methods=['POST'])
+def mark_contract_paid_endpoint():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Request body is required"}), 400
+
+    address = data.get('address')
+    contract_id = data.get('contractId')
+
+    if not address or not contract_id:
+        return jsonify({"error": "Both address and contractId are required"}), 400
+
+    success = mark_contract_as_paid(address, contract_id)
+    if success:
+        return jsonify({"message": "Contract marked as paid successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to mark contract as paid"}), 500
+
 if __name__ == '__main__':
-    app.run(debug=True)
+  app.run(debug=True)

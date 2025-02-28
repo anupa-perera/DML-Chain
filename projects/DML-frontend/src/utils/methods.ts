@@ -8,6 +8,7 @@ import {
   ParticipantInfo,
   ReputationResponseDTO,
   ReputationType,
+  ReputationUpdateResponse,
   SubscribedListingDTO,
 } from './types'
 
@@ -15,8 +16,9 @@ export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseC
   let poolWeight: bigint = 0n
   const baseModelScore = Object.values(baseCriteria).reduce((acc, val) => acc + BigInt(val), 0n)
   const participants: ParticipantInfo[] = []
+  const allAddresses: string[] = Object.keys(paramsData)
 
-  Object.keys(paramsData).forEach((address) => {
+  allAddresses.forEach((address) => {
     const { score, reputation } = paramsData[address]
     if (score > baseModelScore) {
       const excess = score - baseModelScore
@@ -27,8 +29,14 @@ export const calculateReward = (paramsData: ParamsData, fixedPool: bigint, baseC
     }
   })
 
-  const addresses = participants.map((participant) => participant.address)
-  const rewards = participants.map((participant) => (participant.weight * fixedPool) / poolWeight)
+  const addresses: string[] = allAddresses
+  const rewards: bigint[] = addresses.map((address) => {
+    const participant = participants.find((p) => p.address === address)
+    if (participant && poolWeight > 0n) {
+      return (participant.weight * fixedPool) / poolWeight
+    }
+    return 0n
+  })
 
   return { addresses, rewards }
 }
@@ -107,5 +115,43 @@ export const isComplete = (endDate: Date): boolean => {
     return true
   } else {
     return false
+  }
+}
+
+export const updateMultipleReputations = async (
+  meritAddresses: string[],
+  demeritAddresses: string[],
+): Promise<ReputationUpdateResponse> => {
+  try {
+    const { data } = await axios.post<ReputationUpdateResponse>(`${BACKEND_SERVER}/update-multiple-reputations`, {
+      meritAddresses,
+      demeritAddresses,
+    })
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Failed to update reputations')
+    }
+    throw error
+  }
+}
+
+export const markContractAsPaid = async (address: string, contractId: number) => {
+  try {
+    const response = await axios.post(`${BACKEND_SERVER}/mark-contract-paid`, {
+      address,
+      contractId,
+    })
+
+    if (response.status !== 200) {
+      throw new Error(response.data.error || 'Failed to mark contract as paid')
+    }
+
+    return response.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to mark contract as paid')
+    }
+    throw error
   }
 }

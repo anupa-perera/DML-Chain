@@ -1,5 +1,14 @@
 export const BACKEND_SERVER = import.meta.env.VITE_BACKEND_SERVER
 
+export interface ParamsData {
+  [address: string]: {
+    paramHash: string
+    paramKey: string
+    score: bigint
+    reputation: bigint
+  }
+}
+
 export interface AddListingPayload {
   address: string
   contractId: number
@@ -47,6 +56,7 @@ export interface CreatedListingDTO {
   createdAt: Date
   expiresAt: Date
   url: string
+  paid?: boolean
 }
 
 export interface ReputationResponseDTO {
@@ -62,3 +72,19 @@ export const ReputationType = {
 } as const
 
 export type ReputationType = (typeof ReputationType)[keyof typeof ReputationType]
+
+export interface ReputationUpdateResponse {
+  message: string
+  results: {
+    successful: Array<{
+      address: string
+      previousReputation: number
+      newReputation: number
+      action: ReputationType
+    }>
+    failed: Array<{
+      address: string
+      reason: string
+    }>
+  }
+}
