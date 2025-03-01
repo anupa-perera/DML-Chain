@@ -42,7 +42,7 @@ export interface AddSubscribedListingsPayload {
 }
 
 export interface SubscribedListingDTO {
-  contractId: string
+  contractId: number
   createdAt: Date
   expiresAt: Date
   url: string

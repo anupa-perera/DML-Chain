@@ -155,3 +155,24 @@ export const markContractAsPaid = async (address: string, contractId: number) =>
     throw error
   }
 }
+
+export const updateFeedback = async (subscriberAddress: string, contractId: number, feedback: boolean): Promise<{ message: string }> => {
+  try {
+    const response = await axios.post(`${BACKEND_SERVER}/update-feedback`, {
+      subscriberAddress,
+      contractId,
+      feedback,
+    })
+
+    if (response.status !== 200) {
+      throw new Error(response.data.error || 'Failed to update feedback')
+    }
+
+    return response.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to update feedback')
+    }
+    throw error
+  }
+}

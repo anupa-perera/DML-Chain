@@ -16,10 +16,9 @@ import {
 import { useWallet } from '@txnlab/use-wallet-react'
 import axios from 'axios'
 import { useSnackbar } from 'notistack'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Classification, DmlChainFactory } from '../contracts/DMLChain'
 import { addListing } from '../utils/methods'
-import { BACKEND_SERVER } from '../utils/types'
 
 interface DeployContractInterface {
   openModal: boolean
@@ -69,7 +68,7 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
       })
 
       if (!data) {
-        enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
+        enqueueSnackbar('Error Fetching Data', { variant: 'error' })
         handleClose()
         return
       }
@@ -164,19 +163,18 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
     closeModal()
   }
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`${BACKEND_SERVER}/data`)
+      const response = await axios.get('http://127.0.0.1:5000/data')
       setData(response.data)
     } catch (error) {
-      enqueueSnackbar('Error fetching data', { variant: 'error' })
+      enqueueSnackbar('Please ensure the model is feeding data into the backend', { variant: 'warning' })
     }
-  }
+  }, [])
 
   useEffect(() => {
-    if (openModal) {
-      fetchData()
-    }
+    if (!openModal) return
+    fetchData()
   }, [openModal])
 
   return (
@@ -187,9 +185,6 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
           <DialogContent>
             <DialogContentText>
               Please deploy a new contract to the host the model request listing. This action cannot be undone.
-            </DialogContentText>
-            <DialogContentText sx={{ color: 'red', textAlign: 'center' }}>
-              **Please ensure your model is feeding data into the backend**
             </DialogContentText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">

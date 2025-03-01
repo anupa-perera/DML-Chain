@@ -164,3 +164,19 @@ def mark_contract_as_paid(address, contract_id):
   except Exception as e:
     print(f"An error occurred while marking contract as paid: {e}")
     return False
+
+
+def update_feedback(subscriber_address, contract_id, feedback_value):
+  try:
+    result = collection.update_one(
+      {"address": subscriber_address, "subscribedListings.contractId": contract_id},
+      {"$set": {"subscribedListings.$.feedback": feedback_value}}
+    )
+    if result.modified_count > 0:
+      return True
+    else:
+      print(f"No matching subscription found for address {subscriber_address} and contract ID {contract_id}")
+      return False
+  except Exception as e:
+    print(f"An error occurred while updating feedback: {e}")
+    return None

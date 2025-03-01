@@ -3,7 +3,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { useEffect, useState } from 'react'
-import { getSubscribedListings, isComplete, updateReputation } from '../utils/methods'
+import { getSubscribedListings, isComplete, updateFeedback, updateReputation } from '../utils/methods'
 import { ReputationType, SubscribedListingDTO } from '../utils/types'
 import Timer from './Timer'
 
@@ -20,9 +20,27 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
   const { activeAddress } = useWallet()
 
   const [listings, setListings] = useState<Array<SubscribedListingDTO>>([])
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const sendFeedback = async (creatorAddress: string, action: ReputationType) => {
-    await updateReputation(creatorAddress, action)
+  const sendFeedback = async (creatorAddress: string, action: ReputationType, appId: number) => {
+    setLoading(true)
+    if (!activeAddress) {
+      return
+    }
+    try {
+      await updateReputation(creatorAddress, action)
+      const feedback = await updateFeedback(activeAddress, appId, true)
+
+      console.log('this is feedback', feedback)
+
+      const updatedListings = await getSubscribedListings(activeAddress)
+      setListings(updatedListings)
+    } catch (error) {
+      console.error('Error sending feedback:', error)
+      // You might want to add error handling UI feedback here
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -34,7 +52,7 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
     }
 
     fetchListings()
-  }, [openModal, activeAddress])
+  }, [openModal, activeAddress, loading])
   return (
     <Dialog open={openModal} onClose={handleClose}>
       <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', padding: 1 }}>View Subscribed Model Listings</DialogTitle>
@@ -65,7 +83,7 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                       transition: 'background-color 0.2s ease',
                     }}
                     secondaryAction={
-                      isComplete(listing.expiresAt) ? (
+                      listing.feedback ? null : isComplete(listing.expiresAt) ? (
                         <Box sx={{ display: 'flex' }}>
                           <IconButton
                             size="small"
@@ -75,7 +93,7 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                               '&:hover': { color: 'primary.dark' },
                             }}
                             onClick={() => {
-                              sendFeedback(listing.creatorAddress, ReputationType.MERIT)
+                              sendFeedback(listing.creatorAddress, ReputationType.MERIT, listing.contractId)
                             }}
                             title="Merit Icon"
                           >
@@ -88,7 +106,7 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                               color: 'success.main',
                               '&:hover': { color: 'success.dark' },
                             }}
-                            onClick={() => sendFeedback(listing.creatorAddress, ReputationType.DEMERIT)}
+                            onClick={() => sendFeedback(listing.creatorAddress, ReputationType.DEMERIT, listing.contractId)}
                             title="Demerit Icon"
                           >
                             <ThumbDownIcon sx={{ color: 'red' }} />
@@ -111,15 +129,13 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                     <ListItemText
                       primary={`ID: ${listing.contractId.toString()}`}
                       secondary={
-                        <>
-                          <span
-                            style={{
-                              color: listing.reputation > 75 ? '#2e7d32' : listing.reputation > 50 ? '#ffeb3b' : '#f50057',
-                            }}
-                          >
-                            {`Reputation: ${listing.reputation || 'N/A'}`}
-                          </span>
-                        </>
+                        <span
+                          style={{
+                            color: listing.reputation > 75 ? '#2e7d32' : listing.reputation > 50 ? '#ffeb3b' : '#f50057',
+                          }}
+                        >
+                          {`Reputation: ${listing.reputation || 'N/A'}`}
+                        </span>
                       }
                     />
                   </ListItem>

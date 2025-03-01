@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, mark_contract_as_paid
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, update_feedback
 
 app = Flask(__name__)
 CORS(app)
@@ -197,14 +197,18 @@ def update_reputation():
 
   print(f"New reputation for address {address}: {new_reputation}")
 
-  success = update_user_reputation(address, new_reputation)
+  if new_reputation != current_reputation:
+    success = update_user_reputation(address, new_reputation)
+  else:
+    success = True
 
   if success:
-    print(f"Reputation updated successfully for address {address}")
+    print(f"Reputation handled successfully for address {address}")
     return jsonify({
-      "message": f"Reputation updated successfully",
+      "message": "Reputation handled successfully",
       "previousReputation": current_reputation,
-      "newReputation": new_reputation
+      "newReputation": new_reputation,
+      "changed": new_reputation != current_reputation
     }), 200
   else:
     print(f"Failed to update reputation for address {address}")
@@ -295,7 +299,7 @@ def update_multiple_reputations():
   }), 200
 
 @app.route('/mark-contract-paid', methods=['POST'])
-def mark_contract_paid_endpoint():
+def mark_contract_paid():
     data = request.json
     if not data:
         return jsonify({"error": "Request body is required"}), 400
@@ -311,6 +315,25 @@ def mark_contract_paid_endpoint():
         return jsonify({"message": "Contract marked as paid successfully"}), 200
     else:
         return jsonify({"error": "Failed to mark contract as paid"}), 500
+
+@app.route('/update-feedback', methods=['POST'])
+def update_feedback_endpoint():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Request body is required"}), 400
+
+    subscriber_address = data.get('subscriberAddress')
+    contract_id = data.get('contractId')
+    feedback_value = data.get('feedback')
+
+    if not all([subscriber_address, contract_id, isinstance(feedback_value, bool)]):
+        return jsonify({"error": "subscriberAddress, contractId, and feedback (boolean) are required"}), 400
+
+    success = update_feedback(subscriber_address, contract_id, feedback_value)
+    if success:
+        return jsonify({"message": "Feedback updated successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to update feedback"}), 500
 
 if __name__ == '__main__':
   app.run(debug=True)
