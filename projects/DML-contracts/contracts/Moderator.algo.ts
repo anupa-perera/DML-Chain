@@ -247,6 +247,16 @@ export class DMLChain extends Contract {
     return rewardAmount;
   }
 
+  deleteBox(address: Address): uint64 {
+    if (this.paramsData(address).exists) {
+      this.paramsData(address).delete();
+    }
+    if (this.classificationPerformanceMetrics('InitialModelMetrics').exists) {
+      this.classificationPerformanceMetrics('InitialModelMetrics').delete();
+    }
+    return 1;
+  }
+
   //  delete contract
   deleteApplication(): void {
     assert(this.txn.sender === this.app.creator);

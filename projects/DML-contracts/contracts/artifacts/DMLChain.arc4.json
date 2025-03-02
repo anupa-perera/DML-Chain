@@ -197,6 +197,18 @@
       }
     },
     {
+      "name": "deleteBox",
+      "args": [
+        {
+          "name": "address",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "deleteApplication",
       "args": [],
       "returns": {

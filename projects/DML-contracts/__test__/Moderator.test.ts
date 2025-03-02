@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
-import algosdk from 'algosdk';
+import algosdk, { encodeAddress } from 'algosdk';
 import { DmlChainClient, DmlChainFactory, Classification } from '../contracts/clients/DMLChainClient';
 
 const fixture = algorandFixture();
@@ -135,5 +135,45 @@ describe('DML-CHAIN', () => {
     });
 
     expect(payout.return).toEqual(1n);
+  });
+
+  test('delete application', async () => {
+    const boxMBRPay = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: (1).algo(),
+    });
+
+    const TESTADDRESS = String(acc.addr);
+
+    await appClient.send.storeModelParams({
+      args: {
+        mbrPay: boxMBRPay,
+        address: TESTADDRESS,
+        paramsData: {
+          paramHash: 'TEST',
+          paramKey: 'TEST',
+          score: 350n,
+          reputation: 50n,
+        },
+      },
+    });
+
+    const boxIDs = await algorand.app.getBoxNames(appClient.appId);
+
+    const deleteBox = await Promise.all(
+      boxIDs
+        .filter((box) => Object.keys(box.nameRaw).length === 32)
+        .map(async (box) => {
+          const extAddr = algosdk.encodeAddress(box.nameRaw);
+          return appClient.send.deleteBox({ args: { address: extAddr } });
+        })
+    );
+
+    console.log('delete box', deleteBox);
+
+    const clearApp = await appClient.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() });
+
+    expect(clearApp.return).toBeUndefined();
   });
 });

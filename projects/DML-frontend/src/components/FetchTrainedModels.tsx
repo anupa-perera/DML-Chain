@@ -111,6 +111,21 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
         const SIZE = addresses.length
 
         await client.send.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE).algo() })
+
+        const deleteBox = await Promise.all(
+          boxIDs
+            .filter((box) => Object.keys(box.nameRaw).length === 32)
+            .map(async (box) => {
+              const extAddr = encodeAddress(box.nameRaw)
+              return client.send.deleteBox({ args: { address: extAddr } })
+            }),
+        )
+
+        console.log('delete box', deleteBox)
+
+        const clearApp = await client.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() })
+
+        console.log('this is clear app', clearApp)
       }
 
       if (paramsData) {

@@ -1431,6 +1431,70 @@ distributeRewards:
 	popn 15
 	retsub
 
+// deleteBox(address)uint64
+*abi_route_deleteBox:
+	// The ABI return prefix
+	bytec 2 // 0x151f7c75
+
+	// address: address
+	txna ApplicationArgs 1
+	dup
+	len
+	intc 3 // 32
+	==
+
+	// argument 0 (address) for deleteBox must be a address
+	assert
+
+	// execute deleteBox(address)uint64
+	callsub deleteBox
+	itob
+	concat
+	log
+	intc 0 // 1
+	return
+
+// deleteBox(address: Address): uint64
+deleteBox:
+	proto 1 1
+
+	// *if4_condition
+	// contracts\Moderator.algo.ts:251
+	// this.paramsData(address).exists
+	frame_dig -1 // address: Address
+	box_len
+	swap
+	pop
+	bz *if4_end
+
+	// *if4_consequent
+	// contracts\Moderator.algo.ts:252
+	// this.paramsData(address).delete()
+	frame_dig -1 // address: Address
+	box_del
+
+*if4_end:
+	// *if5_condition
+	// contracts\Moderator.algo.ts:254
+	// this.classificationPerformanceMetrics('InitialModelMetrics').exists
+	bytec 1 // 0x0013496e697469616c4d6f64656c4d657472696373
+	box_len
+	swap
+	pop
+	bz *if5_end
+
+	// *if5_consequent
+	// contracts\Moderator.algo.ts:255
+	// this.classificationPerformanceMetrics('InitialModelMetrics').delete()
+	bytec 1 // 0x0013496e697469616c4d6f64656c4d657472696373
+	box_del
+
+*if5_end:
+	// contracts\Moderator.algo.ts:257
+	// return 1;
+	intc 0 // 1
+	retsub
+
 // deleteApplication()void
 *abi_route_deleteApplication:
 	// execute deleteApplication()void
@@ -1442,7 +1506,7 @@ distributeRewards:
 deleteApplication:
 	proto 0 0
 
-	// contracts\Moderator.algo.ts:252
+	// contracts\Moderator.algo.ts:262
 	// assert(this.txn.sender === this.app.creator)
 	txn Sender
 	txna Applications 0
@@ -1451,7 +1515,7 @@ deleteApplication:
 	==
 	assert
 
-	// contracts\Moderator.algo.ts:253
+	// contracts\Moderator.algo.ts:263
 	// sendPayment({
 	//       closeRemainderTo: this.txn.sender,
 	//     })
@@ -1459,7 +1523,7 @@ deleteApplication:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts\Moderator.algo.ts:254
+	// contracts\Moderator.algo.ts:264
 	// closeRemainderTo: this.txn.sender
 	txn Sender
 	itxn_field CloseRemainderTo
@@ -1494,8 +1558,9 @@ deleteApplication:
 	pushbytes 0x54d250bf // method "storeModelParams(pay,address,(string,string,uint64,uint64))void"
 	pushbytes 0x705cb310 // method "getBoxValue(address)(string,string,uint64,uint64)"
 	pushbytes 0xd1885361 // method "distributeRewards((uint64))uint64[]"
+	pushbytes 0xf4a30c1f // method "deleteBox(address)uint64"
 	txna ApplicationArgs 0
-	match *abi_route_assignRewardPool *abi_route_commitToListing *abi_route_checkBalance *abi_route_payoutRewards *abi_route_bulkPayoutRewards *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelRegressionSelectionCriteria *abi_route_regModelSelectionCriteria *abi_route_storeModelParams *abi_route_getBoxValue *abi_route_distributeRewards
+	match *abi_route_assignRewardPool *abi_route_commitToListing *abi_route_checkBalance *abi_route_payoutRewards *abi_route_bulkPayoutRewards *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelRegressionSelectionCriteria *abi_route_regModelSelectionCriteria *abi_route_storeModelParams *abi_route_getBoxValue *abi_route_distributeRewards *abi_route_deleteBox
 
 	// this contract does not implement the given ABI method for call NoOp
 	err
