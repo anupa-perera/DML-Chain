@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, update_feedback
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, update_feedback, mark_contract_as_paid
 
 app = Flask(__name__)
 CORS(app)

@@ -161,9 +161,9 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
             }, 0n)
           : 0n
 
-      const score = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
+      const score: bigint = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
 
-      const excessScore = score > baseScore ? score - baseScore : 0n
+      console.log('score', score)
 
       const boxMBRPay = await algorand.createTransaction.payment({
         sender: activeAddress,
@@ -178,7 +178,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
           paramsData: {
             paramHash: data.param_ipfs_hash,
             paramKey: data.param_key,
-            score: excessScore,
+            score: score,
             reputation: reputation,
           },
         },

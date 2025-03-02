@@ -141,9 +141,26 @@ describe('DML-CHAIN', () => {
         addresses,
         rewards,
       },
-      extraFee: (0.001 * SIZE).algo(),
+      extraFee: (0.001 * SIZE + 0.01).algo(),
     });
 
     expect(payout.return).toEqual(1n);
   });
+
+  // test('delete contract', async () => {
+  //   // First create a new contract to delete to avoid affecting other tests
+  //   const newAcc = algosdk.generateAccount();
+  //   algorand.account.setSignerFromAccount(newAcc);
+
+  //   await algorand.send.payment({
+  //     sender: acc.addr,
+  //     receiver: newAcc.addr,
+  //     amount: (10).algo(),
+  //   });
+
+  //   const deleteResult = await appClient.send.deleteApplication();
+
+  //   // Check if the deletion was successful
+  //   expect(deleteResult.success).toBeTruthy();
+  // });
 });

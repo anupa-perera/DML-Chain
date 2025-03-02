@@ -262,6 +262,7 @@ export class DMLChain extends Contract {
   //  delete contract
   deleteApplication(): void {
     assert(this.txn.sender === this.app.creator);
+
     sendPayment({
       closeRemainderTo: this.txn.sender,
     });

@@ -1477,7 +1477,7 @@ deleteApplication:
 	==
 	assert
 
-	// contracts\Moderator.algo.ts:265
+	// contracts\Moderator.algo.ts:266
 	// sendPayment({
 	//       closeRemainderTo: this.txn.sender,
 	//     })
@@ -1485,7 +1485,7 @@ deleteApplication:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts\Moderator.algo.ts:266
+	// contracts\Moderator.algo.ts:267
 	// closeRemainderTo: this.txn.sender
 	txn Sender
 	itxn_field CloseRemainderTo
