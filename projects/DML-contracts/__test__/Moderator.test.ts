@@ -141,26 +141,48 @@ describe('DML-CHAIN', () => {
         addresses,
         rewards,
       },
-      extraFee: (0.001 * SIZE + 0.01).algo(),
+      extraFee: (0.001 * SIZE + 0.001).algo(),
     });
 
     expect(payout.return).toEqual(1n);
   });
 
-  // test('delete contract', async () => {
-  //   // First create a new contract to delete to avoid affecting other tests
-  //   const newAcc = algosdk.generateAccount();
-  //   algorand.account.setSignerFromAccount(newAcc);
+  test('delete application', async () => {
+    const TESTADDRESS = acc.addr;
+    const TESTADDRESSSTR = String(acc.addr);
 
-  //   await algorand.send.payment({
-  //     sender: acc.addr,
-  //     receiver: newAcc.addr,
-  //     amount: (10).algo(),
-  //   });
+    const boxMBRPay = await algorand.createTransaction.payment({
+      sender: TESTADDRESS,
+      receiver: appClient.appAddress,
+      amount: (1).algo(),
+    });
 
-  //   const deleteResult = await appClient.send.deleteApplication();
+    await appClient.send.storeModelParams({
+      args: {
+        mbrPay: boxMBRPay,
+        address: TESTADDRESSSTR,
+        paramsData: {
+          paramHash: 'TEST',
+          paramKey: 'TEST',
+          score: 350n,
+          reputation: 50n,
+        },
+      },
+    });
 
-  //   // Check if the deletion was successful
-  //   expect(deleteResult.success).toBeTruthy();
-  // });
+    const boxIDs = await algorand.app.getBoxNames(appClient.appId);
+
+    await Promise.all(
+      boxIDs
+        .filter((box) => Object.keys(box.nameRaw).length === 32)
+        .map(async (box) => {
+          const extAddr = algosdk.encodeAddress(box.nameRaw);
+          return appClient.send.deleteBox({ args: { address: extAddr } });
+        })
+    );
+
+    const clearApp = await appClient.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() });
+
+    expect(clearApp.return).toBeUndefined();
+  });
 });

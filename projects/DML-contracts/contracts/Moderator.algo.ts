@@ -14,17 +14,6 @@ type Classification = {
   f1score: uint64;
 };
 
-type Regression = {
-  MSE: uint64;
-  RMSE: uint64;
-  MAE: uint64;
-  COD: uint64;
-};
-
-type rewardCalculation = {
-  score: uint64;
-};
-
 type ParamsData = {
   paramHash: string;
   paramKey: string;
@@ -42,12 +31,10 @@ export class DMLChain extends Contract {
   // store stake amount
   stakeAmount = GlobalStateKey<uint64>({ key: 'stakeAmount' });
 
-  // Store params in BoxMap
+  // store params in BoxMap
   paramsData = BoxMap<Address, ParamsData>({ allowPotentialCollisions: true });
 
   // store selection criteria in BoxMap
-  regressionPerformanceMetrics = BoxMap<string, Regression>({ allowPotentialCollisions: true });
-
   classificationPerformanceMetrics = BoxMap<string, Classification>({ allowPotentialCollisions: true });
 
   // assign hash to global state
@@ -89,17 +76,6 @@ export class DMLChain extends Contract {
     return this.app.address.balance;
   }
 
-  // payout rewards to relevant addresses
-  payoutRewards(Address: Address, reward: uint64): string {
-    sendPayment({
-      amount: reward,
-      receiver: Address,
-      note: 'reward',
-    });
-
-    return 'success';
-  }
-
   // bulk reward pay
   bulkPayoutRewards(addresses: Address[], rewards: uint64[]): uint64 {
     assert(this.txn.sender === this.app.creator);
@@ -122,6 +98,10 @@ export class DMLChain extends Contract {
         receiver: addresses[i],
         note: 'reward',
       });
+    }
+
+    for (let i = 0; i < addresses.length; i += 1) {
+      this.deleteBox(addresses[i]);
     }
 
     this.deleteApplication();
@@ -172,26 +152,6 @@ export class DMLChain extends Contract {
     return modelScore - baselineScore;
   }
 
-  // store Regression model selection criteria
-  storeModelRegressionSelectionCriteria(evaluationMetrics: Regression): void {
-    verifyTxn(this.txn, { sender: this.app.creator });
-    this.regressionPerformanceMetrics('regModel').value = evaluationMetrics;
-  }
-
-  // model selection criteria for reg models
-  regModelSelectionCriteria(modelEvaluationMetrics: Regression): string {
-    const baselineRegMetrics = this.regressionPerformanceMetrics('regModel').value;
-    if (
-      modelEvaluationMetrics.MSE <= baselineRegMetrics.MSE &&
-      modelEvaluationMetrics.MAE <= baselineRegMetrics.MAE &&
-      modelEvaluationMetrics.RMSE <= baselineRegMetrics.RMSE &&
-      modelEvaluationMetrics.COD >= baselineRegMetrics.COD
-    ) {
-      return 'Model has been accepted for further consideration';
-    }
-    return 'failed the minimum requirements';
-  }
-
   // store model parameters
   storeModelParams(mbrPay: PayTxn, Address: Address, paramsData: ParamsData): void {
     if (this.paramsData(Address).exists) {
@@ -223,40 +183,15 @@ export class DMLChain extends Contract {
     return this.paramsData(Address).value;
   }
 
-  // distribute rewards
-  distributeRewards(contributor: rewardCalculation): uint64[] {
-    const baseCase = this.classificationPerformanceMetrics('InitialModelMetrics').value;
-    const honestyScores: StaticArray<uint64, 3> = [50, 50, 50];
-    const pricePool = 10_000_000;
-    let poolWeight = 0;
-
-    const total = baseCase.accuracy + baseCase.precision + baseCase.recall + baseCase.f1score;
-    let excess = 0;
-    const rewardAmount: uint64[] = [];
-
-    if (contributor.score > total) {
-      excess = contributor.score - total;
+  // delete box
+  deleteBox(address: Address): uint64 {
+    if (this.classificationPerformanceMetrics('InitialModelMetrics').exists) {
+      this.classificationPerformanceMetrics('InitialModelMetrics').delete();
     }
-
-    honestyScores.forEach((honestyScore: uint64) => {
-      const repWeight = wideRatio([honestyScore * honestyScore * 1000], [100 * 100]);
-
-      const participantWeight = repWeight * excess;
-
-      poolWeight += participantWeight;
-    });
-
-    honestyScores.forEach((honestyScore: uint64) => {
-      const repWeight = wideRatio([honestyScore * honestyScore * 1000], [100 * 100]);
-
-      const participantWeight = repWeight * excess;
-
-      const reward = wideRatio([participantWeight * pricePool], [poolWeight]);
-
-      rewardAmount.push(reward);
-    });
-
-    return rewardAmount;
+    if (this.paramsData(address).exists) {
+      this.paramsData(address).delete();
+    }
+    return 1;
   }
 
   //  delete contract

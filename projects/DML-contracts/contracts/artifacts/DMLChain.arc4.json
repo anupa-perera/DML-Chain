@@ -62,22 +62,6 @@
       }
     },
     {
-      "name": "payoutRewards",
-      "args": [
-        {
-          "name": "Address",
-          "type": "address"
-        },
-        {
-          "name": "reward",
-          "type": "uint64"
-        }
-      ],
-      "returns": {
-        "type": "string"
-      }
-    },
-    {
       "name": "bulkPayoutRewards",
       "args": [
         {
@@ -129,30 +113,6 @@
       }
     },
     {
-      "name": "storeModelRegressionSelectionCriteria",
-      "args": [
-        {
-          "name": "evaluationMetrics",
-          "type": "(uint64,uint64,uint64,uint64)"
-        }
-      ],
-      "returns": {
-        "type": "void"
-      }
-    },
-    {
-      "name": "regModelSelectionCriteria",
-      "args": [
-        {
-          "name": "modelEvaluationMetrics",
-          "type": "(uint64,uint64,uint64,uint64)"
-        }
-      ],
-      "returns": {
-        "type": "string"
-      }
-    },
-    {
       "name": "storeModelParams",
       "args": [
         {
@@ -185,15 +145,15 @@
       }
     },
     {
-      "name": "distributeRewards",
+      "name": "deleteBox",
       "args": [
         {
-          "name": "contributor",
-          "type": "(uint64)"
+          "name": "address",
+          "type": "address"
         }
       ],
       "returns": {
-        "type": "uint64[]"
+        "type": "uint64"
       }
     },
     {
