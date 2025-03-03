@@ -304,7 +304,7 @@ bulkPayoutRewards:
 	bytec 2 // 0x
 	dupn 5
 
-	// contracts\Moderator.algo.ts:81
+	// contracts\Moderator.algo.ts:82
 	// assert(this.txn.sender === this.app.creator)
 	txn Sender
 	txna Applications 0
@@ -313,7 +313,7 @@ bulkPayoutRewards:
 	==
 	assert
 
-	// contracts\Moderator.algo.ts:82
+	// contracts\Moderator.algo.ts:83
 	// assert(addresses.length === rewards.length, 'Arrays must have the same length')
 	frame_dig -1 // addresses: Address[]
 	len
@@ -328,18 +328,18 @@ bulkPayoutRewards:
 	// Arrays must have the same length
 	assert
 
-	// contracts\Moderator.algo.ts:84
+	// contracts\Moderator.algo.ts:85
 	// totalReward = 0
 	intc 1 // 0
 	frame_bury 0 // totalReward: uint64
 
-	// contracts\Moderator.algo.ts:85
+	// contracts\Moderator.algo.ts:86
 	// for (let i = 0; i < rewards.length; i += 1)
 	intc 1 // 0
 	frame_bury 1 // i: uint64
 
 *for_0:
-	// contracts\Moderator.algo.ts:85
+	// contracts\Moderator.algo.ts:86
 	// i < rewards.length
 	frame_dig 1 // i: uint64
 	frame_dig -2 // rewards: uint64[]
@@ -349,7 +349,7 @@ bulkPayoutRewards:
 	<
 	bz *for_0_end
 
-	// contracts\Moderator.algo.ts:86
+	// contracts\Moderator.algo.ts:87
 	// totalReward += rewards[i]
 	frame_dig 0 // totalReward: uint64
 	frame_dig -2 // rewards: uint64[]
@@ -368,7 +368,7 @@ bulkPayoutRewards:
 	frame_bury 0 // totalReward: uint64
 
 *for_0_continue:
-	// contracts\Moderator.algo.ts:85
+	// contracts\Moderator.algo.ts:86
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 0 // 1
@@ -377,7 +377,7 @@ bulkPayoutRewards:
 	b *for_0
 
 *for_0_end:
-	// contracts\Moderator.algo.ts:89
+	// contracts\Moderator.algo.ts:90
 	// totalStakeAmount = wideRatio([addresses.length, this.stakeAmount.value], [1])
 	frame_dig -1 // addresses: Address[]
 	len
@@ -398,14 +398,14 @@ bulkPayoutRewards:
 	assert
 	frame_bury 2 // totalStakeAmount: uint64
 
-	// contracts\Moderator.algo.ts:91
+	// contracts\Moderator.algo.ts:92
 	// totalPayout = totalReward + totalStakeAmount
 	frame_dig 0 // totalReward: uint64
 	frame_dig 2 // totalStakeAmount: uint64
 	+
 	frame_bury 3 // totalPayout: uint64
 
-	// contracts\Moderator.algo.ts:93
+	// contracts\Moderator.algo.ts:94
 	// assert(this.app.address.balance >= totalPayout, 'Insufficient balance for rewards')
 	global CurrentApplicationAddress
 	acct_params_get AcctBalance
@@ -416,13 +416,13 @@ bulkPayoutRewards:
 	// Insufficient balance for rewards
 	assert
 
-	// contracts\Moderator.algo.ts:95
+	// contracts\Moderator.algo.ts:96
 	// for (let i = 0; i < addresses.length; i += 1)
 	intc 1 // 0
 	frame_bury 4 // i: uint64
 
 *for_1:
-	// contracts\Moderator.algo.ts:95
+	// contracts\Moderator.algo.ts:96
 	// i < addresses.length
 	frame_dig 4 // i: uint64
 	frame_dig -1 // addresses: Address[]
@@ -432,7 +432,7 @@ bulkPayoutRewards:
 	<
 	bz *for_1_end
 
-	// contracts\Moderator.algo.ts:96
+	// contracts\Moderator.algo.ts:97
 	// sendPayment({
 	//         amount: rewards[i] + this.stakeAmount.value,
 	//         receiver: addresses[i],
@@ -442,7 +442,7 @@ bulkPayoutRewards:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts\Moderator.algo.ts:97
+	// contracts\Moderator.algo.ts:98
 	// amount: rewards[i] + this.stakeAmount.value
 	frame_dig -2 // rewards: uint64[]
 	store 255 // full array
@@ -461,7 +461,7 @@ bulkPayoutRewards:
 	+
 	itxn_field Amount
 
-	// contracts\Moderator.algo.ts:98
+	// contracts\Moderator.algo.ts:99
 	// receiver: addresses[i]
 	frame_dig -1 // addresses: Address[]
 	store 255 // full array
@@ -476,7 +476,7 @@ bulkPayoutRewards:
 	extract3
 	itxn_field Receiver
 
-	// contracts\Moderator.algo.ts:99
+	// contracts\Moderator.algo.ts:100
 	// note: 'reward'
 	pushbytes 0x726577617264 // "reward"
 	itxn_field Note
@@ -489,7 +489,7 @@ bulkPayoutRewards:
 	itxn_submit
 
 *for_1_continue:
-	// contracts\Moderator.algo.ts:95
+	// contracts\Moderator.algo.ts:96
 	// i += 1
 	frame_dig 4 // i: uint64
 	intc 0 // 1
@@ -498,13 +498,13 @@ bulkPayoutRewards:
 	b *for_1
 
 *for_1_end:
-	// contracts\Moderator.algo.ts:103
+	// contracts\Moderator.algo.ts:104
 	// for (let i = 0; i < addresses.length; i += 1)
 	intc 1 // 0
 	frame_bury 5 // i: uint64
 
 *for_2:
-	// contracts\Moderator.algo.ts:103
+	// contracts\Moderator.algo.ts:104
 	// i < addresses.length
 	frame_dig 5 // i: uint64
 	frame_dig -1 // addresses: Address[]
@@ -514,7 +514,7 @@ bulkPayoutRewards:
 	<
 	bz *for_2_end
 
-	// contracts\Moderator.algo.ts:104
+	// contracts\Moderator.algo.ts:105
 	// this.deleteBox(addresses[i])
 	frame_dig -1 // addresses: Address[]
 	store 255 // full array
@@ -530,7 +530,7 @@ bulkPayoutRewards:
 	callsub deleteBox
 
 *for_2_continue:
-	// contracts\Moderator.algo.ts:103
+	// contracts\Moderator.algo.ts:104
 	// i += 1
 	frame_dig 5 // i: uint64
 	intc 0 // 1
@@ -539,11 +539,11 @@ bulkPayoutRewards:
 	b *for_2
 
 *for_2_end:
-	// contracts\Moderator.algo.ts:107
+	// contracts\Moderator.algo.ts:108
 	// this.deleteApplication()
 	callsub deleteApplication
 
-	// contracts\Moderator.algo.ts:109
+	// contracts\Moderator.algo.ts:110
 	// return 1;
 	intc 0 // 1
 
@@ -587,7 +587,7 @@ bulkPayoutRewards:
 storeClassificationSelectionCriteria:
 	proto 2 0
 
-	// contracts\Moderator.algo.ts:114
+	// contracts\Moderator.algo.ts:115
 	// verifyTxn(this.txn, { sender: this.app.creator })
 	// verify sender
 	txn Sender
@@ -599,7 +599,7 @@ storeClassificationSelectionCriteria:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.app.creator"}
 	assert
 
-	// contracts\Moderator.algo.ts:115
+	// contracts\Moderator.algo.ts:116
 	// verifyPayTxn(mbrPay, {
 	//       sender: this.txn.sender,
 	//       receiver: this.app.address,
@@ -632,14 +632,14 @@ storeClassificationSelectionCriteria:
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
-	// contracts\Moderator.algo.ts:121
+	// contracts\Moderator.algo.ts:122
 	// this.classificationPerformanceMetrics('InitialModelMetrics').create(32)
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	intc 2 // 32
 	box_create
 	pop
 
-	// contracts\Moderator.algo.ts:122
+	// contracts\Moderator.algo.ts:123
 	// this.classificationPerformanceMetrics('InitialModelMetrics').value = evaluationMetrics
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	frame_dig -1 // evaluationMetrics: Classification
@@ -662,7 +662,7 @@ storeClassificationSelectionCriteria:
 getClassificationCriteria:
 	proto 0 1
 
-	// contracts\Moderator.algo.ts:127
+	// contracts\Moderator.algo.ts:128
 	// assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists)
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	box_len
@@ -670,7 +670,7 @@ getClassificationCriteria:
 	pop
 	assert
 
-	// contracts\Moderator.algo.ts:128
+	// contracts\Moderator.algo.ts:129
 	// return this.classificationPerformanceMetrics('InitialModelMetrics').value;
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	box_get
@@ -710,7 +710,7 @@ classModelSelectionCriteria:
 	bytec 2 // 0x
 	dup
 
-	// contracts\Moderator.algo.ts:133
+	// contracts\Moderator.algo.ts:134
 	// assert(this.classificationPerformanceMetrics('InitialModelMetrics').exists)
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	box_len
@@ -718,7 +718,7 @@ classModelSelectionCriteria:
 	pop
 	assert
 
-	// contracts\Moderator.algo.ts:136
+	// contracts\Moderator.algo.ts:137
 	// baselineScore =
 	//       baselineClassMetrics.accuracy +
 	//       baselineClassMetrics.precision +
@@ -749,7 +749,7 @@ classModelSelectionCriteria:
 	+
 	frame_bury 0 // baselineScore: uint64
 
-	// contracts\Moderator.algo.ts:142
+	// contracts\Moderator.algo.ts:143
 	// modelScore =
 	//       modelEvaluationMetrics.accuracy +
 	//       modelEvaluationMetrics.precision +
@@ -773,7 +773,7 @@ classModelSelectionCriteria:
 	frame_bury 1 // modelScore: uint64
 
 	// *if0_condition
-	// contracts\Moderator.algo.ts:148
+	// contracts\Moderator.algo.ts:149
 	// modelScore <= baselineScore
 	frame_dig 1 // modelScore: uint64
 	frame_dig 0 // baselineScore: uint64
@@ -781,13 +781,13 @@ classModelSelectionCriteria:
 	bz *if0_end
 
 	// *if0_consequent
-	// contracts\Moderator.algo.ts:149
+	// contracts\Moderator.algo.ts:150
 	// return 0;
 	intc 1 // 0
 	b *classModelSelectionCriteria*return
 
 *if0_end:
-	// contracts\Moderator.algo.ts:152
+	// contracts\Moderator.algo.ts:153
 	// return modelScore - baselineScore;
 	frame_dig 1 // modelScore: uint64
 	frame_dig 0 // baselineScore: uint64
@@ -838,7 +838,7 @@ storeModelParams:
 	proto 3 0
 
 	// *if1_condition
-	// contracts\Moderator.algo.ts:157
+	// contracts\Moderator.algo.ts:158
 	// this.paramsData(Address).exists
 	frame_dig -2 // Address: Address
 	box_len
@@ -847,7 +847,7 @@ storeModelParams:
 	bz *if1_else
 
 	// *if1_consequent
-	// contracts\Moderator.algo.ts:158
+	// contracts\Moderator.algo.ts:159
 	// verifyTxn(this.txn, { sender: this.txn.sender })
 	// verify sender
 	txn Sender
@@ -857,7 +857,7 @@ storeModelParams:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.txn.sender"}
 	assert
 
-	// contracts\Moderator.algo.ts:159
+	// contracts\Moderator.algo.ts:160
 	// verifyPayTxn(mbrPay, {
 	//         sender: this.txn.sender,
 	//         receiver: this.app.address,
@@ -890,7 +890,7 @@ storeModelParams:
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
-	// contracts\Moderator.algo.ts:165
+	// contracts\Moderator.algo.ts:166
 	// this.paramsData(Address).value = paramsData
 	frame_dig -2 // Address: Address
 	dup
@@ -901,7 +901,7 @@ storeModelParams:
 	b *if1_end
 
 *if1_else:
-	// contracts\Moderator.algo.ts:167
+	// contracts\Moderator.algo.ts:168
 	// verifyTxn(this.txn, { sender: this.txn.sender })
 	// verify sender
 	txn Sender
@@ -911,7 +911,7 @@ storeModelParams:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.txn.sender"}
 	assert
 
-	// contracts\Moderator.algo.ts:168
+	// contracts\Moderator.algo.ts:169
 	// verifyPayTxn(mbrPay, {
 	//         sender: this.txn.sender,
 	//         receiver: this.app.address,
@@ -944,14 +944,14 @@ storeModelParams:
 	// transaction verification failed: {"txn":"mbrPay","field":"amount","expected":"boxMbr"}
 	assert
 
-	// contracts\Moderator.algo.ts:174
+	// contracts\Moderator.algo.ts:175
 	// this.paramsData(Address).create(32)
 	frame_dig -2 // Address: Address
 	intc 2 // 32
 	box_create
 	pop
 
-	// contracts\Moderator.algo.ts:175
+	// contracts\Moderator.algo.ts:176
 	// this.paramsData(Address).value = paramsData
 	frame_dig -2 // Address: Address
 	dup
@@ -989,7 +989,7 @@ storeModelParams:
 getBoxValue:
 	proto 1 1
 
-	// contracts\Moderator.algo.ts:181
+	// contracts\Moderator.algo.ts:182
 	// verifyTxn(this.txn, { sender: this.app.creator })
 	// verify sender
 	txn Sender
@@ -1001,7 +1001,7 @@ getBoxValue:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.app.creator"}
 	assert
 
-	// contracts\Moderator.algo.ts:182
+	// contracts\Moderator.algo.ts:183
 	// assert(this.paramsData(Address).exists)
 	frame_dig -1 // Address: Address
 	box_len
@@ -1009,7 +1009,7 @@ getBoxValue:
 	pop
 	assert
 
-	// contracts\Moderator.algo.ts:183
+	// contracts\Moderator.algo.ts:184
 	// return this.paramsData(Address).value;
 	frame_dig -1 // Address: Address
 	box_get
@@ -1046,7 +1046,7 @@ deleteBox:
 	proto 1 1
 
 	// *if2_condition
-	// contracts\Moderator.algo.ts:188
+	// contracts\Moderator.algo.ts:189
 	// this.classificationPerformanceMetrics('InitialModelMetrics').exists
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	box_len
@@ -1055,14 +1055,14 @@ deleteBox:
 	bz *if2_end
 
 	// *if2_consequent
-	// contracts\Moderator.algo.ts:189
+	// contracts\Moderator.algo.ts:190
 	// this.classificationPerformanceMetrics('InitialModelMetrics').delete()
 	bytec 0 // 0x0013496e697469616c4d6f64656c4d657472696373
 	box_del
 
 *if2_end:
 	// *if3_condition
-	// contracts\Moderator.algo.ts:191
+	// contracts\Moderator.algo.ts:192
 	// this.paramsData(address).exists
 	frame_dig -1 // address: Address
 	box_len
@@ -1071,13 +1071,13 @@ deleteBox:
 	bz *if3_end
 
 	// *if3_consequent
-	// contracts\Moderator.algo.ts:192
+	// contracts\Moderator.algo.ts:193
 	// this.paramsData(address).delete()
 	frame_dig -1 // address: Address
 	box_del
 
 *if3_end:
-	// contracts\Moderator.algo.ts:194
+	// contracts\Moderator.algo.ts:195
 	// return 1;
 	intc 0 // 1
 	retsub
@@ -1093,7 +1093,7 @@ deleteBox:
 deleteApplication:
 	proto 0 0
 
-	// contracts\Moderator.algo.ts:199
+	// contracts\Moderator.algo.ts:200
 	// assert(this.txn.sender === this.app.creator)
 	txn Sender
 	txna Applications 0
@@ -1102,7 +1102,7 @@ deleteApplication:
 	==
 	assert
 
-	// contracts\Moderator.algo.ts:201
+	// contracts\Moderator.algo.ts:202
 	// sendPayment({
 	//       closeRemainderTo: this.txn.sender,
 	//     })
@@ -1110,7 +1110,7 @@ deleteApplication:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts\Moderator.algo.ts:202
+	// contracts\Moderator.algo.ts:203
 	// closeRemainderTo: this.txn.sender
 	txn Sender
 	itxn_field CloseRemainderTo
@@ -1135,7 +1135,6 @@ deleteApplication:
 	pushbytes 0x66e8158c // method "assignRewardPool(uint64,pay)uint64"
 	pushbytes 0x0fd36836 // method "commitToListing(pay)uint64"
 	pushbytes 0x286be636 // method "checkBalance()uint64"
-	pushbytes 0x8345dc83 // method "bulkPayoutRewards(address[],uint64[])uint64"
 	pushbytes 0xb78918f5 // method "storeClassificationSelectionCriteria((uint64,uint64,uint64,uint64),pay)void"
 	pushbytes 0x6ddcdfdc // method "getClassificationCriteria()(uint64,uint64,uint64,uint64)"
 	pushbytes 0x436a0295 // method "classModelSelectionCriteria((uint64,uint64,uint64,uint64))uint64"
@@ -1143,7 +1142,7 @@ deleteApplication:
 	pushbytes 0x705cb310 // method "getBoxValue(address)(string,string,uint64,uint64)"
 	pushbytes 0xf4a30c1f // method "deleteBox(address)uint64"
 	txna ApplicationArgs 0
-	match *abi_route_assignRewardPool *abi_route_commitToListing *abi_route_checkBalance *abi_route_bulkPayoutRewards *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelParams *abi_route_getBoxValue *abi_route_deleteBox
+	match *abi_route_assignRewardPool *abi_route_commitToListing *abi_route_checkBalance *abi_route_storeClassificationSelectionCriteria *abi_route_getClassificationCriteria *abi_route_classModelSelectionCriteria *abi_route_storeModelParams *abi_route_getBoxValue *abi_route_deleteBox
 
 	// this contract does not implement the given ABI method for call NoOp
 	err
@@ -1157,9 +1156,10 @@ deleteApplication:
 	err
 
 *call_DeleteApplication:
+	pushbytes 0x8345dc83 // method "bulkPayoutRewards(address[],uint64[])uint64"
 	pushbytes 0x2487c32c // method "deleteApplication()void"
 	txna ApplicationArgs 0
-	match *abi_route_deleteApplication
+	match *abi_route_bulkPayoutRewards *abi_route_deleteApplication
 
 	// this contract does not implement the given ABI method for call DeleteApplication
 	err

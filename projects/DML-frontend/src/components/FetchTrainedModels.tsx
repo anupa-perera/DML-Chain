@@ -175,11 +175,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
 
       const SIZE = addresses.length
 
-      await client.send.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
-
-      const clearApp = await client.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() })
-
-      console.log('this is clear app', clearApp)
+      await client.send.delete.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
 
       await markContractAsPaid(activeAddress, Number(appId))
 

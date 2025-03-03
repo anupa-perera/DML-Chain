@@ -77,6 +77,7 @@ export class DMLChain extends Contract {
   }
 
   // bulk reward pay
+  @allow.call('DeleteApplication')
   bulkPayoutRewards(addresses: Address[], rewards: uint64[]): uint64 {
     assert(this.txn.sender === this.app.creator);
     assert(addresses.length === rewards.length, 'Arrays must have the same length');

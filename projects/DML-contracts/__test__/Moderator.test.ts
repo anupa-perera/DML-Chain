@@ -136,7 +136,7 @@ describe('DML-CHAIN', () => {
       args: { rewardPoolAmount: rewardPoolAmount * 10n ** 6n, rewardPoolTxn },
     });
 
-    const payout = await appClient.send.bulkPayoutRewards({
+    const payout = await appClient.send.delete.bulkPayoutRewards({
       args: {
         addresses,
         rewards,
@@ -147,42 +147,42 @@ describe('DML-CHAIN', () => {
     expect(payout.return).toEqual(1n);
   });
 
-  test('delete application', async () => {
-    const TESTADDRESS = acc.addr;
-    const TESTADDRESSSTR = String(acc.addr);
+  // test('delete application', async () => {
+  //   const TESTADDRESS = acc.addr;
+  //   const TESTADDRESSSTR = String(acc.addr);
 
-    const boxMBRPay = await algorand.createTransaction.payment({
-      sender: TESTADDRESS,
-      receiver: appClient.appAddress,
-      amount: (1).algo(),
-    });
+  //   const boxMBRPay = await algorand.createTransaction.payment({
+  //     sender: TESTADDRESS,
+  //     receiver: appClient.appAddress,
+  //     amount: (1).algo(),
+  //   });
 
-    await appClient.send.storeModelParams({
-      args: {
-        mbrPay: boxMBRPay,
-        address: TESTADDRESSSTR,
-        paramsData: {
-          paramHash: 'TEST',
-          paramKey: 'TEST',
-          score: 350n,
-          reputation: 50n,
-        },
-      },
-    });
+  //   await appClient.send.storeModelParams({
+  //     args: {
+  //       mbrPay: boxMBRPay,
+  //       address: TESTADDRESSSTR,
+  //       paramsData: {
+  //         paramHash: 'TEST',
+  //         paramKey: 'TEST',
+  //         score: 350n,
+  //         reputation: 50n,
+  //       },
+  //     },
+  //   });
 
-    const boxIDs = await algorand.app.getBoxNames(appClient.appId);
+  //   const boxIDs = await algorand.app.getBoxNames(appClient.appId);
 
-    await Promise.all(
-      boxIDs
-        .filter((box) => Object.keys(box.nameRaw).length === 32)
-        .map(async (box) => {
-          const extAddr = algosdk.encodeAddress(box.nameRaw);
-          return appClient.send.deleteBox({ args: { address: extAddr } });
-        })
-    );
+  //   await Promise.all(
+  //     boxIDs
+  //       .filter((box) => Object.keys(box.nameRaw).length === 32)
+  //       .map(async (box) => {
+  //         const extAddr = algosdk.encodeAddress(box.nameRaw);
+  //         return appClient.send.deleteBox({ args: { address: extAddr } });
+  //       })
+  //   );
 
-    const clearApp = await appClient.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() });
+  //   const clearApp = await appClient.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() });
 
-    expect(clearApp.return).toBeUndefined();
-  });
+  //   expect(clearApp.return).toBeUndefined();
+  // });
 });
