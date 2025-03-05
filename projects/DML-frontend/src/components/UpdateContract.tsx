@@ -138,32 +138,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       const reputation = await getDataResponse.data.reputation
       const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
 
-      console.log('this is response', getDataResponse)
-
-      const baseCriteria = await client
-        .newGroup()
-        .getClassificationCriteria()
-        .simulate({
-          skipSignatures: true,
-          allowUnnamedResources: true,
-        })
-        .then((result) => {
-          return result.returns[0]
-        })
-
-      const baseScore =
-        typeof baseCriteria === 'object' && baseCriteria !== null
-          ? Object.values(baseCriteria).reduce((total, value) => {
-              if (typeof value === 'bigint') {
-                return total + value
-              }
-              return total
-            }, 0n)
-          : 0n
-
       const score: bigint = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
-
-      console.log('score', score)
 
       const boxMBRPay = await algorand.createTransaction.payment({
         sender: activeAddress,
@@ -353,14 +328,22 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
                       textAlign: 'left',
                       border: '1px solid #ccc',
                       borderRadius: '4px',
-                      padding: '4px',
+                      padding: '8px',
                       fontSize: '0.75rem',
                       backgroundColor: 'black',
                       color: 'white',
                       wordBreak: 'break-all',
                     }}
                   >
-                    {JSON.stringify(data, null, 1)}
+                    {JSON.stringify(
+                      {
+                        metrics: data.metrics,
+                        param_ipfs_hash: data.param_ipfs_hash,
+                        param_key: data.param_key,
+                      },
+                      null,
+                      2,
+                    )}
                   </Box>
                 ) : (
                   <LinearProgress color="inherit" />

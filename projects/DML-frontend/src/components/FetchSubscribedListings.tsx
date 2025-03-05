@@ -1,8 +1,11 @@
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemText } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
+import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
+import { DmlChainFactory } from '../contracts/DMLChain'
 import { getSubscribedListings, isComplete, updateFeedback, updateReputation } from '../utils/methods'
 import { ReputationType, SubscribedListingDTO } from '../utils/types'
 import Timer from './Timer'
@@ -16,11 +19,15 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
   const handleClose = () => {
     closeModal()
   }
+  const { transactionSigner, activeAddress, algodClient } = useWallet()
 
-  const { activeAddress } = useWallet()
-
+  const [contractStatuses, setContractStatuses] = useState<Record<string, boolean>>({})
   const [listings, setListings] = useState<Array<SubscribedListingDTO>>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const { enqueueSnackbar } = useSnackbar()
+
+  const algorand = AlgorandClient.fromClients({ algod: algodClient })
+  algorand.setDefaultSigner(transactionSigner)
 
   const sendFeedback = async (creatorAddress: string, action: ReputationType, appId: number) => {
     setLoading(true)
@@ -29,17 +36,30 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
     }
     try {
       await updateReputation(creatorAddress, action)
-      const feedback = await updateFeedback(activeAddress, appId, true)
-
-      console.log('this is feedback', feedback)
+      await updateFeedback(activeAddress, appId, true)
 
       const updatedListings = await getSubscribedListings(activeAddress)
       setListings(updatedListings)
     } catch (error) {
       console.error('Error sending feedback:', error)
-      // You might want to add error handling UI feedback here
+      enqueueSnackbar('Please Enter a valid contract ID', { variant: 'warning' })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const contractStatus = async (appId: number): Promise<boolean> => {
+    if (!activeAddress) {
+      return false
+    }
+    try {
+      const factory = new DmlChainFactory({ defaultSender: activeAddress, algorand })
+      const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: BigInt(appId) })
+      await client.state.global.getAll()
+      return true
+    } catch (error) {
+      console.log('in error')
+      return false
     }
   }
 
@@ -53,6 +73,20 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
 
     fetchListings()
   }, [openModal, activeAddress, loading])
+
+  useEffect(() => {
+    const checkStatuses = async () => {
+      const newStatuses: Record<string, boolean> = {}
+      for (const item of listings) {
+        const status = await contractStatus(item.contractId)
+        newStatuses[item.contractId.toString()] = status
+      }
+      setContractStatuses(newStatuses)
+    }
+    if (listings.length) {
+      checkStatuses()
+    }
+  }, [listings])
   return (
     <Dialog open={openModal} onClose={handleClose}>
       <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', padding: 1 }}>View Subscribed Model Listings</DialogTitle>
@@ -99,18 +133,20 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
                           >
                             <ThumbUpIcon sx={{ color: 'green' }} />
                           </IconButton>
-                          <IconButton
-                            size="small"
-                            sx={{
-                              mr: 1,
-                              color: 'success.main',
-                              '&:hover': { color: 'success.dark' },
-                            }}
-                            onClick={() => sendFeedback(listing.creatorAddress, ReputationType.DEMERIT, listing.contractId)}
-                            title="Demerit Icon"
-                          >
-                            <ThumbDownIcon sx={{ color: 'red' }} />
-                          </IconButton>
+                          {contractStatuses[listing.contractId.toString()] ? (
+                            <IconButton
+                              size="small"
+                              sx={{
+                                mr: 1,
+                                color: 'success.main',
+                                '&:hover': { color: 'success.dark' },
+                              }}
+                              onClick={() => sendFeedback(listing.creatorAddress, ReputationType.DEMERIT, listing.contractId)}
+                              title="Demerit Icon"
+                            >
+                              <ThumbDownIcon sx={{ color: 'red' }} />
+                            </IconButton>
+                          ) : null}
                         </Box>
                       ) : (
                         <Box

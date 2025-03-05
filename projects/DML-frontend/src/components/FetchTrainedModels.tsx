@@ -200,7 +200,6 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
     const fetchListings = async () => {
       if (openModal && activeAddress) {
         const listings = await getCreatedListings(activeAddress)
-        console.log('listings', listings)
 
         setListings(listings)
       }
@@ -426,12 +425,6 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
                 {loading ? <CircularProgress size={24} /> : 'Distribute Rewards'}
               </Button>
             )}
-            {awardsDistributed ||
-              (isPaid() && (
-                <Button variant="contained" onClick={handleClose} disabled={loading} color="error" fullWidth>
-                  Cancel
-                </Button>
-              ))}
           </DialogContent>
         </>
       </Dialog>

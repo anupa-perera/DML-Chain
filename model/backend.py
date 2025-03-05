@@ -193,7 +193,7 @@ def update_reputation():
   if action == 'merit':
     new_reputation = min(100, current_reputation + 1)
   else:
-    new_reputation = max(0, current_reputation - 1)
+    new_reputation = max(0, current_reputation - 2)
 
   print(f"New reputation for address {address}: {new_reputation}")
 
@@ -278,7 +278,7 @@ def update_multiple_reputations():
       continue
 
     current_reputation = user['reputation']
-    new_reputation = max(0, current_reputation - 1)
+    new_reputation = max(0, current_reputation - 2)
 
     if update_user_reputation(address, new_reputation):
       results["successful"].append({
