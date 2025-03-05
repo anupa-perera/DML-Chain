@@ -159,8 +159,6 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         },
       })
 
-      console.log('this is userlisting datra', listing)
-
       if (!listing) {
         enqueueSnackbar('No Listing has been found', { variant: 'warning' })
         return
@@ -176,14 +174,11 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
         url: listing.url,
       }
 
-      const suslist = await addSubscribedListing(userSubscribedData)
-
-      console.log('User created listing for this contract:', suslist)
+      await addSubscribedListing(userSubscribedData)
 
       enqueueSnackbar('Your model data has been successfully submitted for evaluation', { variant: 'success' })
     } catch (error) {
       enqueueSnackbar(`Failed to submit data `, { variant: 'warning' })
-      console.log(error, 'this is error')
     } finally {
       setLoading(false)
       handleClose()

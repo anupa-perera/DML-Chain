@@ -58,7 +58,6 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
       await client.state.global.getAll()
       return true
     } catch (error) {
-      console.log('in error')
       return false
     }
   }

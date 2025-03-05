@@ -169,10 +169,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
         })
 
       const { addresses, rewards } = calculateReward(paramsData, fixedPool, baseCriteria!)
-
-      console.log('these are payments', addresses)
-      console.log('these are rewards', rewards)
-
+      
       const SIZE = addresses.length
 
       await client.send.delete.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
