@@ -21,7 +21,6 @@ import axios from 'axios'
 import { useSnackbar } from 'notistack'
 import { useMemo, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
-import { getIpfsHash } from '../utils/ContractDeployer'
 import { addSubscribedListing, fetchListings } from '../utils/methods'
 import { AddSubscribedListingsPayload, BACKEND_SERVER, ListingsDTO } from '../utils/types'
 
@@ -82,7 +81,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       setLoading(true)
       const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: id })
 
-      const ipfsHash = await getIpfsHash(id)
+      const ipfsHash = await client.state.global.ipfsHash()
 
       const isBoxExist = async () => {
         const boxIDs = await algorand.app.getBoxNames(id)

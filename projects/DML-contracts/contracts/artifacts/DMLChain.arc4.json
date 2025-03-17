@@ -43,6 +43,18 @@
       }
     },
     {
+      "name": "creatorCommitToListing",
+      "args": [
+        {
+          "name": "stakeAmountTxn",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "commitToListing",
       "args": [
         {
@@ -63,6 +75,22 @@
     },
     {
       "name": "bulkPayoutRewards",
+      "args": [
+        {
+          "name": "addresses",
+          "type": "address[]"
+        },
+        {
+          "name": "rewards",
+          "type": "uint64[]"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "adminBulkPayoutRewards",
       "args": [
         {
           "name": "addresses",
@@ -145,6 +173,25 @@
       }
     },
     {
+      "name": "adminGetBoxValue",
+      "args": [
+        {
+          "name": "Address",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "(string,string,uint64,uint64)"
+      }
+    },
+    {
+      "name": "deleteInitialBox",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "deleteBox",
       "args": [
         {
@@ -158,6 +205,13 @@
     },
     {
       "name": "deleteApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "adminDeleteApplication",
       "args": [],
       "returns": {
         "type": "void"

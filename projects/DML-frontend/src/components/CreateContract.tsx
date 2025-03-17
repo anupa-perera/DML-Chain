@@ -19,6 +19,7 @@ import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useState } from 'react'
 import { Classification, DmlChainFactory } from '../contracts/DMLChain'
 import { addListing } from '../utils/methods'
+import { STARTER_TEMPLATE } from '../utils/types'
 
 interface DeployContractInterface {
   openModal: boolean
@@ -120,15 +121,24 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         return
       }
 
+      const CREATORSTAKEAMOUNT = rewardAmount / 2n
+
       const rewardPoolTxn = await algorand.createTransaction.payment({
         sender: activeAddress,
         receiver: client.appAddress,
         amount: rewardAmount.algo(),
       })
 
+      const stakeAmountTxn = await algorand.createTransaction.payment({
+        sender: activeAddress,
+        receiver: client.appAddress,
+        amount: CREATORSTAKEAMOUNT.algo(),
+      })
+
       await client
         .newGroup()
         .assignRewardPool({ args: { rewardPoolAmount: rewardAmount * 10n ** 6n, rewardPoolTxn } })
+        .creatorCommitToListing({ args: { stakeAmountTxn } })
         .storeClassificationSelectionCriteria({
           args: {
             evaluationMetrics: modelEvaluation,
@@ -184,7 +194,16 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
           <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Deploy Contract</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Please deploy a new contract to the host the model request listing. This action cannot be undone.
+              <Typography variant="body1" gutterBottom>
+                Please deploy a new contract to host the model request listing. This action cannot be undone. You can find the starter
+                template through{' '}
+                <a href={STARTER_TEMPLATE} target="_blank" rel="noopener noreferrer">
+                  here.
+                </a>{' '}
+              </Typography>
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                {loading && <CircularProgress size={24} sx={{ mr: 1 }} />}
+              </Box>
             </DialogContentText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">
@@ -289,6 +308,12 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
                 fullWidth
                 sx={{ mb: 2 }}
               />
+              <Box sx={{ border: '1px solid red', padding: 2, borderRadius: 1, mb: 2, backgroundColor: 'rgba(255,0,0,0.05)' }}>
+                <DialogContentText sx={{ color: 'red', fontStyle: 'italic' }}>
+                  Please note: 50% of the reward pool will be required to create a listing and in case you fail to payout the listing on
+                  time, it may be confiscated and distributed among the contributors.
+                </DialogContentText>
+              </Box>
               <Button variant="contained" color="primary" onClick={handleUpdate} disabled={loading || !rewardAmount} fullWidth>
                 {loading ? <CircularProgress size={24} /> : 'Update Contract'}
               </Button>

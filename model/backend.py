@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from ipfs_configs import retrieve_model, retrieve_model_params
 from Aggregator.aggregator import get_model_params, evaluate_global_model
-from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, update_feedback, mark_contract_as_paid
+from database import create_user, address_exists, get_user_by_address, add_listing_to_created, get_filtered_listings, add_listing_to_subscribed, get_subscribed_listings, update_user_reputation, get_created_listings, update_feedback, mark_contract_as_paid, add_reported_listing, get_created_listings, get_reported_listings, update_reported_listing_status
 
 app = Flask(__name__)
 CORS(app)
@@ -334,6 +334,50 @@ def update_feedback_endpoint():
         return jsonify({"message": "Feedback updated successfully"}), 200
     else:
         return jsonify({"error": "Failed to update feedback"}), 500
+
+@app.route('/report-listing', methods=['POST'])
+def report_listing():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Request body is required"}), 400
+
+    contract_id = data.get('contractId')
+    if not contract_id:
+        return jsonify({"error": "Contract ID is required"}), 400
+
+    result = add_reported_listing(contract_id)
+    if result:
+        return jsonify({"message": "Listing reported successfully", "reportId": str(result)}), 200
+    elif result is False:
+        return jsonify({"error": "Listing already reported or not found"}), 400
+    else:
+        return jsonify({"error": "Failed to report listing"}), 500
+
+@app.route('/get-reported-listings', methods=['GET'])
+def get_reported_listings_endpoint():
+    listings = get_reported_listings()
+    if listings is not None:
+        return jsonify(listings), 200
+    else:
+        return jsonify({"error": "Failed to retrieve reported listings"}), 500
+
+@app.route('/update-reported-listing-status', methods=['POST'])
+def update_reported_listing_status_endpoint():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Request body is required"}), 400
+
+    contract_id = data.get('contractId')
+    status = data.get('status')
+
+    if not contract_id or not status:
+        return jsonify({"error": "Contract ID and status are required"}), 400
+
+    success = update_reported_listing_status(contract_id, status)
+    if success:
+        return jsonify({"message": "Status updated successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to update status"}), 500
 
 if __name__ == '__main__':
   app.run(debug=True)

@@ -52,6 +52,20 @@ describe('DML-CHAIN', () => {
     expect(rewardPool.return).toEqual(1n);
   });
 
+  test('creator commit to listing', async () => {
+    const stakeAmount = Number((await algorand.app.getGlobalState(appClient.appId)).stakeAmount?.value) / 10 ** 6;
+
+    const stakeAmountTxn = await algorand.createTransaction.payment({
+      sender: acc.addr,
+      receiver: appClient.appAddress,
+      amount: stakeAmount.algos(),
+    });
+
+    const commitToStake = await appClient.send.creatorCommitToListing({ args: { stakeAmountTxn } });
+
+    expect(commitToStake.return).toEqual(1n);
+  });
+
   test('commit to listing', async () => {
     const stakeAmount = Number((await algorand.app.getGlobalState(appClient.appId)).stakeAmount?.value) / 10 ** 6;
 
@@ -74,7 +88,7 @@ describe('DML-CHAIN', () => {
     });
 
     const checkBalance = await appClient.send.checkBalance();
-    expect(checkBalance.return).toEqual(15n * 10n ** 6n);
+    expect(checkBalance.return).toEqual(20n * 10n ** 6n);
   });
 
   test('get the excess score', async () => {
@@ -114,7 +128,40 @@ describe('DML-CHAIN', () => {
     expect(score.return).toEqual(100n);
   });
 
-  test('distribute rewards to participants', async () => {
+  // test('distribute rewards to participants', async () => {
+  //   const TESTACC1 = algosdk.generateAccount().addr;
+  //   const TESTACC2 = algosdk.generateAccount().addr;
+
+  //   const addresses: string[] = [TESTACC1.toString(), TESTACC2.toString()];
+
+  //   const SIZE = addresses.length;
+
+  //   const rewards = [1000000n, 2000000n];
+
+  //   const rewardPoolAmount = 20n;
+
+  //   const rewardPoolTxn = await algorand.createTransaction.payment({
+  //     sender: acc.addr,
+  //     receiver: appClient.appAddress,
+  //     amount: rewardPoolAmount.algo(),
+  //   });
+
+  //   await appClient.send.assignRewardPool({
+  //     args: { rewardPoolAmount: rewardPoolAmount * 10n ** 6n, rewardPoolTxn },
+  //   });
+
+  //   const payout = await appClient.send.delete.bulkPayoutRewards({
+  //     args: {
+  //       addresses,
+  //       rewards,
+  //     },
+  //     extraFee: (0.001 * SIZE + 0.001).algo(),
+  //   });
+
+  //   expect(payout.return).toEqual(1n);
+  // });
+
+  test('admin distribute rewards to participants', async () => {
     const TESTACC1 = algosdk.generateAccount().addr;
     const TESTACC2 = algosdk.generateAccount().addr;
 
@@ -136,7 +183,7 @@ describe('DML-CHAIN', () => {
       args: { rewardPoolAmount: rewardPoolAmount * 10n ** 6n, rewardPoolTxn },
     });
 
-    const payout = await appClient.send.delete.bulkPayoutRewards({
+    const payout = await appClient.send.delete.adminBulkPayoutRewards({
       args: {
         addresses,
         rewards,
@@ -146,43 +193,4 @@ describe('DML-CHAIN', () => {
 
     expect(payout.return).toEqual(1n);
   });
-
-  // test('delete application', async () => {
-  //   const TESTADDRESS = acc.addr;
-  //   const TESTADDRESSSTR = String(acc.addr);
-
-  //   const boxMBRPay = await algorand.createTransaction.payment({
-  //     sender: TESTADDRESS,
-  //     receiver: appClient.appAddress,
-  //     amount: (1).algo(),
-  //   });
-
-  //   await appClient.send.storeModelParams({
-  //     args: {
-  //       mbrPay: boxMBRPay,
-  //       address: TESTADDRESSSTR,
-  //       paramsData: {
-  //         paramHash: 'TEST',
-  //         paramKey: 'TEST',
-  //         score: 350n,
-  //         reputation: 50n,
-  //       },
-  //     },
-  //   });
-
-  //   const boxIDs = await algorand.app.getBoxNames(appClient.appId);
-
-  //   await Promise.all(
-  //     boxIDs
-  //       .filter((box) => Object.keys(box.nameRaw).length === 32)
-  //       .map(async (box) => {
-  //         const extAddr = algosdk.encodeAddress(box.nameRaw);
-  //         return appClient.send.deleteBox({ args: { address: extAddr } });
-  //       })
-  //   );
-
-  //   const clearApp = await appClient.send.delete.deleteApplication({ args: {}, extraFee: (0.001).algo() });
-
-  //   expect(clearApp.return).toBeUndefined();
-  // });
 });

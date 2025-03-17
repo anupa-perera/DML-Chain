@@ -73,6 +73,12 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
       return
     }
 
+    if (isPaid()) {
+      enqueueSnackbar('This contract has already been paid', { variant: 'warning' })
+      handleClose()
+      return
+    }
+
     const factory = new DmlChainFactory({
       defaultSender: activeAddress,
       algorand,
@@ -169,7 +175,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
         })
 
       const { addresses, rewards } = calculateReward(paramsData, fixedPool, baseCriteria!)
-      
+
       const SIZE = addresses.length
 
       await client.send.delete.bulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
@@ -302,7 +308,7 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
               </Box>
             )}
             <Box>
-              {paramsData && paramsData !== null && (
+              {paramsData && paramsData !== null && !isPaid() && (
                 <>
                   <Typography variant="subtitle2" gutterBottom>
                     Stored Model Parameters:

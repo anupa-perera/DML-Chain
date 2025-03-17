@@ -9,7 +9,8 @@ load_dotenv()
 MONGO_URI = os.getenv("MONGO_CLIENT")
 client = MongoClient(MONGO_URI)
 db = client['DMLCHAIN']
-collection = db['users']
+user_collection = db['users']
+reported_listing_collection = db['reportedListings']
 
 def create_user(address):
   try:
@@ -19,7 +20,7 @@ def create_user(address):
       "createdListings": [],
       "subscribedListings": []
     }
-    result = collection.insert_one(formatted_record)
+    result = user_collection.insert_one(formatted_record)
     return result.inserted_id
   except Exception as e:
     print(f"An error occurred: {e}")
@@ -27,7 +28,7 @@ def create_user(address):
 
 def address_exists(address):
     try:
-        result = collection.find_one({"address": address})
+        result = user_collection.find_one({"address": address})
         return result is not None
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -35,7 +36,7 @@ def address_exists(address):
 
 def get_user_by_address(address):
   try:
-    user_record = collection.find_one({"address": address})
+    user_record = user_collection.find_one({"address": address})
     return user_record
   except Exception as e:
     print(f"An error occurred: {e}")
@@ -49,7 +50,7 @@ def add_listing_to_created(address, contract_id, created_at, expires_at, url):
     "url": url
   }
   try:
-    collection.update_one(
+    user_collection.update_one(
       {"address": address},
       {"$push": {"createdListings": listing}}
     )
@@ -69,7 +70,7 @@ def add_listing_to_subscribed(address, contract_id, created_at, expires_at, url,
     "feedback": False
   }
   try:
-    user = collection.find_one({
+    user = user_collection.find_one({
       "address": address,
       "subscribedListings.contractId": contract_id
     })
@@ -77,7 +78,7 @@ def add_listing_to_subscribed(address, contract_id, created_at, expires_at, url,
     if user:
       return False
 
-    collection.update_one(
+    user_collection.update_one(
       {"address": address},
       {"$push": {"subscribedListings": listing}}
     )
@@ -107,7 +108,7 @@ def get_filtered_listings(requested_address):
     user_reputation = user.get('reputation', 0)
     current_time = int(time.time())
 
-    all_users = collection.find({})
+    all_users = user_collection.find({})
     filtered_listings = []
 
     for user in all_users:
@@ -128,7 +129,7 @@ def get_filtered_listings(requested_address):
 
 def update_user_reputation(address, new_reputation):
   try:
-    result = collection.update_one(
+    result = user_collection.update_one(
       {"address": address},
       {"$set": {"reputation": new_reputation}}
     )
@@ -152,7 +153,7 @@ def get_created_listings(address):
 
 def mark_contract_as_paid(address, contract_id):
   try:
-    result = collection.update_one(
+    result = user_collection.update_one(
       {"address": address, "createdListings.contractId": contract_id},
       {"$set": {"createdListings.$.paid": True}}
     )
@@ -168,7 +169,7 @@ def mark_contract_as_paid(address, contract_id):
 
 def update_feedback(subscriber_address, contract_id, feedback_value):
   try:
-    result = collection.update_one(
+    result = user_collection.update_one(
       {"address": subscriber_address, "subscribedListings.contractId": contract_id},
       {"$set": {"subscribedListings.$.feedback": feedback_value}}
     )
@@ -180,3 +181,72 @@ def update_feedback(subscriber_address, contract_id, feedback_value):
   except Exception as e:
     print(f"An error occurred while updating feedback: {e}")
     return None
+
+def add_reported_listing(contract_id):
+    try:
+        existing_report = reported_listing_collection.find_one({"contractId": contract_id})
+        if existing_report:
+            return False
+
+        creator = user_collection.find_one(
+            {"createdListings.contractId": contract_id},
+            {"address": 1}
+        )
+
+        if not creator:
+            return False
+
+        subscribers = user_collection.find(
+            {"subscribedListings.contractId": contract_id},
+            {"address": 1}
+        )
+
+        subscriber_addresses = [subscriber["address"] for subscriber in subscribers]
+
+        if not subscriber_addresses:
+            return False
+
+        report_record = {
+            "contractId": contract_id,
+            "creatorAddress": creator["address"],
+            "subscriberAddresses": subscriber_addresses,
+            "reportedAt": datetime.now(),
+            "status": "pending"
+        }
+
+        result = reported_listing_collection.insert_one(report_record)
+        return result.inserted_id
+
+    except Exception as e:
+        print(f"An error occurred while reporting listing: {e}")
+        return None
+
+def get_reported_listings():
+  try:
+    reports = list(reported_listing_collection.find({}, {"_id": 0}))
+    return reports
+  except Exception as e:
+    print(f"An error occurred while fetching reported listings: {e}")
+    return None
+
+def update_reported_listing_status(contract_id: int, status: str):
+    try:
+        # Update status in reported listings
+        result = reported_listing_collection.update_one(
+            {"contractId": contract_id},
+            {"$set": {"status": status}}
+        )
+
+        if result.modified_count == 0:
+            return False
+
+        # Find all users with this contract in their created listings and update paid status
+        user_collection.update_many(
+            {"createdListings.contractId": contract_id},
+            {"$set": {"createdListings.$.paid": True}}
+        )
+
+        return True
+    except Exception as e:
+        print(f"An error occurred while updating reported listing status: {e}")
+        return False

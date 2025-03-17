@@ -6,7 +6,7 @@ import { useWallet } from '@txnlab/use-wallet-react'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import { DmlChainFactory } from '../contracts/DMLChain'
-import { getSubscribedListings, isComplete, updateFeedback, updateReputation } from '../utils/methods'
+import { getSubscribedListings, isComplete, reportListing, updateFeedback, updateReputation } from '../utils/methods'
 import { ReputationType, SubscribedListingDTO } from '../utils/types'
 import Timer from './Timer'
 
@@ -37,11 +37,13 @@ const FetchSubscribedListings = ({ openModal, closeModal }: FetchSubscribedListi
     try {
       await updateReputation(creatorAddress, action)
       await updateFeedback(activeAddress, appId, true)
+      if (action === ReputationType.DEMERIT) {
+        await reportListing(appId)
+      }
 
       const updatedListings = await getSubscribedListings(activeAddress)
       setListings(updatedListings)
     } catch (error) {
-      console.error('Error sending feedback:', error)
       enqueueSnackbar('Please Enter a valid contract ID', { variant: 'warning' })
     } finally {
       setLoading(false)

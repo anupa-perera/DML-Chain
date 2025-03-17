@@ -1,4 +1,5 @@
 export const BACKEND_SERVER = import.meta.env.VITE_BACKEND_SERVER
+export const STARTER_TEMPLATE = import.meta.env.VITE_STARTER_TEMPLATE
 
 export interface ParamsData {
   [address: string]: {
@@ -87,4 +88,18 @@ export interface ReputationUpdateResponse {
       reason: string
     }>
   }
+}
+
+export interface ReportListingResponse {
+  error?: string
+  message: string
+  reportId: string
+}
+
+export interface ReportedListing {
+  contractId: number
+  creatorAddress: string
+  subscriberAddresses: string[]
+  reportedAt: string
+  status: string
 }

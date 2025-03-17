@@ -60,6 +60,18 @@ export class DMLChain extends Contract {
     return 1;
   }
 
+  // creator commit to listing by staking
+  creatorCommitToListing(stakeAmountTxn: PayTxn): uint64 {
+    assert(this.txn.sender === this.app.creator);
+    verifyPayTxn(stakeAmountTxn, {
+      sender: this.txn.sender,
+      receiver: this.app.address,
+      amount: this.stakeAmount.value,
+    });
+
+    return 1;
+  }
+
   // commit to listing by staking
   commitToListing(stakeAmountTxn: PayTxn): uint64 {
     verifyPayTxn(stakeAmountTxn, {
@@ -106,6 +118,45 @@ export class DMLChain extends Contract {
     }
 
     this.deleteApplication();
+
+    return 1;
+  }
+
+  // bulk reward pay
+  @allow.call('DeleteApplication')
+  adminBulkPayoutRewards(addresses: Address[], rewards: uint64[]): uint64 {
+    assert(addresses.length === rewards.length, 'Arrays must have the same length');
+
+    let totalReward = 0;
+    for (let i = 0; i < rewards.length; i += 1) {
+      totalReward += rewards[i];
+    }
+
+    const totalStakeAmount = wideRatio([addresses.length, this.stakeAmount.value], [1]);
+
+    const totalPayout = totalReward + totalStakeAmount;
+
+    assert(this.app.address.balance >= totalPayout, 'Insufficient balance for rewards');
+
+    let unitaryCreatorDistributeStake = 0;
+
+    if (addresses.length > 0) {
+      unitaryCreatorDistributeStake = wideRatio([this.app.address.balance - totalPayout], [addresses.length]);
+    }
+
+    for (let i = 0; i < addresses.length; i += 1) {
+      sendPayment({
+        amount: rewards[i] + this.stakeAmount.value + unitaryCreatorDistributeStake,
+        receiver: addresses[i],
+        note: 'reward',
+      });
+    }
+
+    for (let i = 0; i < addresses.length; i += 1) {
+      this.deleteBox(addresses[i]);
+    }
+
+    this.adminDeleteApplication();
 
     return 1;
   }
@@ -184,6 +235,19 @@ export class DMLChain extends Contract {
     return this.paramsData(Address).value;
   }
 
+  // get model params by address reference by the admin
+  adminGetBoxValue(Address: Address): ParamsData {
+    assert(this.paramsData(Address).exists);
+    return this.paramsData(Address).value;
+  }
+
+  // delete initial box
+  deleteInitialBox(): void {
+    if (this.classificationPerformanceMetrics('InitialModelMetrics').exists) {
+      this.classificationPerformanceMetrics('InitialModelMetrics').delete();
+    }
+  }
+
   // delete box
   deleteBox(address: Address): uint64 {
     if (this.classificationPerformanceMetrics('InitialModelMetrics').exists) {
@@ -199,6 +263,13 @@ export class DMLChain extends Contract {
   deleteApplication(): void {
     assert(this.txn.sender === this.app.creator);
 
+    sendPayment({
+      closeRemainderTo: this.txn.sender,
+    });
+  }
+
+  //  admin delete contract
+  adminDeleteApplication(): void {
     sendPayment({
       closeRemainderTo: this.txn.sender,
     });

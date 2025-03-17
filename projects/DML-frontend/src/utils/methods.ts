@@ -6,6 +6,8 @@ import {
   AddSubscribedListingsPayload,
   BACKEND_SERVER,
   ParticipantInfo,
+  ReportedListing,
+  ReportListingResponse,
   ReputationResponseDTO,
   ReputationType,
   ReputationUpdateResponse,
@@ -172,6 +174,37 @@ export const updateFeedback = async (subscriberAddress: string, contractId: numb
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.error || 'Failed to update feedback')
+    }
+    throw error
+  }
+}
+
+export const reportListing = async (contractId: number): Promise<ReportListingResponse> => {
+  try {
+    const response = await axios.post<ReportListingResponse>(`${BACKEND_SERVER}/report-listing`, {
+      contractId,
+    })
+
+    if (response.status !== 200) {
+      throw new Error(response.data.error || 'Failed to report listing')
+    }
+
+    return response.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to report listing')
+    }
+    throw error
+  }
+}
+
+export const getReportedListings = async (): Promise<ReportedListing[]> => {
+  try {
+    const response = await axios.get<ReportedListing[]>(`${BACKEND_SERVER}/get-reported-listings`)
+    return response.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to fetch reported listings')
     }
     throw error
   }
