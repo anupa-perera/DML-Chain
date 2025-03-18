@@ -5,7 +5,6 @@ import {
   CircularProgress,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   LinearProgress,
   MenuItem,
@@ -193,18 +192,14 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
         <>
           <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Deploy Contract</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              <Typography variant="body1" gutterBottom>
-                Please deploy a new contract to host the model request listing. This action cannot be undone. You can find the starter
-                template through{' '}
-                <a href={STARTER_TEMPLATE} target="_blank" rel="noopener noreferrer">
-                  here.
-                </a>{' '}
-              </Typography>
-              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                {loading && <CircularProgress size={24} sx={{ mr: 1 }} />}
-              </Box>
-            </DialogContentText>
+            <Typography variant="body1" gutterBottom>
+              Please deploy a new contract to host the model request listing. This action cannot be undone. You can find the starter
+              template through{' '}
+              <a href={STARTER_TEMPLATE} target="_blank" rel="noopener noreferrer">
+                here.
+              </a>{' '}
+            </Typography>
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>{loading && <CircularProgress size={24} sx={{ mr: 1 }} />}</Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
               <Button onClick={handleDeploy} disabled={loading} variant="contained" color="primary">
                 {loading ? 'Deploying...' : 'Deploy Contract'}
@@ -309,10 +304,10 @@ const CreateContract = ({ openModal, closeModal }: DeployContractInterface) => {
                 sx={{ mb: 2 }}
               />
               <Box sx={{ border: '1px solid red', padding: 2, borderRadius: 1, mb: 2, backgroundColor: 'rgba(255,0,0,0.05)' }}>
-                <DialogContentText sx={{ color: 'red', fontStyle: 'italic' }}>
+                <Typography sx={{ color: 'red', fontStyle: 'italic' }}>
                   Please note: 50% of the reward pool will be required to create a listing and in case you fail to payout the listing on
                   time, it may be confiscated and distributed among the contributors.
-                </DialogContentText>
+                </Typography>
               </Box>
               <Button variant="contained" color="primary" onClick={handleUpdate} disabled={loading || !rewardAmount} fullWidth>
                 {loading ? <CircularProgress size={24} /> : 'Update Contract'}

@@ -1,11 +1,12 @@
 import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import { BoxName } from '@algorandfoundation/algokit-utils/types/app'
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemText, Typography } from '@mui/material'
 import { useWallet } from '@txnlab/use-wallet-react'
 import { encodeAddress } from 'algosdk'
 import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
-import { DmlChainFactory } from '../contracts/DMLChain'
+import { DmlChainClient, DmlChainFactory } from '../contracts/DMLChain'
 import { ellipseAddress } from '../utils/ellipseAddress'
 import { calculateReward, getReportedListings } from '../utils/methods'
 import { BACKEND_SERVER, ReportedListing } from '../utils/types'
@@ -32,6 +33,52 @@ const FetchReportedListings = ({ openModal, closeModal }: FetchReportedListingsI
     setSelectedListing(listing)
   }
 
+  const processBoxValues = async (
+    client: DmlChainClient,
+    boxIDs: BoxName[],
+    paramsMap: Record<string, { paramHash: string; paramKey: string; score: bigint; reputation: bigint }>,
+  ) => {
+    for (const box of boxIDs) {
+      if (Object.keys(box.nameRaw).length === 32) {
+        try {
+          const extAddr = encodeAddress(box.nameRaw)
+          const getBox = await client
+            .newGroup()
+            .adminGetBoxValue({ args: { address: extAddr } })
+            .simulate({
+              skipSignatures: true,
+              allowUnnamedResources: true,
+            })
+
+          const getParams = getBox.returns[0]
+          if (getParams) {
+            paramsMap[extAddr] = {
+              paramHash: getParams.paramHash,
+              paramKey: getParams.paramKey,
+              score: getParams.score,
+              reputation: getParams.reputation,
+            }
+          }
+        } catch (error) {
+          enqueueSnackbar(`Error processing box: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+            variant: 'error',
+          })
+        }
+      }
+    }
+  }
+
+  const sendRewardsAndUpdateBackend = async (client: DmlChainClient, addresses: string[], rewards: bigint[], contractId: number) => {
+    const SIZE = addresses.length
+
+    await client.send.delete.adminBulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
+
+    await axios.post(`${BACKEND_SERVER}/update-reported-listing-status`, {
+      contractId,
+      status: 'paid',
+    })
+  }
+
   const handleReleaseRewards = async (contractId: number) => {
     const appId = BigInt(contractId)
     if (!transactionSigner || !activeAddress) {
@@ -50,34 +97,7 @@ const FetchReportedListings = ({ openModal, closeModal }: FetchReportedListingsI
 
       const paramsMap: Record<string, { paramHash: string; paramKey: string; score: bigint; reputation: bigint }> = {}
 
-      for (const box of boxIDs) {
-        if (Object.keys(box.nameRaw).length === 32) {
-          try {
-            const extAddr = encodeAddress(box.nameRaw)
-            const getBox = await client
-              .newGroup()
-              .adminGetBoxValue({ args: { address: extAddr } })
-              .simulate({
-                skipSignatures: true,
-                allowUnnamedResources: true,
-              })
-
-            const getParams = getBox.returns[0]
-            if (getParams) {
-              paramsMap[extAddr] = {
-                paramHash: getParams.paramHash,
-                paramKey: getParams.paramKey,
-                score: getParams.score,
-                reputation: getParams.reputation,
-              }
-            }
-          } catch (error) {
-            enqueueSnackbar(`Error processing box: ${error instanceof Error ? error.message : 'Unknown error'}`, {
-              variant: 'error',
-            })
-          }
-        }
-      }
+      await processBoxValues(client, boxIDs, paramsMap)
 
       const fixedPool = BigInt((await algorand.app.getGlobalState(appId)).rewardPool?.value)
 
@@ -96,12 +116,7 @@ const FetchReportedListings = ({ openModal, closeModal }: FetchReportedListingsI
 
       const SIZE = addresses.length
 
-      await client.send.delete.adminBulkPayoutRewards({ args: { addresses, rewards }, extraFee: (0.001 * SIZE + 0.001).algo() })
-
-      await axios.post(`${BACKEND_SERVER}/update-reported-listing-status`, {
-        contractId,
-        status: 'paid',
-      })
+      await sendRewardsAndUpdateBackend(client, addresses, rewards, contractId)
 
       const reportedListings = await getReportedListings()
       setListings(reportedListings)
