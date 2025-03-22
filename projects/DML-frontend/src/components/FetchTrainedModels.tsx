@@ -119,18 +119,6 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
       }
 
       setParamsData(paramsMap)
-
-      if (paramsData) {
-        const filteredParams = Object.fromEntries(
-          Object.entries(paramsData).map(([key, value]) => {
-            const { paramHash, paramKey } = value
-            return [key, { paramHash, paramKey }]
-          }),
-        )
-        await axios.post(`${BACKEND_SERVER}/aggregate`, filteredParams)
-
-        handleClose()
-      }
     } catch (error) {
       enqueueSnackbar(`An Error has occurred, ${error}`, { variant: 'error' })
     } finally {
@@ -213,13 +201,25 @@ const FetchTrainedModels = ({ openModal, closeModal }: UpdateFetchTrainedModelsI
 
   useEffect(() => {
     const fetchparams = async () => {
-      if (openModal && appId !== null) {
-        handleGetAllModelParams()
+      if (openModal && appId) {
+        await handleGetAllModelParams()
       }
     }
 
     fetchparams()
-  }, [appId])
+  }, [openModal, appId])
+
+  useEffect(() => {
+    if (paramsData) {
+      const filteredParams = Object.fromEntries(
+        Object.entries(paramsData).map(([key, value]) => {
+          const { paramHash, paramKey } = value
+          return [key, { paramHash, paramKey }]
+        }),
+      )
+      axios.post(`${BACKEND_SERVER}/aggregate`, filteredParams)
+    }
+  }, [paramsData])
 
   useEffect(() => {
     if (paramsData !== null) {

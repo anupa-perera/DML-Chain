@@ -62,6 +62,7 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
     setListings([])
     setLoading(false)
     closeModal()
+    setData(null)
   }
 
   const retrieveModelFile = async (id: bigint) => {

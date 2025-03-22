@@ -175,3 +175,10 @@ model/DO2/DOData2.csv
 model/MO/MOData.csv
 model/base_model/creditcard.csv
 model/Aggregator/creditcard.csv
+model/data_splitter/creditcard.csv
+model/base_model/creditcard_10percent.csv
+.gitignore
+model/base_model/creditcard_30percent_1.csv
+.gitignore
+model/base_model/creditcard_30percent_3.csv
+model/base_model/creditcard_30percent_2.csv
