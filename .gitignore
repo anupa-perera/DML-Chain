@@ -182,3 +182,24 @@ model/base_model/creditcard_30percent_1.csv
 .gitignore
 model/base_model/creditcard_30percent_3.csv
 model/base_model/creditcard_30percent_2.csv
+model/data_splitter/data_splitter.ipynb
+model/base_model/fraud_detection/creditcard_10percent.csv
+model/base_model/fraud_detection/creditcard_30percent_1.csv
+model/base_model/fraud_detection/creditcard_30percent_2.csv
+model/base_model/fraud_detection/creditcard_30percent_3.csv
+model/base_model/fraud_detection/creditcard.csv
+model/data_splitter/data_splitter.ipynb
+model/base_model/heat_attack_disease_prediction/framingham_10percent.csv
+model/base_model/heat_attack_disease_prediction/framingham_30percent_1.csv
+model/base_model/heat_attack_disease_prediction/framingham_30percent_2.csv
+model/base_model/heat_attack_disease_prediction/framingham_30percent_3.csv
+model/base_model/heat_attack_disease_prediction/framingham.csv
+model/data_splitter/framingham.csv
+projects/DML-frontend/src/components/UpdateContract.tsx
+model/aggregator/Covid Data.csv
+model/base_model/heat_attack_disease_prediction/Covid Data_10percent.csv
+model/base_model/heat_attack_disease_prediction/Covid Data_30percent_1.csv
+model/base_model/heat_attack_disease_prediction/Covid Data_30percent_2.csv
+model/base_model/heat_attack_disease_prediction/Covid Data_30percent_3.csv
+model/base_model/heat_attack_disease_prediction/Covid Data.csv
+model/data_splitter/Covid Data.csv
