@@ -138,7 +138,11 @@ const UpdateContract = ({ openModal, closeModal }: UpdateContractInterface) => {
       const reputation = await getDataResponse.data.reputation
       const client = await factory.getAppClientById({ defaultSender: activeAddress, appId: appId })
 
-      const score: bigint = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
+      let score: bigint = data.metrics.accuracy + data.metrics.precision + data.metrics.recall + data.metrics.f1score
+
+      if (score > 400n) {
+        score = 0n
+      }
 
       const boxMBRPay = await algorand.createTransaction.payment({
         sender: activeAddress,
