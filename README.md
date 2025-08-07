@@ -26,6 +26,8 @@ Before setting up DML-Chain, ensure you have the following installed:
 - **Python** (v3.8 or higher)
 - **Git**
 - **AlgoKit CLI** (v2.0.0 or higher)
+- **MongoDB** (for ML model data storage)
+- **Jupyter Notebook** (optional, for running ML notebooks)
 
 ### Installing AlgoKit
 
@@ -98,6 +100,50 @@ The backend consists of Algorand smart contracts written in TEALScript.
    npm run test
    ```
 
+### ML Model Setup
+
+The ML components handle federated learning, data aggregation, and model training.
+
+1. **Navigate to the model directory:**
+   ```bash
+   cd model
+   ```
+
+2. **Create a Python virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
+
+3. **Activate the virtual environment:**
+
+   **Windows:**
+   ```bash
+   venv\Scripts\activate
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   source venv/bin/activate
+   ```
+
+4. **Install Python dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Set up environment variables:**
+   ```bash
+   cp .env.template .env
+   ```
+   Configure your MongoDB connection string and other required variables in the `.env` file.
+
+6. **Start the ML backend server:**
+   ```bash
+   python backend.py
+   ```
+
+The ML backend will be available at `http://localhost:5000`
+
 ### Frontend Setup
 
 The frontend is built with React, TypeScript, and Vite.
@@ -134,11 +180,18 @@ algokit project run build
 
 ### Development Workflow
 
-#### Backend Development
+#### Backend Development (Smart Contracts)
 - **Compile contracts:** `npm run compile-contract`
 - **Generate TypeScript clients:** `npm run generate-client`
 - **Run tests:** `npm run test`
 - **Lint code:** `npm run lint`
+
+#### ML Model Development
+- **Start ML backend:** `python model/backend.py`
+- **Run Jupyter notebooks:** `jupyter notebook` (from model directory)
+- **Data splitting:** Use `model/data_splitter/data_splitter.ipynb`
+- **Model training:** Use `model/base_model/fraud-detection-model.ipynb`
+- **Aggregation:** Use `model/Aggregator/Aggregator.ipynb`
 
 #### Frontend Development
 - **Start dev server:** `npm run dev`
@@ -148,12 +201,20 @@ algokit project run build
 
 ### Environment Configuration
 
-1. **Copy the environment template:**
+1. **Frontend environment:**
    ```bash
    cp projects/DML-frontend/.env.template projects/DML-frontend/.env
    ```
 
-2. **Configure your environment variables** in the `.env` file as needed.
+2. **ML Model environment:**
+   ```bash
+   cp model/.env.template model/.env
+   ```
+   Configure the following variables:
+   - `MONGO_CLIENT`: MongoDB connection string
+   - Other ML-specific configuration variables
+
+3. **Configure your environment variables** in the respective `.env` files as needed.
 
 ### Troubleshooting
 
@@ -174,6 +235,12 @@ algokit project run build
 4. **Build failures:**
    - Clear node_modules and reinstall: `rm -rf node_modules package-lock.json && npm install`
    - Ensure all dependencies are up to date
+
+5. **Python/ML issues:**
+   - Ensure Python virtual environment is activated
+   - Reinstall Python dependencies: `pip install -r model/requirements.txt`
+   - Check MongoDB connection string in `.env` file
+   - Verify all required Python packages are installed
 
 ### Additional Resources
 
